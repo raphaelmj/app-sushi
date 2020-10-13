@@ -1,0 +1,88 @@
+<FlexboxLayout
+               flexDirection="row"
+               justifyContent="space-between"
+               alignItems="center"
+               class="p-10 row-m-flex"
+               [width]="rowWidth">
+    <FlexboxLayout
+                   alignItems="center"
+                   width="50%"
+                   justifyContent="space-between" *ngIf="plusElement.elementType!=elementType.configStepsPriceMany && (plusElement.optionsElements.length==0)">
+        <Label [text]="plusElement.shortName" class="nameLabel" textWrap="true"></Label>
+        <Image src="~/images/krewetka.png" width="25" *ngIf="plusElement?.isSea" class="image-elems" loadMode="async"></Image>
+        <Label class="qua-label">
+            <FormattedString>
+                <Span text=" "></Span>
+                <Span text="&#xf00d;" class="fas"></Span>
+                <Span [text]="' '+plusElement.qunatity"></Span>
+            </FormattedString>
+        </Label>
+    </FlexboxLayout>
+    <FlexboxLayout alignItems="center" justifyContent="space-between" *ngIf="plusElement.elementType==elementType.configStepsPriceMany && (plusElement.optionsElements.length==0)">
+        <WrapLayout orientation="horizontal">
+            <FlexboxLayout
+                           alignItems="center"
+                           justifyContent="space-between"
+                           flexDirection="row"
+                           *ngFor="let item of plusElement.stepOptionsList;let i=index"
+                           width="50%"
+                           class="p-5 element-step-many">
+                <Label [text]="item|configStepElementName:plusElement.configStepsPrice" class="nameLabel" textWrap="true"></Label>
+                <FlexboxLayout class="remove-step" width="50" (tap)="removeStep(i)">
+                    <Label>
+                        <FormattedString>
+                            <Span text="&#xf00d;" class="fas"></Span>
+                        </FormattedString>
+                    </Label>
+                </FlexboxLayout>
+            </FlexboxLayout>
+        </WrapLayout>
+        <Image src="~/images/krewetka.png" width="25" *ngIf="plusElement?.isSea" class="image-elems" loadMode="async"></Image>
+    </FlexboxLayout>
+    <ng-container *ngIf="plusElement.optionsElements.length>0">
+        <FlexboxLayout
+                       alignItems="center"
+                       justifyContent="space-between">
+            <WrapLayout orientation="horizontal">
+                <FlexboxLayout
+                               alignItems="center"
+                               justifyContent="space-between"
+                               flexDirection="row"
+                               *ngFor="let item of plusElement.optionsElements;let i=index"
+                               width="50%"
+                               class="p-5 element-step-many">
+                    <Label [text]="plusElement.shortName+' >> '+item" class="nameLabel" textWrap="true"></Label>
+
+                    <FlexboxLayout class="remove-step" width="50" (tap)="removeOptionElement(i)">
+                        <Label>
+                            <FormattedString>
+                                <Span text="&#xf00d;" class="fas"></Span>
+                            </FormattedString>
+                        </Label>
+                    </FlexboxLayout>
+                </FlexboxLayout>
+            </WrapLayout>
+            <Image src="~/images/krewetka.png" width="25" *ngIf="plusElement?.isSea" class="image-elems" loadMode="async"></Image>
+        </FlexboxLayout>
+    </ng-container>
+    <FlexboxLayout flexDirection="column">
+        <FlexboxLayout *ngIf="plusElement.grill>0 && plusElement.canGrill">
+            <Label text=" ("></Label>
+            <Image src="~/images/grill.png" width="18" class="image-elems" loadMode="async"></Image>
+            <Label [text]="plusElement.grill+'/'+plusElement.qunatity"></Label>
+            <Label text=") "></Label>
+        </FlexboxLayout>
+        <FlexboxLayout *ngIf="plusElement.gluten>0 && plusElement.hasGluten">
+            <Label text=" ("></Label>
+            <Image src="~/images/gluten.png" width="18" class="image-elems" loadMode="async"></Image>
+            <Label [text]="plusElement.gluten+'/'+plusElement.qunatity"></Label>
+            <Label text=") "></Label>
+        </FlexboxLayout>
+    </FlexboxLayout>
+
+    <Button class="remove" (tap)="remove()">
+        <FormattedString>
+            <Span text="&#xf00d;" class="fas"></Span>
+        </FormattedString>
+    </Button>
+</FlexboxLayout>

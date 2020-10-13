@@ -1,0 +1,208 @@
+<AbsoluteLayout>
+  <FlexboxLayout
+                 left="0"
+                 top="0"
+                 alignItems="center"
+                 justifyContent="center"
+                 class="bt"
+                 [ngClass]="{ active: oQP.inprogress=='all'|| oQP.inprogress=='1', 'phone': device.deviceType=='Phone','tablet': device.deviceType!='Phone'  }"
+                 (tap)="changeInProgress()">
+    <Label *ngIf="oQP.inprogress=='0'">
+      <FormattedString>
+        <Span text="&#xf593;" class="fas"></Span>
+        <Span [text]="' Nie realiz.'"></Span>
+      </FormattedString>
+    </Label>
+    <Label *ngIf="oQP.inprogress=='1'">
+      <FormattedString>
+        <Span text="&#xf593;" class="fas"></Span>
+        <Span text=" Tylko w realiz."></Span>
+      </FormattedString>
+    </Label>
+    <Label *ngIf="oQP.inprogress=='all'">
+      <FormattedString>
+        <Span text="&#xf593;" class="fas"></Span>
+        <Span text=" Realizowane"></Span>
+      </FormattedString>
+    </Label>
+
+  </FlexboxLayout>
+
+  <FlexboxLayout *ngIf="oQP.inprogress=='0'" top="0" [left]="(device.deviceType=='Phone')?100:120" class="count-label" alignItems="center" justifyContent="center" [ngClass]="{'phone': device.deviceType=='Phone','tablet': device.deviceType!='Phone'}">
+    <Label [text]="inProgress"></Label>
+  </FlexboxLayout>
+  <FlexboxLayout top="0" *ngIf="oQP.inprogress=='1'" [left]="(device.deviceType=='Phone')?120:140" class="count-label" alignItems="center" justifyContent="center" [ngClass]="{'phone': device.deviceType=='Phone','tablet': device.deviceType!='Phone'}">
+    <Label [text]="inProgress"></Label>
+  </FlexboxLayout>
+  <FlexboxLayout *ngIf="oQP.inprogress=='all'" top="0" [left]="(device.deviceType=='Phone')?110:130" class="count-label" alignItems="center" justifyContent="center" [ngClass]="{'phone': device.deviceType=='Phone','tablet': device.deviceType!='Phone'}">
+    <Label [text]="inProgress"></Label>
+  </FlexboxLayout>
+</AbsoluteLayout>
+<FlexboxLayout
+               alignItems="center"
+               justifyContent="center"
+               class="bt"
+               [ngClass]="{ active: isAll,'in-active-change':oQP.inprogress=='1', 'phone': device.deviceType=='Phone','tablet': device.deviceType!='Phone'  }"
+               (tap)="selectAll()">
+  <Label text="Wszystkie"></Label>
+</FlexboxLayout>
+
+<ng-container *ngFor="let item of options; let i = index">
+  <!-- <app-paid-status *ngIf="i==(options.length-1)" [paid]="oQP.paid" (emitChange)="changePaid($event)" [inprogress]="this.oQP.inprogress"></app-paid-status> -->
+  <FlexboxLayout
+                 alignItems="center"
+                 justifyContent="center"
+                 class="bt"
+                 [ngClass]="{ active: item.selected, 'in-active-change':oQP.inprogress=='1','phone': device.deviceType=='Phone','tablet': device.deviceType!='Phone'  }"
+                 *ngIf="item.value!=orderStatus.archive"
+                 (tap)="selectUnselect(i)">
+    <Label [text]="item.name"></Label>
+  </FlexboxLayout>
+
+
+  <AbsoluteLayout *ngIf="item.value==orderStatus.archive">
+    <FlexboxLayout
+                   alignItems="center"
+                   justifyContent="center"
+                   class="bt"
+                   left="0"
+                   top="0"
+                   [ngClass]="{ active: item.selected, 'in-active-change':oQP.inprogress=='1', 'phone': device.deviceType=='Phone','tablet': device.deviceType!='Phone'  }"
+                   (tap)="selectUnselect(i)">
+      <Label [text]="item.name"></Label>
+    </FlexboxLayout>
+    <FlexboxLayout *ngIf="archives>0" top="0" [left]="(device.deviceType=='Phone')?40:50" class="count-label" alignItems="center" justifyContent="center" [ngClass]="{'phone': device.deviceType=='Phone','tablet': device.deviceType!='Phone'}">
+      <Label [text]="archives"></Label>
+    </FlexboxLayout>
+  </AbsoluteLayout>
+
+</ng-container>
+
+<Label class="clear" [ngClass]="{'in-active-change':oQP.inprogress=='1'}" (tap)="clearAll()">
+  <FormattedString>
+    <Span text="&#xf00d;" class="fas"></Span>
+  </FormattedString>
+</Label>
+
+<FlexboxLayout
+               class="bt"
+               alignItems="center"
+               justifyContent="center"
+               [ngClass]="{ active: true, 'in-active-change':oQP.inprogress=='1', 'phone': device.deviceType=='Phone','tablet': device.deviceType!='Phone'  }"
+               (tap)="changePaid()">
+  <Label
+         *ngIf="oQP.paid=='all'">
+    <FormattedString>
+      <Span text="&#xf0d6;" class="fas"></Span>
+      <Span text=" Zapł. i Niezapł."></Span>
+    </FormattedString>
+  </Label>
+  <Label
+         *ngIf="oQP.paid=='1'">
+    <FormattedString>
+      <Span text="&#xf0d6;" class="fas"></Span>
+      <Span text=" Zapłacone"></Span>
+    </FormattedString>
+  </Label>
+  <Label
+         *ngIf="oQP.paid=='0'">
+    <FormattedString>
+      <Span text="&#xf0d6;" class="fas"></Span>
+      <Span text=" Niezapłacone"></Span>
+    </FormattedString>
+  </Label>
+</FlexboxLayout>
+
+<FlexboxLayout
+               *ngIf="reservations==0"
+               class="bt"
+               alignItems="center"
+               justifyContent="center"
+               [ngClass]="{ active: oQP.reservation=='1' || oQP.reservation=='all', 'in-active-change':oQP.inprogress=='1', 'phone': device.deviceType=='Phone','tablet': device.deviceType!='Phone'  }"
+               (tap)="changeReservation()">
+  <Label
+         *ngIf="oQP.reservation=='0'">
+    <FormattedString>
+      <Span text="&#xf3ff;" class="fas"></Span>
+      <Span text=" Bez rezerwacji"></Span>
+    </FormattedString>
+  </Label>
+  <Label
+         *ngIf="oQP.reservation=='1'">
+    <FormattedString>
+      <Span text="&#xf3ff;" class="fas"></Span>
+      <Span text=" Wszystkie rezer."></Span>
+    </FormattedString>
+  </Label>
+  <Label
+         *ngIf="oQP.reservation=='all'">
+    <FormattedString>
+      <Span text="&#xf3ff;" class="fas"></Span>
+      <Span text=" Rezerwacje"></Span>
+    </FormattedString>
+  </Label>
+</FlexboxLayout>
+
+<AbsoluteLayout
+                *ngIf="reservations>0">
+  <FlexboxLayout
+                 left="0"
+                 top="0"
+                 alignItems="center"
+                 justifyContent="center"
+                 class="bt"
+                 [ngClass]="{ active: oQP.reservation=='1' || oQP.reservation=='all', 'in-active-change':oQP.inprogress=='1', 'phone': device.deviceType=='Phone','tablet': device.deviceType!='Phone'  }"
+                 (tap)="changeReservation()">
+    <Label
+           *ngIf="oQP.reservation=='0'">
+      <FormattedString>
+        <Span text="&#xf3ff;" class="fas"></Span>
+        <Span text=" Bez rezerwacji"></Span>
+      </FormattedString>
+    </Label>
+    <Label
+           *ngIf="oQP.reservation=='1'">
+      <FormattedString>
+        <Span text="&#xf3ff;" class="fas"></Span>
+        <Span text=" Tylko rezerwacje"></Span>
+      </FormattedString>
+    </Label>
+    <Label
+           *ngIf="oQP.reservation=='all'">
+      <FormattedString>
+        <Span text="&#xf3ff;" class="fas"></Span>
+        <Span text=" Rezerwacje"></Span>
+      </FormattedString>
+    </Label>
+  </FlexboxLayout>
+  <FlexboxLayout
+                 *ngIf="oQP.reservation=='0'"
+                 top="0"
+                 [left]="(device.deviceType=='Phone')?130:140"
+                 class="count-label"
+                 alignItems="center"
+                 justifyContent="center"
+                 [ngClass]="{'phone': device.deviceType=='Phone','tablet': device.deviceType!='Phone'}">
+    <Label [text]="reservations"></Label>
+  </FlexboxLayout>
+  <FlexboxLayout
+                 *ngIf="oQP.reservation=='1'"
+                 top="0"
+                 [left]="(device.deviceType=='Phone')?140:155"
+                 class="count-label"
+                 alignItems="center"
+                 justifyContent="center"
+                 [ngClass]="{'phone': device.deviceType=='Phone','tablet': device.deviceType!='Phone'}">
+    <Label [text]="reservations"></Label>
+  </FlexboxLayout>
+  <FlexboxLayout
+                 *ngIf="oQP.reservation=='all'"
+                 top="0"
+                 [left]="(device.deviceType=='Phone')?120:120"
+                 class="count-label"
+                 alignItems="center"
+                 justifyContent="center"
+                 [ngClass]="{'phone': device.deviceType=='Phone','tablet': device.deviceType!='Phone'}">
+    <Label [text]="reservations"></Label>
+  </FlexboxLayout>
+</AbsoluteLayout>

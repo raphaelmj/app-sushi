@@ -1,0 +1,36 @@
+@import "../../assets/scss/variables.scss";
+
+
+Button.bt-tag {
+    background-color: $body-bg;
+    margin: 0 20 0 0 !important;
+    padding: 0 !important;
+    border-radius: 0;
+    color: #ffffff;
+}
+
+Button.bt-tag:active {
+    background-color: $body-bg;
+    margin: 0 20 0 0 !important;
+    padding: 0 !important;
+    border-radius: 0;
+    color: #ffffff;
+}
+
+Button.bt-add-tag {
+    margin: 0 !important;
+    padding: 0 !important;
+    background-color: #504426 !important;
+    color: #ffffff;
+    height: 40;
+    font-size: 14;
+}
+
+Button.btn-add {
+    margin: 0 !important;
+    padding: 0 !important;
+    background-color: #504426 !important;
+    color: #ffffff;
+    height: 40;
+    font-size: 14;
+}

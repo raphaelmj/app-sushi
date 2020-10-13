@@ -1,0 +1,36 @@
+@import "../assets/scss/variables.scss";
+
+.sideStackLayout {
+    background-color: #4e412c;
+}
+
+Button.burger {
+    font-size: 32;
+    height: 60;
+    // padding: 0 20 0 20;
+    background-color: transparent;
+    color: #ffffff;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+Button.change-day-bt {
+    background-color: $body-bg;
+    color: #ffffff;
+    padding: 0 !important;
+    font-size: 16;
+}
+
+FlexboxLayout.back-bt {
+    background-color: $body-bg;
+    color: #ffffff;
+    padding: 0 !important;
+    font-size: 16;
+    width: 40;
+}
+
+FlexboxLayout.plus-reserve {
+    background-color: #504426 !important;
+    color: #ffffff;
+    font-size: 16;
+}

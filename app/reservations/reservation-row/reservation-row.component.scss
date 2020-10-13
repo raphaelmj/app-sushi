@@ -1,0 +1,76 @@
+FlexboxLayout.number-o {
+    background-color: #0300b8;
+    font-size: 14;
+}
+
+FlexboxLayout.minus-reserve {
+    background-color: #ce1f13 !important;
+    color: #ffffff;
+    font-size: 16;
+    // margin-top: 60;
+}
+
+FlexboxLayout.date-col {
+    background-color: #d0ff00;
+    color: #000000;
+    font-size: 18;
+}
+
+FlexboxLayout.edit-reserve {
+    background-color: #4e412c !important;
+    color: #ffffff;
+    font-size: 16;
+}
+
+FlexboxLayout.archive-reserve {
+    background-color: #4e412c !important;
+    color: #ffffff;
+    font-size: 16;
+}
+
+GridLayout.row-grid {
+    background-color: #000000 !important;
+    border-bottom-width: 1;
+    border-bottom-color: #ffffff;
+}
+
+GridLayout.row-grid.archive-r {
+    opacity: 0.5;
+}
+
+GridLayout.reserve-size {
+    // background-color: #d0ff00;
+    color: #ffffff;
+    font-size: 18;
+
+    // FlexboxLayout {
+    //     padding-left: 20;
+    // }
+}
+
+FlexboxLayout.icon {
+    font-size: 16;
+}
+
+Label.date-view {
+    font-size: 16;
+}
+
+Label.status-v {
+    font-size: 14;
+}
+
+Label.desc-info {
+    font-size: 16;
+}
+
+
+FlexboxLayout.paid-status {
+    background-color: #00ff0d;
+    color: #000000;
+}
+
+FlexboxLayout.not-paid {
+    background-color: #ff0000;
+    color: #000000;
+}

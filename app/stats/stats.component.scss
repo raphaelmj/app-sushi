@@ -1,0 +1,66 @@
+@import "../assets/scss/variables.scss";
+
+.sideStackLayout {
+    background-color: #4e412c;
+}
+
+Button.burger {
+    font-size: 32;
+    height: 60;
+    // padding: 0 20 0 20;
+    background-color: transparent;
+    color: #ffffff;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+Button.change-day-bt {
+    background-color: $body-bg;
+    color: #ffffff;
+    padding: 0 !important;
+    font-size: 16;
+}
+
+GridLayout.list-elements {
+    border-bottom-width: 1;
+    border-bottom-color: #504426;
+    color: #ffffff;
+}
+
+Label.total-szt {
+    font-size: 22;
+    border-bottom-width: 1;
+    border-bottom-color: #504426;
+}
+
+FlexboxLayout.price-flex {
+    border-bottom-width: 1;
+    border-bottom-color: #504426;
+}
+
+Label.total-price {
+    font-size: 22;
+}
+
+Label.price-bonus {
+    font-size: 16;
+}
+
+Label.total-extra {
+    font-size: 16;
+}
+
+.phone {
+    Label.total-price {
+        font-size: 18;
+    }
+
+    Label.price-bonus {
+        font-size: 16;
+    }
+
+    Label.total-extra {
+        font-size: 16;
+
+    }
+}

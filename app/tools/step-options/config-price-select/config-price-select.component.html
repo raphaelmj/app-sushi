@@ -1,0 +1,22 @@
+<GridLayout [columns]="'60,*'" *ngFor="let p of priceConfigSort; let i = index">
+    <Label [text]="'' + p.perSize + ' szt.'" class="per-size" column="0"></Label>
+    <FlexboxLayout flexDirection="column" alignItems="flex-start" column="1" justifyContent="flex-start">
+        <FlexboxLayout flexDirection="row" justifyContent="space-between" width="100%" alignItems="center"
+                       *ngFor="let pel of p.data; let j = index" [ngClass]="{'selected-option': index==pel.indexInElement}">
+            <FlexboxLayout>
+                <Label [text]="pel.price + ' pln'" class="red-price" (tap)="selectOption(pel.indexInElement,pel.isSea)"></Label>
+                <Image src="~/images/krewetka.png" *ngIf="pel.isSea" width="25" class="image-elems" loadMode="async" (tap)="selectOption(pel.indexInElement,pel.isSea)"></Image>
+            </FlexboxLayout>
+            <Label class="select-label" *ngIf="index!=pel.indexInElement" (tap)="selectOption(pel.indexInElement,pel.isSea)">
+                <FormattedString>
+                    <Span text="&#xf0c8;" class="far"></Span>
+                </FormattedString>
+            </Label>
+            <Label class="select-label" *ngIf="index==pel.indexInElement">
+                <FormattedString>
+                    <Span text="&#xf14a;" class="far"></Span>
+                </FormattedString>
+            </Label>
+        </FlexboxLayout>
+    </FlexboxLayout>
+</GridLayout>

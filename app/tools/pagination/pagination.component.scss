@@ -1,0 +1,28 @@
+Button {
+  background-color: transparent;
+  color: #ffffff;
+}
+Button.inactive-bt {
+  background-color: transparent;
+  color: transparent;
+}
+
+Button.inactive-bt:active {
+  background-color: transparent;
+  color: transparent;
+}
+
+Button.inactive-bt:pressed {
+  background-color: transparent;
+  color: transparent;
+}
+
+Button.inactive-bt:highlighted {
+  background-color: transparent;
+  color: transparent;
+}
+
+Button.inactive-bt:focus {
+  background-color: transparent;
+  color: transparent;
+}

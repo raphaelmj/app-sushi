@@ -1,0 +1,262 @@
+@import "../../assets/scss/variables.scss";
+
+.sideStackLayout {
+  background-color: #4e412c;
+}
+
+StackLayout.nav-beam {
+  Button {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+}
+
+FlexboxLayout.button-nav {
+  width: 100%;
+}
+
+FlexboxLayout.burger {
+  font-size: 32;
+  padding: 0 20 0 20;
+}
+
+FlexboxLayout.change-bt {
+  padding: 0 10 0 10 !important;
+  background-color: $body-bg;
+  color: #ffffff;
+}
+
+FlexboxLayout.change-bt-info {
+  padding: 0 10 0 10 !important;
+  background-color: $body-bg;
+  color: #ffffff;
+  font-size: 14;
+}
+
+Label.set-label {
+  font-size: 14;
+}
+
+
+Button.burger {
+  font-size: 28;
+  height: 60;
+  // padding: 0 20 0 20;
+  background-color: transparent;
+  color: #ffffff;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+Button.special-bt {
+  background-color: transparent;
+  color: #ffffff;
+  font-size: 16;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+Button.reserve-bt {
+  background-color: transparent;
+  color: #ffffff;
+  font-size: 20;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+
+FlexboxLayout.row-group-t {
+  padding: 0 0 0 0;
+}
+
+FlexboxLayout.row-cart {
+  padding: 0 20 0 20;
+  margin-bottom: 25;
+  border-width: 1;
+  border-color: #000000;
+
+  FlexboxLayout.elements-list {
+    FlexboxLayout.data-el-l {
+      width: 100%;
+    }
+  }
+}
+
+FlexboxLayout.cart-bt {
+  padding: 0 !important;
+  margin: 0 !important;
+  background-color: #4e412c;
+  height: 100%;
+  padding-left: 5;
+  padding-right: 5;
+
+  Label.trash {
+    font-size: 16;
+    text-transform: uppercase;
+  }
+
+  Label.cart-count {
+    font-size: 16;
+  }
+
+  Label.price {
+    color: #ff0000;
+    font-size: 16;
+  }
+
+  FlexboxLayout.price-bonus {
+    Label {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    Label.price-no-bonus {
+      text-decoration: line-through;
+      font-size: 14;
+    }
+  }
+}
+
+Label.group-title {
+  font-size: 16;
+  margin-top: 30;
+  font-weight: 600;
+}
+
+
+
+Button.plus-btn {
+  background-color: transparent !important;
+  color: #ffffff;
+}
+
+Button.plus-btn:pressed {
+  background-color: transparent !important;
+  color: #ffffff;
+}
+
+// Button.btn-anch {
+//   background-color: #000000 !important;
+//   color: #ffffff;
+//   font-size: 18;
+// }
+
+// Button.active-anch.btn-anch {
+//   background-color: $buttonColor !important;
+//   color: #000000;
+// }
+
+Button.submit-btn {
+  background-color: #4e412c !important;
+  margin: 0 !important;
+  padding: 0 20 0 20 !important;
+  text-transform: uppercase;
+  color: #ffffff;
+  font-size: 14;
+}
+
+// Label.day-label {
+//   font-size: 14;
+//   margin: 0 0 0 10 !important;
+// }
+
+// Label.time-label {
+//   margin-left: 10;
+//   font-size: 16;
+// }
+
+Button.details-bt {
+  padding: 0 20 0 20 !important;
+  background-color: $body-bg;
+  color: #ffffff;
+}
+
+Button.details-bt:highlighted {
+  padding: 0 20 0 20 !important;
+  background-color: $body-bg !important;
+  color: #ffffff !important;
+}
+
+Button.details-bt:active {
+  padding: 0 20 0 20 !important;
+  background-color: $body-bg !important;
+  color: #ffffff !important;
+}
+
+Button.details-bt:focus {
+  padding: 0 20 0 20 !important;
+  background-color: $body-bg !important;
+  color: #ffffff !important;
+}
+
+Button.clear-bt {
+  width: 60;
+  background-color: transparent;
+  font-size: 20;
+  color: #ffffff;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+Button.drawer-close {
+  background-color: #000000;
+  margin: 0 !important;
+  color: #ffffff;
+}
+
+StackLayout.close-row {
+  background-color: #000000;
+}
+
+FlexboxLayout.flex-bt {
+  font-size: 18;
+  // color:#000000;
+}
+
+Button.return-home {
+  height: 40;
+  font-size: 16;
+  margin: 0 !important;
+  background-color: #4e412c;
+  color: #ffffff;
+  padding-bottom: 40;
+}
+
+FlexboxLayout.row-cart {
+  color: #000000 !important;
+}
+
+// FlexboxLayout.row-cart.miseczki {
+//   background-color: #c29709;
+//   color: #000000 !important;
+// }
+
+// FlexboxLayout.row-cart.zestawy {
+//   background-color: #f3ff82;
+//   color: #000000 !important;
+// }
+
+// FlexboxLayout.row-cart.zupy {
+//   background-color: #ee83c5;
+//   color: #000000 !important;
+// }
+
+// FlexboxLayout.row-cart.wybrane {
+//   background-color: #6ff5ff;
+//   color: #000000 !important;
+// }
+
+// FlexboxLayout.row-cart.salatki {
+//   background-color: #ffc2aa;
+//   color: #000000 !important;
+// }
+
+// FlexboxLayout.row-cart.napoje {
+//   background-color: #fffc65;
+//   color: #000000 !important;
+// }
+
+// FlexboxLayout.row-cart.specjalne {
+//   background-color: #6865ff;
+//   color: #000000 !important;
+// }

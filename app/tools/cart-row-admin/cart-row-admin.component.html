@@ -1,0 +1,414 @@
+<FlexboxLayout
+               flexDirection="column"
+               [formGroup]="formEl"
+               class="cart-element"
+               [ngClass]="{ 'ready-element': cartEl.status }">
+  <FlexboxLayout
+                 flexDirection="row"
+                 flexWrap="wrap"
+                 alignItems="center"
+                 justifyContent="space-between"
+                 class="row-data">
+    <FlexboxLayout flexDirection="row" alignItems="center" class="name-flex">
+      <Label
+             [text]="cartEl.viewName | stripTags"
+             class="name-label"
+             textWrap="true"></Label>
+      <Image
+             src="~/images/krewetka.png"
+             *ngIf="cartEl.isSea"
+             width="25"
+             loadMode="async"
+             class="image-elems"></Image>
+    </FlexboxLayout>
+
+    <FlexboxLayout
+                   flexDirection="column"
+                   alignItems="flex-end"
+                   justifyContent="flex-end"
+                   class="price-flex">
+      <Label [text]="cartEl.price + ' pln'" class="red-price-big"></Label>
+      <Label
+             *ngIf="cartEl.plusElements.length > 0 || cartEl.quantity>1 || cartEl.extra>0"
+             [text]="'(' + cartEl.pricePerOne + ' pln)'"></Label>
+
+      <ng-container *ngIf="cartEl.type.isSpecial">
+        <Label (tap)="changeSpecialPrice()" class="p-10 change-price-icon">
+          <FormattedString>
+            <Span text="&#xf53a;" class="fas"></Span>
+          </FormattedString>
+        </Label>
+      </ng-container>
+
+    </FlexboxLayout>
+  </FlexboxLayout>
+  <FlexboxLayout
+                 flexDirection="row"
+                 flexWrap="wrap"
+                 alignItems="center"
+                 justifyContent="space-between"
+                 class="row-data">
+    <FlexboxLayout
+                   flexDirection="row"
+                   justifyContent="flex-start"
+                   alignContent="center"
+                   class="qua-form"
+                   *ngIf="(!cartEl.elastic || cartEl.type.isSpecial) && cartEl.elementType!='config_steps_price_many'">
+      <Button (tap)="qChange('minus')" class="bt-qua">
+        <FormattedString>
+          <Span text="&#xf068;" class="fas"></Span>
+        </FormattedString>
+      </Button>
+      <TextField
+                 editable="false"
+                 keyboardType="integer"
+                 formControlName="quantity">
+      </TextField>
+      <Button (tap)="qChange('plus')" class="bt-qua">
+        <FormattedString>
+          <Span text="&#xf067;" class="fas"></Span>
+        </FormattedString>
+      </Button>
+    </FlexboxLayout>
+    <FlexboxLayout
+                   class="remove-bt-flex"
+                   flexDirection="column"
+                   alignItems="flex-end"
+                   justifyContent="flex-end"
+                   [ngClass]="{ 'w-100': (cartEl.elastic || cartEl.elementType=='config_steps_price_many') && !cartEl.type.isSpecial }">
+      <Button text="-" class="remove-bt" (tap)="remove()">
+        <FormattedString>
+          <Span text="&#xf1f8;" class="fas"></Span>
+          <Span text=""></Span>
+        </FormattedString>
+      </Button>
+    </FlexboxLayout>
+  </FlexboxLayout>
+  <FlexboxLayout flexDirection="row" flexWrap="wrap" class="step-list" width="100%" *ngIf="cartEl.elementType=='config_steps_price_many'">
+    <Button
+            text="edytuj opcje"
+            (tap)="changeStepOptions()"
+            class="button-step-options"></Button>
+    <WrapLayout orientation="horizontal" width="100%" [ngClass]="{'margin-top-10': cartEl.reverseElements.length>0}">
+      <FlexboxLayout
+                     flexDirection="row"
+                     alignItems="center"
+                     justifyContent="space-between"
+                     [width]="widthNormalPlus"
+                     class="step-tag" *ngFor="let stp of cartEl.stepOptionsList;let i=index">
+        <FlexboxLayout class="s-name" width="70%">
+          <Label [text]="stp|configStepName:cartEl.element:cartEl.element.configStepsPrice" class="label-name p-10" textWrap="true"></Label>
+        </FlexboxLayout>
+        <FlexboxLayout class="label-action" width="30%" justifyContent="space-between">
+          <Label class="price p-10">
+            <FormattedString>
+              <Span [text]="stp|configStepPrice:cartEl.element.configStepsPrice"></Span>
+              <Span [text]="' pln'"></Span>
+            </FormattedString>
+          </Label>
+          <Label class="minus p-10" (tap)="removeStepOption(i)">
+            <FormattedString>
+              <Span text="&#xf00d;" class="fas"></Span>
+            </FormattedString>
+          </Label>
+        </FlexboxLayout>
+      </FlexboxLayout>
+    </WrapLayout>
+
+  </FlexboxLayout>
+  <FlexboxLayout
+                 flexDirection="row"
+                 alignItems="center"
+                 *ngIf="cartEl.status"
+                 class="ready-sts">
+    <Label>
+      <FormattedString>
+        <Span text="&#xf46c;" class="fas"></Span>
+        <Span text=" "></Span>
+        <Span text="Gotowe na kuchni"></Span>
+      </FormattedString>
+    </Label>
+  </FlexboxLayout>
+  <ng-container *ngIf="cartEl.element">
+    <ng-container *ngIf="cartEl.element.options.length>0">
+      <FlexboxLayout
+                     flexDirection="column"
+                     class="plus-elements"
+                     width="100%"
+                     *ngIf="cartEl.element.optionsOnInit == 'select' || cartEl.element.optionsOnInit=='all' || cartEl.element.optionsOnInit=='custom'">
+        <Button
+                text="szczegóły"
+                (tap)="showOptions()"
+                class="button-plus-el"></Button>
+
+        <FlexboxLayout flexDirection="row" flexWrap="wrap" width="100%">
+          <FlexboxLayout
+                         flexDirection="row"
+                         width="100%"
+                         [ngClass]="{'type-element-list': cartEl.optionsElements.length>0}"
+                         justifyContent="flex-start">
+            <FlexboxLayout class="type-element" *ngFor="let opte of cartEl.optionsElements; let i = index">
+              <Label
+                     class="p-10">
+                <FormattedString>
+                  <Span [text]="opte+' '"></Span>
+                  <Span text="&#xf00d;" class="fas"></Span>
+                  <Span [text]="' 1'"></Span>
+                </FormattedString>
+              </Label>
+            </FlexboxLayout>
+
+          </FlexboxLayout>
+        </FlexboxLayout>
+        <FlexboxLayout *ngIf="cartEl.optionsElements.length!=cartEl.quantity" class="types-alerts">
+          <Label *ngIf="cartEl.optionsElements.length>cartEl.quantity" class="alert-types p-5">
+            <FormattedString>
+              <Span text="&#xf06a;" class="fas"></Span>
+              <Span text=" zredukuj listę szczegółów o "></Span>
+              <Span [text]="cartEl.optionsElements.length-cartEl.quantity"></Span>
+            </FormattedString>
+          </Label>
+          <Label *ngIf="cartEl.optionsElements.length<cartEl.quantity" class="alert-types p-10">
+            <FormattedString>
+              <Span text="&#xf06a;" class="fas"></Span>
+              <Span text=" zwiększ listę szczegółów o "></Span>
+              <Span [text]="cartEl.quantity-cartEl.optionsElements.length"></Span>
+            </FormattedString>
+          </Label>
+        </FlexboxLayout>
+      </FlexboxLayout>
+
+    </ng-container>
+  </ng-container>
+
+  <FlexboxLayout
+                 flexDirection="column"
+                 class="plus-elements"
+                 width="100%">
+    <Button
+            *ngIf="cartEl.elastic && cartEl.elementType!='special'"
+            text="plus elementy"
+            (tap)="showPlus()"
+            class="button-plus-el"></Button>
+    <ng-template #tempPlus></ng-template>
+  </FlexboxLayout>
+
+
+  <FlexboxLayout flexDirection="column" class="plus-elements" width="100%">
+    <Button
+            text="zamiany"
+            (tap)="showReverse()"
+            class="button-plus-el"></Button>
+    <WrapLayout orientation="horizontal" [ngClass]="{'margin-top-10': cartEl.reverseElements.length>0}">
+      <FlexboxLayout
+                     flexDirection="row"
+                     alignItems="center"
+                     [width]="widthNormalPlus"
+                     *ngFor="let item of cartEl.reverseElements; let i = index"
+                     justifyContent="space-between"
+                     class="reverse-f">
+        <Label [text]="item.from" class="p-10"></Label>
+        <Label class="p-10">
+          <FormattedString>
+            <Span text="&#xf101;" class="fas"></Span>
+          </FormattedString>
+        </Label>
+        <Label [text]="item.to" class="p-10"></Label>
+        <FlexboxLayout (tap)="removeReverse(i)" class="remove p-10">
+          <Label>
+            <FormattedString>
+              <Span text="&#xf068;" class="fas"></Span>
+            </FormattedString>
+          </Label>
+        </FlexboxLayout>
+      </FlexboxLayout>
+    </WrapLayout>
+  </FlexboxLayout>
+
+  <FlexboxLayout flexDirection="column" class="desc-list" width="100%">
+    <Button text="uwagi" (tap)="showDesc()" class="button-plus-el"></Button>
+    <WrapLayout orientation="horizontal" [ngClass]="{'margin-top-10': cartEl.descElements.length>0}">
+      <FlexboxLayout
+                     flexDirection="row"
+                     justifyContent="space-between"
+                     *ngFor="let del of cartEl.descElements; let i = index"
+                     [width]="widthNormalPlus"
+                     class="desc-flex">
+        <Label [text]="del" class="p-10"></Label>
+        <FlexboxLayout class="remove p-10" justifyContent="center" alignItems="center" (tap)="removeDescEl(i)">
+          <Label>
+            <FormattedString>
+              <Span text="&#xf068;" class="fas"></Span>
+            </FormattedString>
+          </Label>
+        </FlexboxLayout>
+      </FlexboxLayout>
+    </WrapLayout>
+  </FlexboxLayout>
+
+  <FlexboxLayout flexDirection="row" class="more-info">
+    <TextView
+              formControlName="description"
+              hint="Dodatkowa informacja"
+              style="width: 100%; margin-left: 0; margin-right: 0; min-height: 70;">
+    </TextView>
+  </FlexboxLayout>
+
+  <FlexboxLayout flexDirection="row" class="gluten-grill">
+    <FlexboxLayout alignItems="center" class="opt-row p-5" *ngIf="!cartEl.type.isSpecial && seaDouble">
+      <Image
+             src="~/images/krewetka.png"
+             width="30"
+             class="image-elems"
+             loadMode="async"
+             [ngClass]="{'sea-opacity': !cartEl.isSea}" (tap)="changeSeaDouble()"></Image>
+    </FlexboxLayout>
+    <FlexboxLayout class="opt-row p-5" *ngIf="cartEl.type.isSpecial" alignItems="center">
+      <Image src="~/images/krewetka.png" width="30" class="image-elems" loadMode="async" (tap)="changeSea()" [ngClass]="{'sea-opacity': !cartEl.isSea}"></Image>
+    </FlexboxLayout>
+    <FlexboxLayout class="opt-row p-5" alignItems="center" *ngIf="cartEl.hasGluten && cartEl.elementType!=elementType.configStepsPriceMany">
+      <Image src="~/images/gluten.png" width="30" class="image-elems" loadMode="async" (tap)="selectGluten()"></Image>
+      <Label [text]="'(' +cartEl.gluten +'/' +formEl.get('quantity').value+')'" (tap)="selectGluten()" class="label-opt"></Label>
+    </FlexboxLayout>
+    <FlexboxLayout class="opt-row p-5" alignItems="center" *ngIf="cartEl.canGrill && cartEl.elementType!=elementType.configStepsPriceMany">
+      <Image src="~/images/grill.png" width="30" class="image-elems" loadMode="async" (tap)="selectGrill()"></Image>
+      <Label [text]="'(' +cartEl.grill +'/' +formEl.get('quantity').value+')'" (tap)="selectGrill()" class="label-opt"></Label>
+    </FlexboxLayout>
+  </FlexboxLayout>
+
+  <FlexboxLayout flexDirection="row" class="opt-row" flexWrap="wrap">
+
+    <ng-container *ngIf="cartEl.canPack">
+      <FlexboxLayout flexDirection="row" alignItems="center">
+        <Label *ngIf="cartEl.serveType=='plate'" class="label-serve-icon p-10" textWrap="true" (tap)="changeServeType()">
+          <FormattedString>
+            <Span text="&#xf2e7;" class="fas"></Span>
+          </FormattedString>
+        </Label>
+        <Label *ngIf="cartEl.serveType=='plate'" text="na miejscu" class="label-serve p-10" textWrap="true" (tap)="changeServeType()"></Label>
+        <Label *ngIf="cartEl.serveType=='pack'" class="label-serve-icon p-10" textWrap="true" (tap)="changeServeType()">
+          <FormattedString>
+            <Span text="&#xf49e;" class="fas"></Span>
+          </FormattedString>
+        </Label>
+        <Label *ngIf="cartEl.serveType=='pack'" text="wynos" class="label-serve p-10" textWrap="true" (tap)="changeServeType()"></Label>
+      </FlexboxLayout>
+    </ng-container>
+
+    <ng-container *ngIf="!cartEl.canPack">
+      <FlexboxLayout flexDirection="row" alignItems="center">
+        <Label class="label-serve-icon p-10">
+          <FormattedString>
+            <Span text="&#xf2e7;" class="fas"></Span>
+          </FormattedString>
+        </Label>
+        <Label text="na miejscu" class="label-serve p-10" textWrap="true"></Label>
+      </FlexboxLayout>
+    </ng-container>
+    <ng-container *ngIf="cartEl.canOnePlate || cartEl.type.isSpecial">
+      <ng-container *ngIf="cartEl.onOnePlate">
+        <FlexboxLayout class="p-10" alignItems="center" (tap)="changeOnOnePlate()">
+          <Image src="~/images/plate.png" width="30" loadMode="async"></Image>
+          <Label text="1 talerz" class="label-serve" textWrap="true"></Label>
+        </FlexboxLayout>
+      </ng-container>
+      <ng-container *ngIf="!cartEl.onOnePlate">
+        <FlexboxLayout class="p-10" alignItems="center" (tap)="changeOnOnePlate()">
+          <Image src="~/images/plates.png" width="30" loadMode="async"></Image>
+          <Label text="wiele" class="label-serve" textWrap="true"></Label>
+        </FlexboxLayout>
+      </ng-container>
+    </ng-container>
+  </FlexboxLayout>
+
+  <FlexboxLayout flexDirection="row" justifyContent="flex-start" flexWrap="wrap" class="opt-row acc-options">
+    <ng-template #accTemp></ng-template>
+  </FlexboxLayout>
+
+
+
+
+  <!-- <FlexboxLayout flexDirection="column" class="opt-row extra" *ngIf="cartEl.canExtra && cartEl.elementType!='config_steps_price_many'">
+    <Label class="extra-label p-10" *ngIf="cartEl.extra>0">
+      <FormattedString>
+        <Span [text]="cartEl.extra|extraPriceInfo: appConfig.data.extraPrice:cartEl.quantity"></Span>
+      </FormattedString>
+    </Label>
+    <Label class="extra-label p-10" *ngIf="cartEl.extra==0">
+      <FormattedString>
+        <Span [text]="'brak extra dodatków'"></Span>
+      </FormattedString>
+    </Label>
+    <FlexboxLayout flexDirection="row" justifyContent="flex-end">
+      <Label class="p-10 label-extra-bt" *ngIf="cartEl.extra>0" (tap)="extraChange('minus')">
+        <FormattedString>
+          <Span text="&#xf068;" class="fas"></Span>
+        </FormattedString>
+      </Label>
+      <Label class="p-10 label-extra-bt" (tap)="extraChange('plus')">
+        <FormattedString>
+          <Span text="&#xf067;" class="fas"></Span>
+        </FormattedString>
+      </Label>
+    </FlexboxLayout>
+
+  </FlexboxLayout>
+  <FlexboxLayout flexDirection="column" class="opt-row extra" *ngIf="cartEl.canExtra && cartEl.elementType=='config_steps_price_many'">
+    <Label class="extra-label p-10" *ngIf="cartEl.extra>0">
+      <FormattedString>
+        <Span [text]="cartEl.extra|extraPriceInfo: appConfig.data.extraPrice:cartEl.stepOptionsList.length"></Span>
+      </FormattedString>
+    </Label>
+    <Label class="extra-label p-10" *ngIf="cartEl.extra==0">
+      <FormattedString>
+        <Span [text]="'brak extra dodatków'"></Span>
+      </FormattedString>
+    </Label>
+    <FlexboxLayout flexDirection="row" justifyContent="flex-end">
+      <Label class="p-10 label-extra-bt" *ngIf="cartEl.extra>0" (tap)="extraChange('minus')">
+        <FormattedString>
+          <Span text="&#xf068;" class="fas"></Span>
+        </FormattedString>
+      </Label>
+      <Label class="p-10 label-extra-bt" (tap)="extraChange('plus')">
+        <FormattedString>
+          <Span text="&#xf067;" class="fas"></Span>
+        </FormattedString>
+      </Label>
+    </FlexboxLayout>
+  </FlexboxLayout> -->
+
+
+
+  <FlexboxLayout flexDirection="row" class="opt-row extra" justifyContent="space-between" *ngIf="cartEl.canExtra">
+    <Label class="extra-label p-10" *ngIf="cartEl.extra>0 && !existOrder">
+      <FormattedString>
+        <Span [text]="cartEl.extra|extraPriceSimple:appConfig.data.extraPrice"></Span>
+      </FormattedString>
+    </Label>
+    <Label class="extra-label p-10" *ngIf="cartEl.extra>0 && existOrder">
+      <FormattedString>
+        <Span [text]="cartEl.extra|extraPriceSimple:order.oneExtraPrice"></Span>
+      </FormattedString>
+    </Label>
+    <Label class="extra-label p-10" *ngIf="cartEl.extra==0">
+      <FormattedString>
+        <Span [text]="'brak extra dodatków'"></Span>
+      </FormattedString>
+    </Label>
+    <FlexboxLayout flexDirection="row" justifyContent="flex-end">
+      <Label class="p-10 label-extra-bt" *ngIf="cartEl.extra>0" (tap)="extraChangeSimple('minus')">
+        <FormattedString>
+          <Span text="&#xf068;" class="fas"></Span>
+        </FormattedString>
+      </Label>
+      <Label class="p-10 label-extra-bt" (tap)="extraChangeSimple('plus')">
+        <FormattedString>
+          <Span text="&#xf067;" class="fas"></Span>
+        </FormattedString>
+      </Label>
+    </FlexboxLayout>
+  </FlexboxLayout>
+
+
+</FlexboxLayout>

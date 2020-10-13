@@ -1,0 +1,18 @@
+<FlexboxLayout flexDirection="row" justifyContent="center" alignItems="center" class="acc-element">
+
+    <Label (tap)="change('minus')" class="qua-bt p-5" text="-">
+
+    </Label>
+
+    <Label *ngIf="acc.howMany==-1" [text]="'bez '+acc.acc.name"></Label>
+    <Label *ngIf="acc.howMany==0" [text]="acc.acc.name"></Label>
+    <ng-container *ngIf="acc.howMany>0">
+        <Label [text]="acc.acc.name"></Label>
+        <Label [text]="'+ '+acc.howMany" class="extra-cloud"></Label>
+    </ng-container>
+
+    <Label (tap)="change('plus')" class="qua-bt p-5" text="+">
+
+    </Label>
+
+</FlexboxLayout>

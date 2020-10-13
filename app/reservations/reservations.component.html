@@ -1,0 +1,95 @@
+<RadSideDrawer
+               tkExampleTitle
+               tkToggleNavButton
+               [drawerLocation]="'Right'"
+               [drawerContentSize]="300">
+    <StackLayout tkDrawerContent>
+        <GridLayout class="sideStackLayout">
+            <app-menu-view
+                           [tokenUser]="tokenUser"
+                           [name]="'Rezerwacje'"></app-menu-view>
+        </GridLayout>
+    </StackLayout>
+    <StackLayout tkMainContent>
+        <GridLayout class="page" [rows]="'50,*'">
+            <GridLayout row="0" columns="auto,*,60">
+
+                <FlexboxLayout
+                               column="0"
+                               flexDirection="row"
+                               alignItems="center"
+                               justifyContent="center">
+                    <FlexboxLayout (tap)="goBack()" class="back-bt" alignItems="center" justifyContent="center">
+                        <Label>
+                            <FormattedString>
+                                <Span text="&#xf053;" class="fas"></Span>
+                            </FormattedString>
+                        </Label>
+                    </FlexboxLayout>
+                    <Button (tap)="changeDay()" class="change-day-bt">
+                        <FormattedString>
+                            <Span text="&#xf783;" class="fas"></Span>
+                            <Span text=" "></Span>
+                            <Span [text]="currentDay | date: 'dd.MM.yyyy'"></Span>
+                        </FormattedString>
+                    </Button>
+                </FlexboxLayout>
+                <FlexboxLayout column="2">
+                    <Button class="burger" (tap)="openMenu()">
+                        <FormattedString>
+                            <Span text="&#xf0c9;" class="fas"></Span>
+                        </FormattedString>
+                    </Button>
+                </FlexboxLayout>
+            </GridLayout>
+            <StackLayout row="1" orientation="horizontal" width="100%">
+
+                <GridLayout rows="*,40">
+                    <app-route-loading></app-route-loading>
+                    <TabView selectedIndex="0" (selectedIndexChanged)="onSelectedIndexchanged($event)" row="0">
+                        <StackLayout *tabItem="{title: 'Aktulane rezerwacje'}">
+                            <ScrollView [height]="scrollHeight">
+                                <WrapLayout orientation="horizontal">
+                                    <app-reservation-row
+                                                         *ngFor="let item of dayR"
+                                                         [order]="item"
+                                                         [day]="currentDay"
+                                                         (emitChange)="getData()"
+                                                         (routeChange)="clearBeforeRouteChange()"
+                                                         [datePosition]="'now'">
+                                    </app-reservation-row>
+                                </WrapLayout>
+
+
+                            </ScrollView>
+                        </StackLayout>
+                        <StackLayout *tabItem="{title: 'Następne dni'}">
+                            <ScrollView [height]="scrollHeight">
+                                <WrapLayout>
+                                    <app-reservation-row
+                                                         *ngFor="let item of soonR"
+                                                         [order]="item"
+                                                         [day]="currentDay"
+                                                         (emitChange)="getData()"
+                                                         (routeChange)="clearBeforeRouteChange()"
+                                                         [datePosition]="'after'">
+                                    </app-reservation-row>
+                                </WrapLayout>
+                            </ScrollView>
+                        </StackLayout>
+                    </TabView>
+                    <FlexboxLayout row="1" alignItems="center" justifyContent="center" class="plus-reserve" (tap)="addReservation()">
+                        <Label>
+                            <FormattedString>
+                                <Span text="&#xf067;" class="fas"></Span>
+                                <Span text=" Dodaj rezerwację"></Span>
+                            </FormattedString>
+                        </Label>
+                    </FlexboxLayout>
+                </GridLayout>
+
+
+            </StackLayout>
+        </GridLayout>
+    </StackLayout>
+</RadSideDrawer>

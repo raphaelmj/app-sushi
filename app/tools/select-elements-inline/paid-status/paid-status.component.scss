@@ -1,0 +1,29 @@
+@import "../../../assets/scss/variables.scss";
+
+
+FlexboxLayout.bt {
+    margin: 0 !important;
+    padding: 0 10 0 10 !important;
+    background-color: transparent !important;
+    color: #9e855d;
+    font-size: 16;
+}
+
+FlexboxLayout.bt.active {
+    color: #ffffff;
+}
+
+FlexboxLayout.bt.in-active-change {
+    color: #9e855d;
+    opacity: 0.5;
+}
+
+FlexboxLayout.bt.phone {
+    font-size: 14;
+    padding: 0 10 0 10 !important;
+}
+
+
+// Button.active.active-all {
+//     font-size: 12;
+// }

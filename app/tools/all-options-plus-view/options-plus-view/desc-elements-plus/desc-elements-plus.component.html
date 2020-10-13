@@ -1,0 +1,53 @@
+<FlexboxLayout class="open-title p-5" flexDirection="row" justifyContent="space-between" (tap)=" openDescElements()">
+    <Label [text]="element.name">
+        <FormattedString>
+            <Span [text]="element.name"></Span>
+        </FormattedString>
+    </Label>
+    <Label [text]="element.name" *ngIf="!open">
+        <FormattedString>
+            <Span text="&#xf0da;" class="fas"></Span>
+        </FormattedString>
+    </Label>
+    <Label [text]="element.name" *ngIf="open">
+        <FormattedString>
+            <Span text="&#xf0d7;" class="fas"></Span>
+        </FormattedString>
+    </Label>
+</FlexboxLayout>
+<WrapLayout>
+    <FlexboxLayout
+                   flexDirection="column"
+                   justifyContent="space-between"
+                   alignContent="space-between"
+                   width="50%" *ngFor="let de of descElements;let y=index"
+                   class="p-5 row-m-flex"
+                   [ngClass]="{'row-m-flex': (y%2==0), 'row-m-flex-bottom':(y%2==1)}">
+        <HtmlView
+                  [html]="de.info"
+                  class="htmlLabel margin-bottom-10"></HtmlView>
+        <FlexboxLayout *ngIf="de.price!=''" flexDirection="column" justifyContent="space-between">
+            <FlexboxLayout *ngIf="de.price!=''">
+                <Label
+                       [text]="de.price+ ' pln'"
+                       class=" red-price-min"></Label>
+            </FlexboxLayout>
+            <FlexboxLayout *ngIf="de.seaPrice!=''">
+                <Label
+                       [text]="de.seaPrice+ ' pln'"
+                       class=" red-price-min"></Label>
+                <Image
+                       src="~/images/krewetka.png"
+                       width="25"
+                       loadMode="async"
+                       class="image-elems"></Image>
+            </FlexboxLayout>
+
+            <Button class="btn-add" (tap)="add(element,y)">
+                <FormattedString>
+                    <Span text="&#xf217;" class="fas"></Span>
+                </FormattedString>
+            </Button>
+        </FlexboxLayout>
+    </FlexboxLayout>
+</WrapLayout>

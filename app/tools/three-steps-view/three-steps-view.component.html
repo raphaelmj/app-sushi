@@ -1,0 +1,52 @@
+<StackLayout row="0" *ngIf="!element.skipStepOne">
+    <FlexboxLayout flexDirection="row" flexWrap="wrap" class="p-15" justifyContent="center">
+        <Button
+                *ngFor="let item of element.configStepsPrice;let i=index"
+                [text]="item.name"
+                class="button-option"
+                (tap)="selectFirstType(i)"
+                [ngClass]="{'active': configFirstIndex==i}"></Button>
+    </FlexboxLayout>
+    <FlexboxLayout flexDirection="row" flexWrap="wrap" class="p-15" justifyContent="center" *ngIf="element.configStepsPrice[configFirstIndex].types.length>1">
+        <Button
+                *ngFor="let item of element.configStepsPrice[configFirstIndex].types;let i=index"
+                [text]="item.type"
+                class="button-option"
+                (tap)="selectSecondType(i)"
+                [ngClass]="{'active': configSecondIndex==i}"></Button>
+    </FlexboxLayout>
+    <FlexboxLayout flexDirection="row" flexWrap="wrap" class="p-15" justifyContent="center">
+        <Button
+                *ngFor="let item of element.configStepsPrice[configFirstIndex].types[configSecondIndex].options;let i=index"
+                [text]="item.name"
+                (tap)="selectThirdType(i)"
+                [ngClass]="{'active': configThirdIndex==i}"
+                class="button-option"></Button>
+    </FlexboxLayout>
+</StackLayout>
+<StackLayout row="0" *ngIf="element.skipStepOne">
+    <FlexboxLayout flexDirection="row" flexWrap="wrap" class="p-15" justifyContent="center">
+        <Button
+                *ngFor="let item of mergeSteps;let i=index"
+                [text]="item.name"
+                class="button-option"
+                (tap)="selectFirstSecondType(item)"
+                [ngClass]="{'active': configFirstIndex==item.indexOne && configSecondIndex==item.indexTwo}"></Button>
+    </FlexboxLayout>
+    <FlexboxLayout flexDirection="row" flexWrap="wrap" class="p-15" justifyContent="center">
+        <Button
+                *ngFor="let item of element.configStepsPrice[configFirstIndex].types[configSecondIndex].options;let i=index"
+                [text]="item.name"
+                (tap)="selectThirdType(i)"
+                [ngClass]="{'active': configThirdIndex==i}"
+                class="button-option"></Button>
+    </FlexboxLayout>
+</StackLayout>
+<StackLayout *ngIf="hasPushBt">
+    <FlexboxLayout flexDirection="row" flexWrap="wrap" class="p-15" justifyContent="center">
+        <Button class="plus-bt" (tap)="pushStepElement()">
+            <Span text="&#xf067;" class="fas"></Span>
+        </Button>
+    </FlexboxLayout>
+
+</StackLayout>

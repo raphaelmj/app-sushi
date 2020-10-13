@@ -1,0 +1,229 @@
+<RadSideDrawer
+               tkExampleTitle
+               tkToggleNavButton
+               [drawerContentSize]="drawerContentSize"
+               [drawerLocation]="drawerLocation" [ngClass]="{'phone': device.deviceType=='Phone','tablet': device.deviceType!='Phone', 'landscape':orient=='horizontal',portrait:orient=='vertical' }">
+  <StackLayout tkDrawerContent>
+    <GridLayout class="sideStackLayout">
+      <app-menu-view
+                     [day]="currentDay"
+                     [tokenUser]="tokenUser"
+                     [name]="'Zamówienia'"></app-menu-view>
+    </GridLayout>
+  </StackLayout>
+  <StackLayout tkMainContent>
+    <GridLayout class="page" [rows]="rowsGlobalGrid">
+      <ng-container *ngIf="orient=='horizontal'">
+        <GridLayout row="0" [columns]="navColumns">
+          <FlexboxLayout
+                         column="0"
+                         flexDirection="row"
+                         alignItems="flex-start"
+                         justifyContent="flex-end">
+            <Label class="bt-refresh" (tap)="refreshData()" width="35">
+              <FormattedString>
+                <Span text="&#xf2f1;" class="fas"></Span>
+              </FormattedString>
+            </Label>
+            <Label
+                   class="bt-stats"
+                   [ngClass]="{'anim-bt-stats': loadingStats}"
+                   *ngIf="this.tokenUser.user.permission=='superadmin'"
+                   width="35"
+                   (tap)="showStats()">
+              <FormattedString>
+                <Span text="&#xf080;" class="fas"></Span>
+              </FormattedString>
+            </Label>
+          </FlexboxLayout>
+          <FlexboxLayout
+                         [column]="1"
+                         flexDirection="row"
+                         alignItems="center"
+                         [justifyContent]="(device.deviceType=='Phone')?'flex-start':'space-between'"
+                         flexWrap="wrap"
+                         class="m-t-10">
+            <app-select-elements-inline
+                                        [tokenUser]="tokenUser"
+                                        [archives]="archives"
+                                        [reservations]="reservations"
+                                        [options]="statusOptions"
+                                        [oQP]="oQP"
+                                        [inProgress]="inProgress"
+                                        [selectedOptions]="selectedStatusOptions"
+                                        (emitSelected)="queryStatuses($event)">
+            </app-select-elements-inline>
+            <FlexboxLayout (tap)="changeDay()" class="change-day-bt" *ngIf="device.deviceType=='Phone'">
+              <Label>
+                <FormattedString>
+                  <Span text="&#xf783;" class="fas"></Span>
+                  <Span text=" "></Span>
+                  <Span [text]="currentDay | date: 'dd.MM.yyyy'"></Span>
+                </FormattedString>
+              </Label>
+            </FlexboxLayout>
+            <FlexboxLayout class="reserve-bt" (tap)="gotToReserve()" justifyContent="center" alignItems="center" *ngIf="device.deviceType=='Phone'">
+              <Label>
+                <FormattedString>
+                  <Span text="&#xf46d;" class="fas"></Span>
+                </FormattedString>
+              </Label>
+            </FlexboxLayout>
+            <FlexboxLayout
+                           flexDirection="row"
+                           alignItems="center"
+                           justifyContent="center"
+                           *ngIf="device.deviceType!='Phone'">
+              <FlexboxLayout (tap)="changeDay()" class="change-day-bt">
+                <Label>
+                  <FormattedString>
+                    <Span text="&#xf783;" class="fas"></Span>
+                    <Span text=" "></Span>
+                    <Span [text]="currentDay | date: 'dd.MM.yyyy'"></Span>
+                  </FormattedString>
+                </Label>
+              </FlexboxLayout>
+              <FlexboxLayout class="reserve-bt" (tap)="gotToReserve()" justifyContent="center" alignItems="center">
+                <Label>
+                  <FormattedString>
+                    <Span text="&#xf46d;" class="fas"></Span>
+                  </FormattedString>
+                </Label>
+              </FlexboxLayout>
+            </FlexboxLayout>
+
+          </FlexboxLayout>
+          <FlexboxLayout
+                         [flexDirection]="'column'"
+                         [column]="2"
+                         alignItems="flex-start"
+                         justifyContent="center">
+            <Button class="burger" (tap)="openMenu()">
+              <FormattedString>
+                <Span text="&#xf0c9;" class="fas"></Span>
+              </FormattedString>
+            </Button>
+          </FlexboxLayout>
+        </GridLayout>
+      </ng-container>
+
+      <ng-container *ngIf="orient=='vertical'">
+        <GridLayout row="0" [columns]="'*,60'">
+          <FlexboxLayout
+                         [column]="0"
+                         flexDirection="row"
+                         alignItems="center"
+                         [justifyContent]="'flex-start'"
+                         flexWrap="wrap"
+                         class="m-t-10">
+            <app-select-elements-inline
+                                        [tokenUser]="tokenUser"
+                                        [archives]="archives"
+                                        [reservations]="reservations"
+                                        [options]="statusOptions"
+                                        [inProgress]="inProgress"
+                                        [oQP]="oQP"
+                                        [selectedOptions]="selectedStatusOptions"
+                                        (emitSelected)="queryStatuses($event)">
+            </app-select-elements-inline>
+            <FlexboxLayout (tap)="changeDay()" class="change-day-bt" *ngIf="device.deviceType=='Phone'">
+              <Label>
+                <FormattedString>
+                  <Span text="&#xf783;" class="fas"></Span>
+                  <Span text=" "></Span>
+                  <Span [text]="currentDay | date: 'dd.MM.yyyy'"></Span>
+                </FormattedString>
+              </Label>
+            </FlexboxLayout>
+            <FlexboxLayout class="reserve-bt" (tap)="gotToReserve()" justifyContent="center" alignItems="center" *ngIf="device.deviceType=='Phone'">
+              <Label>
+                <FormattedString>
+                  <Span text="&#xf46d;" class="fas"></Span>
+                </FormattedString>
+              </Label>
+            </FlexboxLayout>
+            <FlexboxLayout
+                           flexDirection="row"
+                           alignItems="center"
+                           justifyContent="center"
+                           *ngIf="device.deviceType!='Phone'">
+              <FlexboxLayout (tap)="changeDay()" class="change-day-bt">
+                <Label>
+                  <FormattedString>
+                    <Span text="&#xf783;" class="fas"></Span>
+                    <Span text=" "></Span>
+                    <Span [text]="currentDay | date: 'dd.MM.yyyy'"></Span>
+                  </FormattedString>
+                </Label>
+              </FlexboxLayout>
+              <FlexboxLayout class="reserve-bt" (tap)="gotToReserve()" justifyContent="center" alignItems="center">
+                <Label>
+                  <FormattedString>
+                    <Span text="&#xf46d;" class="fas"></Span>
+                  </FormattedString>
+                </Label>
+              </FlexboxLayout>
+            </FlexboxLayout>
+
+          </FlexboxLayout>
+          <FlexboxLayout
+                         [flexDirection]="'column'"
+                         [column]="1"
+                         alignItems="center"
+                         justifyContent="center">
+            <Label class="burger" (tap)="openMenu()">
+              <FormattedString>
+                <Span text="&#xf0c9;" class="fas"></Span>
+              </FormattedString>
+            </Label>
+            <Label class="bt-refresh" (tap)="refreshData()" width="35">
+              <FormattedString>
+                <Span text="&#xf2f1;" class="fas"></Span>
+              </FormattedString>
+            </Label>
+            <Label
+                   class="bt-stats"
+                   [ngClass]="{'anim-bt-stats': loadingStats}"
+                   *ngIf="this.tokenUser.user.permission=='superadmin'"
+                   width="35"
+                   (tap)="showStats()">
+              <FormattedString>
+                <Span text="&#xf080;" class="fas"></Span>
+              </FormattedString>
+            </Label>
+          </FlexboxLayout>
+        </GridLayout>
+      </ng-container>
+
+
+      <StackLayout row="1" orientation="horizontal" width="100%">
+        <app-loading-absolute [busy]="listInProgress"></app-loading-absolute>
+        <app-route-loading></app-route-loading>
+        <ScrollView (swipe)="onSwipeScreen($event)">
+          <GridLayout [columns]="colsGrid" [rows]="rowsGrid">
+            <FlexboxLayout
+                           *ngFor="let order of orders; let i = index"
+                           [column]="columnGrid[i].c"
+                           [row]="columnGrid[i].r"
+                           class="order-col">
+              <app-order-square
+                                [day]="currentDay"
+                                [order]="order"
+                                (emitStatus)="changeStatus($event)">
+              </app-order-square>
+            </FlexboxLayout>
+          </GridLayout>
+        </ScrollView>
+      </StackLayout>
+      <StackLayout row="2" orientation="horizontal" class="navi-beam">
+        <app-pagination
+                        [pages]="pages"
+                        [current]="oQP.page"
+                        (emitChange)="changePage($event)">
+        </app-pagination>
+
+
+      </StackLayout>
+    </GridLayout>
+  </StackLayout>
+</RadSideDrawer>

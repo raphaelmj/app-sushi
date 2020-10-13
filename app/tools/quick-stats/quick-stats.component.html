@@ -1,0 +1,228 @@
+<FlexboxLayout flexDirection="column" justifyContent="center" alignItems="center" width="100%" class="box p-10">
+    <GridLayout rows="auto,auto,auto,auto,auto,auto,auto" columns="300">
+        <GridLayout columns="100,*" row="0">
+            <Label text="Dzień:" column="0" class="label-what"></Label>
+            <Label column="1" [text]="date|date: 'dd.MM.yyyy'" class="day text-center"></Label>
+        </GridLayout>
+        <GridLayout columns="100,*" row="1">
+            <Label text="Ilość rozdzielnie:" column="0" class="label-what" textWrap="true"></Label>
+            <FlexboxLayout column="1" justifyContent="center" alignItems="center" flexDirection="column">
+                <FlexboxLayout justifyContent="center" alignItems="center">
+                    <Label>
+                        <FormattedString>
+                            <Span text="opłaconych"></Span>
+                        </FormattedString>
+                    </Label>
+                    <Label>
+                        <FormattedString>
+                            <Span text=" / "></Span>
+                        </FormattedString>
+                    </Label>
+                    <Label>
+                        <FormattedString>
+                            <Span text="nieopłaconych"></Span>
+                        </FormattedString>
+                    </Label>
+                </FlexboxLayout>
+                <FlexboxLayout justifyContent="center" alignItems="center">
+                    <Label [text]="quickStats.paid.size+' zam.'" class="day text-center"></Label>
+                    <Label>
+                        <FormattedString>
+                            <Span text=" / "></Span>
+                        </FormattedString>
+                    </Label>
+                    <Label class="price-not">
+                        <FormattedString>
+                            <Span [text]="quickStats.notPaid.size"></Span>
+                            <Span text=" zam."></Span>
+                        </FormattedString>
+                    </Label>
+                </FlexboxLayout>
+            </FlexboxLayout>
+
+        </GridLayout>
+        <GridLayout columns="100,*" row="2">
+            <Label text="Ilość:" column="0" class="label-what"></Label>
+            <FlexboxLayout column="1" flexDirection="column" justifyContent="center" alignItems="center">
+
+                <FlexboxLayout justifyContent="center" alignItems="center">
+                    <Label class="size-all">
+                        <FormattedString>
+                            <Span [text]="(quickStats.all.size)?quickStats.all.size:0"></Span>
+                            <Span text=" zam."></Span>
+                        </FormattedString>
+                    </Label>
+                </FlexboxLayout>
+
+            </FlexboxLayout>
+
+        </GridLayout>
+        <GridLayout columns="100,*" row="3">
+            <Label text="Rozdzielnie:" column="0" class="label-what"></Label>
+            <FlexboxLayout column="1" flexDirection="column" justifyContent="center" alignItems="center">
+                <FlexboxLayout justifyContent="center" alignItems="center">
+                    <Label>
+                        <FormattedString>
+                            <Span text="zapłacone"></Span>
+                        </FormattedString>
+                    </Label>
+                    <Label>
+                        <FormattedString>
+                            <Span text=" / "></Span>
+                        </FormattedString>
+                    </Label>
+                    <Label>
+                        <FormattedString>
+                            <Span text="niezapłacone"></Span>
+                        </FormattedString>
+                    </Label>
+                </FlexboxLayout>
+                <FlexboxLayout justifyContent="center" alignItems="center">
+                    <Label class="price-total ">
+                        <FormattedString>
+                            <Span [text]="(quickStats.all.total)?quickStats.paid.total:0"></Span>
+                            <Span text=" pln"></Span>
+                        </FormattedString>
+                    </Label>
+                    <Label>
+                        <FormattedString>
+                            <Span text=" / "></Span>
+                        </FormattedString>
+                    </Label>
+                    <Label class="price-not">
+                        <FormattedString>
+                            <Span [text]="(quickStats.notPaid.total)?quickStats.notPaid.total:0"></Span>
+                            <Span text=" pln"></Span>
+                        </FormattedString>
+                    </Label>
+                </FlexboxLayout>
+
+            </FlexboxLayout>
+
+        </GridLayout>
+        <GridLayout columns="100,*" row="4">
+            <Label text="Razem:" column="0" class="label-what"></Label>
+            <FlexboxLayout column="1" flexDirection="column" justifyContent="center" alignItems="center">
+
+                <FlexboxLayout justifyContent="center" alignItems="center">
+                    <Label class="price-total-all">
+                        <FormattedString>
+                            <Span [text]="(quickStats.all.total)?quickStats.all.total:0"></Span>
+                            <Span text=" pln"></Span>
+                        </FormattedString>
+                    </Label>
+                </FlexboxLayout>
+
+            </FlexboxLayout>
+
+        </GridLayout>
+
+        <GridLayout columns="100,*" row="5">
+            <FlexboxLayout column="0" flexDirection="column">
+                <Label class="label-what" text="Szczegóły:"></Label>
+                <Label text="(opłacone)"></Label>
+            </FlexboxLayout>
+            <GridLayout column="1" rows="auto,auto,auto">
+                <GridLayout row="0" columns="100,100">
+                    <Label column="0" class="label-col text-center">
+                        <FormattedString>
+                            <Span text="&#xf2e7;" class="fas"></Span>
+                            <Span [text]="' '"></Span>
+                            <Span text="Lokal"></Span>
+                        </FormattedString>
+                    </Label>
+                    <Label column="1" class="label-col text-center">
+                        <FormattedString>
+                            <Span text="&#xf015;" class="fas"></Span>
+                            <Span [text]="' '"></Span>
+                            <Span text="Wynos"></Span>
+                        </FormattedString>
+                    </Label>
+                </GridLayout>
+                <GridLayout columns="100,100" row="1">
+                    <Label column="0" class="text-center l-qua">
+                        <FormattedString>
+                            <Span [text]="quickStats.onSite.size"></Span>
+                            <Span text=" zam."></Span>
+                        </FormattedString>
+                    </Label>
+                    <Label column="1" class="text-center l-qua">
+                        <FormattedString>
+                            <Span [text]="quickStats.takeAway.size"></Span>
+                            <Span text=" zam."></Span>
+                        </FormattedString>
+                    </Label>
+                </GridLayout>
+                <GridLayout columns="100,100" row="2">
+                    <Label column="0" class="text-center l-total">
+                        <FormattedString>
+                            <Span [text]="(quickStats.onSite.total)?quickStats.onSite.total:0"></Span>
+                            <Span text=" pln"></Span>
+                        </FormattedString>
+                    </Label>
+                    <Label column="1" class="text-center l-total">
+                        <FormattedString>
+                            <Span [text]="(quickStats.takeAway.total)?quickStats.takeAway.total:0"></Span>
+                            <Span text=" pln"></Span>
+                        </FormattedString>
+                    </Label>
+                </GridLayout>
+            </GridLayout>
+        </GridLayout>
+        <GridLayout columns="100,*" row="6">
+            <FlexboxLayout column="0" flexDirection="column">
+                <Label class="label-what" text="Szczegóły:"></Label>
+                <Label text="(nieopłacone)"></Label>
+            </FlexboxLayout>
+            <GridLayout column="1" rows="auto,auto,auto">
+                <GridLayout row="0" columns="100,100">
+                    <Label column="0" class="label-col text-center">
+                        <FormattedString>
+                            <Span text="&#xf2e7;" class="fas"></Span>
+                            <Span [text]="' '"></Span>
+                            <Span text="Lokal"></Span>
+                        </FormattedString>
+                    </Label>
+                    <Label column="1" class="label-col text-center">
+                        <FormattedString>
+                            <Span text="&#xf015;" class="fas"></Span>
+                            <Span [text]="' '"></Span>
+                            <Span text="Wynos"></Span>
+                        </FormattedString>
+                    </Label>
+                </GridLayout>
+                <GridLayout columns="100,100" row="1">
+                    <Label column="0" class="text-center l-qua through-line">
+                        <FormattedString>
+                            <Span [text]="quickStats.onSiteNotPaid.size"></Span>
+                            <Span text=" zam."></Span>
+                        </FormattedString>
+                    </Label>
+                    <Label column="1" class="text-center l-qua through-line">
+                        <FormattedString>
+                            <Span [text]="quickStats.takeAwayNotPaid.size"></Span>
+                            <Span text=" zam."></Span>
+                        </FormattedString>
+                    </Label>
+                </GridLayout>
+                <GridLayout columns="100,100" row="2">
+                    <Label column="0" class="text-center l-total-not through-line">
+                        <FormattedString>
+                            <Span [text]="(quickStats.onSiteNotPaid.total)?quickStats.onSiteNotPaid.total:0"></Span>
+                            <Span text=" pln"></Span>
+                        </FormattedString>
+                    </Label>
+                    <Label column="1" class="text-center l-total-not through-line">
+                        <FormattedString>
+                            <Span [text]="(quickStats.takeAwayNotPaid.total)?quickStats.takeAwayNotPaid.total:0"></Span>
+                            <Span text=" pln"></Span>
+                        </FormattedString>
+                    </Label>
+                </GridLayout>
+            </GridLayout>
+        </GridLayout>
+    </GridLayout>
+    <FlexboxLayout class="close-box">
+        <Button text="Zamknij" class="close" (tap)="close()"></Button>
+    </FlexboxLayout>
+</FlexboxLayout>

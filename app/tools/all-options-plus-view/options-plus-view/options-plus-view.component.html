@@ -1,0 +1,154 @@
+<GridLayout class="sideStackLayout" rows="*" class="p-10">
+    <StackLayout row="0">
+        <ScrollView [height]="scrollHeight">
+
+            <WrapLayout orientation="horizontal">
+                <ng-container *ngFor="let element of elements">
+                    <ng-container [ngSwitch]="element.elementType">
+                        <ng-container *ngSwitchCase="'one_name'">
+                            <FlexboxLayout flexDirection="column" justifyContent="space-between" alignContent="space-between" [width]="width" class="p-5 row-m-flex">
+                                <FlexboxLayout flexDirection="column">
+                                    <HtmlView
+                                              [html]="element.name"
+                                              class="htmlLabel margin-bottom-10"></HtmlView>
+                                    <FlexboxLayout flexDirection="row" *ngFor="let item of element.price" justifyContent="space-between" alignItems="center">
+                                        <Label
+                                               [text]="item.price + ' pln'"
+                                               class="red-price-min"></Label>
+                                        <Image
+                                               *ngIf="item.isSea"
+                                               src="~/images/krewetka.png"
+                                               width="25"
+                                               loadMode="async"
+                                               class="image-elems"></Image>
+
+                                    </FlexboxLayout>
+                                </FlexboxLayout>
+
+                                <Button class="btn-add" (tap)="addPlus(element,0,null)">
+                                    <FormattedString>
+                                        <Span text="&#xf217;" class="fas"></Span>
+                                    </FormattedString>
+                                </Button>
+                            </FlexboxLayout>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'many_names'">
+                            <FlexboxLayout flexDirection="column" justifyContent="space-between" alignContent="space-between" [width]="width" *ngFor="let pn of element.priceNames;let x=index" class="p-5 row-m-flex">
+                                <FlexboxLayout flexDirection="column">
+                                    <HtmlView
+                                              [html]="pn.name"
+                                              class="htmlLabel margin-bottom-10"></HtmlView>
+                                    <FlexboxLayout flexDirection="row" justifyContent="space-between" alignItems="center" *ngFor="let p of pn.price">
+                                        <Label
+                                               [text]="p.price + ' pln'"
+                                               class=" red-price-min"></Label>
+                                        <Image
+                                               *ngIf="p.isSea"
+                                               src="~/images/krewetka.png"
+                                               width="25"
+                                               loadMode="async"
+                                               class="image-elems"></Image>
+                                    </FlexboxLayout>
+                                </FlexboxLayout>
+
+                                <Button class="btn-add" (tap)="addPlus(element,x,0)">
+                                    <FormattedString>
+                                        <Span text="&#xf217;" class="fas"></Span>
+                                    </FormattedString>
+                                </Button>
+                            </FlexboxLayout>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'desc_elements'">
+                            <FlexboxLayout flexDirection="column" justifyContent="space-between" alignContent="space-between" width="100%" class="row-m-flex">
+                                <app-desc-elements-plus [element]="element" (emitPlus)="plusDescElement($event)"></app-desc-elements-plus>
+                            </FlexboxLayout>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'config_price'">
+                            <FlexboxLayout flexDirection="column" justifyContent="space-between" alignContent="space-between" [width]="width" class="p-5 row-m-flex">
+                                <FlexboxLayout flexDirection="column">
+                                    <HtmlView
+                                              [html]="element.name"
+                                              class="htmlLabel margin-bottom-10"></HtmlView>
+
+
+                                    <FlexboxLayout flexDirection="row" width="100%" justifyContent="space-between" *ngFor="let item of element.price;let z=index">
+                                        <FlexboxLayout>
+                                            <Label
+                                                   [text]="item.price+ ' pln'"
+                                                   class=" red-price-min"></Label>
+
+                                            <Label [text]="' ('+item.perSize+' szt.)'"></Label>
+                                        </FlexboxLayout>
+                                        <Image
+                                               *ngIf="item.isSea"
+                                               src="~/images/krewetka.png"
+                                               width="25"
+                                               loadMode="async"
+                                               class="image-elems"></Image>
+                                    </FlexboxLayout>
+                                </FlexboxLayout>
+
+                                <Button class="btn-add" (tap)="addPlus(element,1,null)">
+                                    <FormattedString>
+                                        <Span text="&#xf217;" class="fas"></Span>
+                                    </FormattedString>
+                                </Button>
+                            </FlexboxLayout>
+
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'config_steps_price'">
+                            <FlexboxLayout flexDirection="column" justifyContent="space-between" alignContent="space-between" [width]="width" class="p-5 row-m-flex">
+                                <FlexboxLayout flexDirection="column">
+                                    <HtmlView
+                                              [html]="element.name"
+                                              class="htmlLabel margin-bottom-10"></HtmlView>
+
+
+                                    <FlexboxLayout flexDirection="row" width="100%" justifyContent="space-between" *ngFor="let item of element.price;let z=index">
+                                        <FlexboxLayout>
+                                            <Label
+                                                   [text]="'cena w konfiguracji'"
+                                                   class=" red-price-min"></Label>
+                                        </FlexboxLayout>
+                                    </FlexboxLayout>
+                                </FlexboxLayout>
+
+                                <Button class="btn-add" (tap)="addPlus(element,null,null)">
+                                    <FormattedString>
+                                        <Span text="&#xf217;" class="fas"></Span>
+                                    </FormattedString>
+                                </Button>
+                            </FlexboxLayout>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'config_steps_price_many'">
+                            <FlexboxLayout flexDirection="column" justifyContent="space-between" alignContent="space-between" [width]="width" class="p-5 row-m-flex">
+                                <FlexboxLayout flexDirection="column">
+                                    <HtmlView
+                                              [html]="element.name"
+                                              class="htmlLabel margin-bottom-10"></HtmlView>
+
+
+                                    <FlexboxLayout flexDirection="row" width="100%" justifyContent="space-between" *ngFor="let item of element.price;let z=index">
+                                        <FlexboxLayout>
+                                            <Label
+                                                   [text]="'cena w konfiguracji'"
+                                                   class=" red-price-min"></Label>
+                                        </FlexboxLayout>
+                                    </FlexboxLayout>
+                                </FlexboxLayout>
+
+                                <Button class="btn-add" (tap)="addPlus(element,null,null)">
+                                    <FormattedString>
+                                        <Span text="&#xf217;" class="fas"></Span>
+                                    </FormattedString>
+                                </Button>
+                            </FlexboxLayout>
+                        </ng-container>
+                    </ng-container>
+                </ng-container>
+
+            </WrapLayout>
+
+        </ScrollView>
+    </StackLayout>
+</GridLayout>

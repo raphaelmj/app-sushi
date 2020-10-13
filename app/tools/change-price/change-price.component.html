@@ -1,0 +1,33 @@
+<FlexboxLayout flexDirection="column" alignItems="center" justifyContent="center" [formGroup]="formData">
+
+    <FlexboxLayout flexDirection="row" justifyContent="center" alignItems="center" class="qua-form">
+        <FlexboxLayout>
+            <Label [text]="cartEl.quantity" class="qua-label"></Label>
+        </FlexboxLayout>
+        <FlexboxLayout>
+            <Label class="icon-label">
+                <FormattedString>
+                    <Span text="&#xf00d;" class="fas"></Span>
+                </FormattedString>
+            </Label>
+        </FlexboxLayout>
+        <FlexboxLayout>
+            <TextField formControlName="price"></TextField>
+        </FlexboxLayout>
+        <FlexboxLayout>
+            <Label class="icon-label">
+                <FormattedString>
+                    <Span text="&#xf52c;" class="fas"></Span>
+                </FormattedString>
+            </Label>
+        </FlexboxLayout>
+        <FlexboxLayout>
+            <Label [text]="cartEl.quantity|pricePerQuantity:formData.get('price').value" class="label-price"></Label>
+        </FlexboxLayout>
+    </FlexboxLayout>
+
+    <FlexboxLayout>
+        <Button (tap)="close()" text="Dodaj"></Button>
+        <Button (tap)="closeExit()" text="Anuluj"></Button>
+    </FlexboxLayout>
+</FlexboxLayout>

@@ -1,0 +1,15 @@
+<FlexboxLayout flexDirection="column" justifyContent="space-between" width="100%">
+  <FlexboxLayout flexDirection="column">
+    <Label class="role-label" [text]="tokenUser.user.role | roleName"></Label>
+    <Label [text]="name" class="label-section"></Label>
+    <Button text="Zamówienia" class="link" [nsRouterLink]="['/admin']" *ngIf="tokenUser.user.role == 'admin' && !router.isActive('admin', false)"></Button>
+    <Button text="Zamówienia" class="link" [nsRouterLink]="['/admin']" *ngIf="tokenUser.user.role == 'waiter' && !router.isActive('admin', false)"></Button>
+    <Button text="Menu" class="link" [nsRouterLink]="['/home']" *ngIf="router.url != '/home'"></Button>
+    <Button text="Statystyki" class="link" [nsRouterLink]="['/stats']" *ngIf="tokenUser.user.permission=='superadmin' && !router.isActive('stats', false)"></Button>
+    <Button text="Rezerwacje" class="link" *ngIf="!router.isActive('reservations', false)" (tap)="goToReserve()"></Button>
+  </FlexboxLayout>
+  <FlexboxLayout flexDirection="column">
+    <Button text="Wyloguj" class="logout" (tap)="logOut()"></Button>
+    <Button text="Sprawdź aktualizacje" class="check-updates" (tap)="checkUpdates()"></Button>
+  </FlexboxLayout>
+</FlexboxLayout>

@@ -1,0 +1,21 @@
+<GridLayout rows="*" columns="*">
+    <StackLayout row="0">
+        <TabView
+                 tabTextFontSize="16"
+                 selectedIndex="0"
+                 (selectedIndexChanged)="onSelectedIndexchanged($event)">
+            <StackLayout *tabItem="{ title: 'Zamiany' }">
+                <app-reverse-view (emitChange)="changeReverse($event)"
+                                  [reversWordsGroups]="elementOptions.reverse"
+                                  [(reverseElements)]="reverseElements">
+                </app-reverse-view>
+            </StackLayout>
+            <StackLayout *tabItem="{ title: 'Uwagi' }">
+                <app-desc-view
+                               (emitChange)="changeDesc($event)"
+                               [descWordsGroups]="elementOptions.desc"
+                               [(wordsOutput)]="wordsOutput"></app-desc-view>
+            </StackLayout>
+        </TabView>
+    </StackLayout>
+</GridLayout>

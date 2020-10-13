@@ -1,0 +1,183 @@
+<RadSideDrawer tkExampleTitle tkToggleNavButton [drawerContentSize]="drawerContentSize"
+               [drawerLocation]="drawerLocation" gesturesEnabled="false">
+  <StackLayout tkDrawerContent>
+    <GridLayout class="sideStackLayout" rows="*" columns="40,*" *ngIf="drawerLocation == 'Right'">
+      <Button (touch)="closeDrawer()" class="drawer-close" row="0" column="0" height="100%">
+        <FormattedString>
+          <Span text="&#xf054;" class="fas"></Span>
+        </FormattedString>
+      </Button>
+      <FlexboxLayout row="0" column="1" height="100%" width="100%">
+        <app-menu-view [tokenUser]="tokenUser" [name]="'Zamówienie'"></app-menu-view>
+      </FlexboxLayout>
+    </GridLayout>
+    <GridLayout class="sideStackLayout" rows="*" columns="*,40" width="100%" *ngIf="drawerLocation == 'Left'">
+      <StackLayout row="0" column="0">
+        <app-loading-absolute [busy]="addInProgress"></app-loading-absolute>
+        <TabView [selectedIndex]="selectedIndex" (selectedIndexChanged)="onSelectedIndexchanged($event)">
+          <StackLayout *tabItem="{ title: 'Start' }">
+            <ScrollView height="100%">
+              <WrapLayout>
+                <FlexboxLayout flexDirection="row" height="90" class="flex-bt" alignItems="center"
+                               justifyContent="center"
+                               [backgroundColor]="'#'+item.bgColor"
+                               [ngStyle]="{'color': '#'+item.fontColor}"
+                               width="50%"
+                               *ngFor="let item of menuElementsFull;let i= index" (tap)="changeTab(i)">
+                  <Label [text]="item.fullName" textTransform="uppercase" textWrap="true" textAlignment="center"></Label>
+                </FlexboxLayout>
+              </WrapLayout>
+            </ScrollView>
+          </StackLayout>
+          <ng-container *ngFor="let mc of carts; let i = index">
+            <GridLayout columns="40,*" *tabItem="{ title: mc.name }">
+              <Button (tap)="toTabHome()" height="100%" class="return-home" textTransform="uppercase" column="0">
+                <FormattedString>
+                  <Span text="&#xf100;" class="fas"></Span>
+                </FormattedString>
+              </Button>
+              <ScrollView height="100%" column="1">
+                <WrapLayout orientation="horizontal">
+                  <ng-container *ngFor="let item of mc.elements">
+                    <ng-container [ngSwitch]="item.elementType">
+                      <app-admin-element-one-name *ngSwitchCase="'one_name'" [element]="item"
+                                                  (emitAdd)="addToCart($event)"> </app-admin-element-one-name>
+                      <app-admin-element-many-names *ngSwitchCase="'many_names'" [element]="item"
+                                                    (emitAdd)="addToCart($event)"> </app-admin-element-many-names>
+                      <app-admin-element-desc-element *ngSwitchCase="'desc_elements'" [element]="item"
+                                                      (emitAdd)="addToCart($event)"> </app-admin-element-desc-element>
+                      <app-admin-element-config-price *ngSwitchCase="'config_price'" [element]="item"
+                                                      (emitAdd)="addToCart($event)"> </app-admin-element-config-price>
+                      <app-admin-element-config-steps-price *ngSwitchCase="'config_steps_price'" [element]="item"
+                                                            (emitAdd)="addToCart($event)"></app-admin-element-config-steps-price>
+                      <app-admin-element-config-steps-price-many *ngSwitchCase="'config_steps_price_many'" [element]="item"
+                                                                 (emitAdd)="addToCart($event)"></app-admin-element-config-steps-price-many>
+                    </ng-container>
+                  </ng-container>
+                </WrapLayout>
+              </ScrollView>
+            </GridLayout>
+          </ng-container>
+        </TabView>
+      </StackLayout>
+
+      <Button (touch)="closeDrawer()" class="drawer-close" row="0" column="1" height="100%">
+        <FormattedString>
+          <Span text="&#xf053;" class="fas"></Span>
+        </FormattedString>
+      </Button>
+
+    </GridLayout>
+  </StackLayout>
+  <StackLayout tkMainContent>
+    <GridLayout class="page" rows="50,*,50">
+      <StackLayout row="0" orientation="horizontal" class="navi-beam">
+        <FlexboxLayout flexDirection="row" justifyContent="space-between" class="w-100">
+          <FlexboxLayout alignItems="center" justifyContent="center" class="cart-bt" width="200"
+                         (touch)="openMenuDrawer('Left')">
+            <Label class="trash">
+              <FormattedString>
+                <Span text="&#xf217;" class="fas"></Span>
+              </FormattedString>
+            </Label>
+            <Label class="cart-count" [text]="'  ' + dishes + ' dań'"> </Label>
+            <FlexboxLayout *ngIf="!order.bonusUsed">
+              <Label class="price" [text]="'  ' + total + ' pln'"> </Label>
+            </FlexboxLayout>
+            <FlexboxLayout flexDirection="column" *ngIf="order.bonusUsed" class="price-bonus" alignItems="center" justifyContent="center">
+              <Label [text]="'  ' + total + ' pln'" class="price-no-bonus"> </Label>
+              <Label class="price" [text]="'  ' + order.bonusTotal + ' pln'"></Label>
+            </FlexboxLayout>
+
+          </FlexboxLayout>
+
+          <Button class="special-bt" (tap)="addSpecial()">
+            <FormattedString>
+              <Span text="&#xf12e;" class="fas"></Span>
+            </FormattedString>
+          </Button>
+          <Button class="reserve-bt" (tap)="gotToReserve()">
+            <FormattedString>
+              <Span text="&#xf46d;" class="fas"></Span>
+            </FormattedString>
+          </Button>
+          <Button (touch)="openDrawer('Right')" alignItems="center" width="50" justifyContent="center" class="burger">
+            <FormattedString>
+              <Span text="&#xf0c9;" class="fas"></Span>
+            </FormattedString>
+          </Button>
+        </FlexboxLayout>
+      </StackLayout>
+      <StackLayout row="1" orientation="horizontal" width="100%">
+        <app-route-loading></app-route-loading>
+        <ScrollView orientation="vertical" width="100%" height="100%">
+          <FlexboxLayout flexDirection="column" justifyContent="flex-start" class="p-10">
+            <FlexboxLayout flexDirection="column" justifyContent="flex-start" alignItems="flex-start"
+                           class="row-cart" *ngFor="let g of cartGroups; let i = index"
+                           [ngClass]="{ 'd-none': g.elements.length == 0 }" [ngStyle]="{'background-color': '#'+g.type.bgColor}">
+              <FlexboxLayout flexDirection="column" justifyContent="flex-start" class="row-group-t">
+                <Label [text]="g.type.name" class="group-title"></Label>
+              </FlexboxLayout>
+              <FlexboxLayout flexDirection="row" justifyContent="flex-start" class="elements-list"
+                             *ngFor="let el of g.elements;let oi=index" [ngClass]="{ 'row-group': true }">
+                <FlexboxLayout flexDirection="column" justifyContent="flex-start" class="data-el-l">
+                  <app-cart-row-admin [existOrder]="true" [order]="order" [oneExtraPrice]="order.oneExtraPrice" [cartEl]="el" (emitChange)="updateCart($event)" (emitRemove)="remove($event)" [plusCartCategories]="plusCartCategories" [appConfig]="appConfig"
+                                      [elementOptions]="elementOptions" [offsetIndex]="oi">
+                  </app-cart-row-admin>
+                </FlexboxLayout>
+              </FlexboxLayout>
+            </FlexboxLayout>
+          </FlexboxLayout>
+        </ScrollView>
+      </StackLayout>
+      <StackLayout row="2" orientation="horizontal" class="navi-beam">
+        <FlexboxLayout flexDirection="row" flexWrap="wrap" class="p-10">
+          <FlexboxLayout alignItems="center" class="change-bt" (tap)="changeDay()">
+            <Label class="set-label">
+              <FormattedString>
+                <Span text="&#xf783;" class="fas"></Span>
+                <Span text=" "></Span>
+                <Span [text]="order.endAt | date: 'dd.MM.yy'"></Span>
+              </FormattedString>
+            </Label>
+          </FlexboxLayout>
+          <FlexboxLayout alignItems="center" class="change-bt" (tap)="changeDateTime()">
+            <Label class="set-label">
+              <FormattedString>
+                <Span text="&#xf017;" class="fas"></Span>
+                <Span text=" "></Span>
+                <Span [text]="order.endAt | date: 'HH:mm:ss'"></Span>
+              </FormattedString>
+            </Label>
+          </FlexboxLayout>
+          <FlexboxLayout alignItems="center" height="40" class="change-bt-info" (tap)="setEditInfo()">
+            <Label>
+              <FormattedString>
+                <Span text="&#xf129;" class="fas"></Span>
+                <Span text="  Dodatkowe info."></Span>
+              </FormattedString>
+            </Label>
+          </FlexboxLayout>
+          <!-- <FlexboxLayout alignItems="center" height="40" *ngIf="!order.reservation" class="change-bt-info" (tap)="setUnsetAsReservation()">
+            <Label>
+              <FormattedString>
+                <Span text="&#xf59d;" class="fas"></Span>
+                <Span text=" "></Span>
+                <Span [text]="'Bieżące zam.'"></Span>
+              </FormattedString>
+            </Label>
+          </FlexboxLayout>
+          <FlexboxLayout alignItems="center" height="40" class="change-bt-info" *ngIf="order.reservation" (tap)="setUnsetAsReservation()">
+            <Label>
+              <FormattedString>
+                <Span text="&#xf3ff;" class="fas"></Span>
+                <Span text=" "></Span>
+                <Span [text]="'Rezerwacja'"></Span>
+              </FormattedString>
+            </Label>
+          </FlexboxLayout> -->
+        </FlexboxLayout>
+      </StackLayout>
+    </GridLayout>
+  </StackLayout>
+</RadSideDrawer>

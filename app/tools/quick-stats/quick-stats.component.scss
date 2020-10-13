@@ -1,0 +1,67 @@
+FlexboxLayout.box {}
+
+Label.label-what {
+    font-size: 17;
+}
+
+Label.day {
+    font-size: 20;
+}
+
+Label.price-total {
+    font-size: 20;
+    color: #ff0000;
+}
+
+Label.price-total-all {
+    font-size: 20;
+    color: #ff0000;
+}
+
+Label.price-not {
+    font-size: 16;
+    color: #ffffff;
+    text-decoration: line-through;
+}
+
+Label.label-col {
+    font-size: 14;
+    margin-top: 6;
+}
+
+Label.l-qua {
+    font-size: 14;
+}
+
+Label.l-total {
+    font-size: 14;
+    color: #ff0000;
+}
+
+Label.l-total-not {
+    font-size: 14;
+    color: #ffffff;
+}
+
+Label.through-line {
+    text-decoration: line-through;
+}
+
+Label.size-all {
+    font-size: 20;
+    color: #ffffff;
+}
+
+FlexboxLayout.close-box {
+    margin-top: 20;
+}
+
+Button.close {
+    background-color: #4e412c !important;
+    margin: 0 !important;
+    padding: 0 20 0 20 !important;
+    text-transform: uppercase;
+    color: #ffffff;
+    font-size: 14;
+    width: 100%;
+}

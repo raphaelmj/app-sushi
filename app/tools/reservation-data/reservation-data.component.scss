@@ -1,0 +1,59 @@
+@import "../../assets/scss/variables.scss";
+
+TextView {
+    placeholder-color: #ffffff;
+    color: #ffffff;
+    border-color: #ffffff;
+    font-size: 16;
+}
+
+TextField {
+    margin-bottom: 2;
+    placeholder-color: #ffffff;
+    color: #ffffff;
+    border-color: #ffffff;
+    font-size: 16;
+}
+
+TextField.ng-valid {
+    margin-bottom: 2;
+}
+
+TextField.ng-invalid {
+    margin-bottom: 2;
+}
+
+FlexboxLayout.bt-qua {
+    height: 48;
+    width: 48l
+}
+
+Label.size {
+    font-size: 20;
+}
+
+
+FlexboxLayout.label-size {
+    margin-bottom: 20;
+}
+
+FlexboxLayout.set-row {
+    margin-top: 20;
+    margin-bottom: 20;
+}
+
+Button.set-bt {
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 50;
+    color: #ffffff;
+    background-color: #4e412c;
+}
+
+Button.unset-bt {
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 50;
+    background-color: transparent;
+    color: #ffffff;
+}

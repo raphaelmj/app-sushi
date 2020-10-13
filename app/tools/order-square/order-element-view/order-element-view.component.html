@@ -1,0 +1,257 @@
+<FlexboxLayout flexDirection="column" class="elem-data" (tap)="changeStatus()" width="49%"
+               [ngClass]="{'ready': element.status,'is-drink':element.type.id==2, 'is-grill':element.grill>0 || isPlusGrill}">
+    <FlexboxLayout flexDirection="row" flexWrap="wrap" alignItems="center" justifyContent="space-between">
+        <FlexboxLayout *ngIf="element.elementType!='config_steps_price_many'" flexWrap="wrap">
+            <Label [text]="element.quantity+' x '+element.shortName" textWrap="true"></Label>
+            <Label *ngIf="element.elementType=='special'" [text]="'(budżet: '+element.price+' pln)'" textWrap="true"></Label>
+            <Image src="~/images/krewetka.png" width="20" class="image-elems" *ngIf="element.isSea"
+                   [ngClass]="{'ready-image': element.status}"></Image>
+            <Label class="label-icon" *ngIf="element.serveType=='plate'">
+                <FormattedString>
+                    <Span text="&#xf2e7;" class="fas"></Span>
+                </FormattedString>
+            </Label>
+            <Label class="label-icon p-5" *ngIf="element.serveType=='pack'">
+                <FormattedString>
+                    <Span text="&#xf49e;" class="fas"></Span>
+                </FormattedString>
+            </Label>
+        </FlexboxLayout>
+
+        <FlexboxLayout alignItems="center" flexWrap="wrap" *ngIf="element.elementType=='config_steps_price_many'">
+            <FlexboxLayout flexDirection="column" flexWrap="wrap">
+                <ng-container *ngFor="let step of element.stepOptionsList|configStepByElementViewGroup:element.element">
+                    <Label class="label-name" textWrap="true">
+                        <FormattedString>
+                            <Span [text]="step.name"></Span>
+                            <Span text=" "></Span>
+                            <Span text="&#xf00d;" class="fas"></Span>
+                            <Span [text]="' '+step.quantity"></Span>
+                            <Span text=" "></Span>
+                        </FormattedString>
+                    </Label>
+                </ng-container>
+                <!-- <FlexboxLayout flexDirection="row" alignItems="center" class="step-tag" *ngFor="let stp of element.stepOptionsList;let i=index">
+                    <Label [text]="stp|configStepName:element.element:element.element.configStepsPrice" class="label-name" textWrap="true"></Label>
+                </FlexboxLayout> -->
+            </FlexboxLayout>
+            <FlexboxLayout flexWrap="wrap">
+                <Label *ngIf="element.elementType=='special'" textWrap="true" [text]="'(budżet: '+element.price+' pln)'"></Label>
+                <Image src="~/images/krewetka.png" width="20" class="image-elems" *ngIf="element.isSea"
+                       [ngClass]="{'ready-image': element.status}"></Image>
+                <Label class="label-icon" *ngIf="element.serveType=='plate'">
+                    <FormattedString>
+                        <Span text="&#xf2e7;" class="fas"></Span>
+                    </FormattedString>
+                </Label>
+                <Label class="label-icon p-5" *ngIf="element.serveType=='pack'">
+                    <FormattedString>
+                        <Span text="&#xf49e;" class="fas"></Span>
+                    </FormattedString>
+                </Label>
+            </FlexboxLayout>
+
+        </FlexboxLayout>
+        <!-- <ng-container *ngIf="element.canOnePlate && (element.quantity>1 || (element.quantity>0 && element.plusElements.length>0))">
+            <Image src="~/images/plate.png" width="20" class="image-elems" loadMode="async" *ngIf="element.onOnePlate"></Image>
+            <Image src="~/images/plates.png" width="20" class="image-elems" loadMode="async" *ngIf="!element.onOnePlate"></Image>
+        </ng-container> -->
+        <ng-container *ngIf="element.canOnePlate">
+            <Image src="~/images/plate.png" width="20" class="image-elems" loadMode="async" *ngIf="element.onOnePlate"></Image>
+            <!-- <Image src="~/images/plates.png" width="20" class="image-elems" loadMode="async" *ngIf="!element.onOnePlate"></Image> -->
+        </ng-container>
+    </FlexboxLayout>
+    <FlexboxLayout *ngIf="element.optionsElements" class="label-options" flexDirection="row" flexWrap="wrap">
+        <Label *ngIf="element.optionsElements.length" text="("></Label>
+        <Label *ngFor="let optse of element.optionsElements | descListGroup;let i=index"
+               [text]="((i!=0)?(', '):(''))+optse" textWrap="true"></Label>
+        <Label *ngIf="element.optionsElements.length" text=")"></Label>
+    </FlexboxLayout>
+    <FlexboxLayout flexDirection="row" flexWrap="wrap" *ngIf="element.plusElements">
+
+        <FlexboxLayout *ngFor="let d of element.plusElements" class="p-2" flexWrap="wrap">
+            <ng-container [ngSwitch]="d.elementType">
+                <ng-container *ngSwitchCase="'one_name'">
+                    <ng-container *ngIf="d.optionsElements.length==0">
+
+                        <Label [text]="' + '+d.shortName" textWrap="true"></Label>
+                        <Label class="label-name" textWrap="true">
+                            <FormattedString>
+                                <Span text=" "></Span>
+                                <Span text="&#xf00d;" class="fas"></Span>
+                                <Span [text]="' '+d.qunatity"></Span>
+                            </FormattedString>
+                        </Label>
+
+                    </ng-container>
+                    <ng-container *ngIf="d.optionsElements.length>0">
+
+                        <ng-container *ngFor="let opt of d.optionsElements|groupOptionsTypesQuantity">
+                            <Label [text]="' + '+d.shortName"></Label>
+                            <Label class="label-name" textWrap="true">
+                                <FormattedString>
+                                    <Span [text]="'('+opt.name+') '"></Span>
+                                    <Span text="&#xf00d;" class="fas"></Span>
+                                    <Span [text]="' '+opt.quantity"></Span>
+                                </FormattedString>
+                            </Label>
+                        </ng-container>
+
+                    </ng-container>
+
+                </ng-container>
+                <ng-container *ngSwitchCase="'many_names'">
+                    <ng-container *ngIf="d.optionsElements.length==0">
+                        <Label [text]="' + '+d.shortName" textWrap="true"></Label>
+                        <Label class="label-name" textWrap="true">
+                            <FormattedString>
+                                <Span text=" "></Span>
+                                <Span text="&#xf00d;" class="fas"></Span>
+                                <Span [text]="' '+d.qunatity"></Span>
+                            </FormattedString>
+                        </Label>
+                    </ng-container>
+
+                    <ng-container *ngIf="d.optionsElements.length>0">
+
+                        <ng-container *ngFor="let opt of d.optionsElements|groupOptionsTypesQuantity">
+                            <Label [text]="' + '+d.shortName"></Label>
+                            <Label class="label-name" textWrap="true">
+                                <FormattedString>
+                                    <Span [text]="'('+opt.name+') '"></Span>
+                                    <Span text="&#xf00d;" class="fas"></Span>
+                                    <Span [text]="' '+opt.quantity"></Span>
+                                </FormattedString>
+                            </Label>
+                        </ng-container>
+
+                    </ng-container>
+
+                </ng-container>
+                <ng-container *ngSwitchCase="'desc_elements'">
+
+                    <ng-container *ngIf="d.optionsElements.length==0">
+
+                        <Label [text]="' + '+d.shortName" textWrap="true"></Label>
+                        <Label class="label-name" textWrap="true">
+                            <FormattedString>
+                                <Span text=" "></Span>
+                                <Span text="&#xf00d;" class="fas"></Span>
+                                <Span [text]="' '+d.qunatity"></Span>
+                            </FormattedString>
+                        </Label>
+
+                    </ng-container>
+
+                    <ng-container *ngIf="d.optionsElements.length>0">
+
+                        <ng-container *ngFor="let opt of d.optionsElements|groupOptionsTypesQuantity">
+                            <Label [text]="' + '+d.shortName"></Label>
+                            <Label class="label-name" textWrap="true">
+                                <FormattedString>
+                                    <Span [text]="'('+opt.name+') '"></Span>
+                                    <Span text="&#xf00d;" class="fas"></Span>
+                                    <Span [text]="' '+opt.quantity"></Span>
+                                </FormattedString>
+                            </Label>
+                        </ng-container>
+
+                    </ng-container>
+
+
+                </ng-container>
+                <ng-container *ngSwitchCase="'config_price'">
+                    <Label [text]="' + '+d.shortName"></Label>
+                    <Label class="label-name" textWrap="true">
+                        <FormattedString>
+                            <Span text=" "></Span>
+                            <Span text="&#xf00d;" class="fas"></Span>
+                            <Span [text]="' '+d.qunatity"></Span>
+                        </FormattedString>
+                    </Label>
+                </ng-container>
+                <ng-container *ngSwitchCase="'config_steps_price'">
+                    <Label class="label-name" textWrap="true">
+                        <FormattedString>
+                            <Span text=" + "></Span>
+                            <Span [text]="d.shortName"></Span>
+                            <Span text=" "></Span>
+                            <Span text="&#xf00d;" class="fas"></Span>
+                            <Span [text]="' '+d.qunatity"></Span>
+                        </FormattedString>
+                    </Label>
+                </ng-container>
+                <ng-container *ngSwitchCase="'config_steps_price_many'">
+                    <ng-container *ngFor="let step of d|configStepsViewGroup">
+                        <Label class="label-name" textWrap="true">
+                            <FormattedString>
+                                <Span text=" + "></Span>
+                                <Span [text]="step.name"></Span>
+                                <Span text=" "></Span>
+                                <Span text="&#xf00d;" class="fas"></Span>
+                                <Span [text]="' '+step.quantity"></Span>
+                                <Span text=" "></Span>
+                            </FormattedString>
+                        </Label>
+                    </ng-container>
+
+                </ng-container>
+            </ng-container>
+            <Image src="~/images/krewetka.png" width="20" class="image-elems" *ngIf="d.isSea"
+                   [ngClass]="{'ready-image': element.status}"></Image>
+            <Label text=" "></Label>
+            <FlexboxLayout *ngIf="d.grill>0">
+                <Label text="("></Label>
+                <Image src="~/images/grill.png" width="18" class="image-elems" loadMode="async" [ngClass]="{'ready-image': element.status}"></Image>
+                <Label [text]="d.grill+'/'+d.qunatity"></Label>
+                <Label text=")"></Label>
+            </FlexboxLayout>
+            <FlexboxLayout *ngIf="d.gluten>0">
+                <Label text="("></Label>
+                <Image src="~/images/gluten.png" width="18" class="image-elems" loadMode="async" [ngClass]="{'ready-image': element.status}"></Image>
+                <Label [text]="d.gluten+'/'+d.qunatity"></Label>
+                <Label text=")"></Label>
+            </FlexboxLayout>
+        </FlexboxLayout>
+
+
+    </FlexboxLayout>
+    <FlexboxLayout flexDirection="row" flexWrap="wrap" *ngIf="element.descElements">
+        <Label [text]="element.descElements|mergeNamesArray" textWrap="true"></Label>
+    </FlexboxLayout>
+    <FlexboxLayout flexDirection="row" flexWrap="wrap" *ngIf="element.reverseElements">
+        <FlexboxLayout *ngFor="let d of element.reverseElements" class="p-2" flexWrap="wrap">
+            <Label [text]="d.from+' >> '+d.to" textWrap="true"></Label>
+        </FlexboxLayout>
+    </FlexboxLayout>
+    <FlexboxLayout flexDirection="row" flexWrap="wrap" *ngIf="element.description!=''">
+        <HtmlView [html]="element.description" class="desc-label" textWrap="true"></HtmlView>
+    </FlexboxLayout>
+    <FlexboxLayout flexDirection="row" flexWrap="wrap" *ngIf="element.gluten>0" class="gluten-free">
+        <Image src="~/images/gluten.png" width="18" class="image-elems" loadMode="async" textWrap="true" [ngClass]="{'ready-image': element.status}"></Image>
+        <Label [text]="'('+element.gluten+'/'+element.quantity+')'"></Label>
+    </FlexboxLayout>
+    <FlexboxLayout flexDirection="row" flexWrap="wrap" *ngIf="element.grill>0" class="gluten-free">
+        <Image src="~/images/grill.png" width="18" class="image-elems" loadMode="async" textWrap="true" [ngClass]="{'ready-image': element.status}"></Image>
+        <Label [text]="'('+element.grill+'/'+element.quantity+')'"></Label>
+    </FlexboxLayout>
+    <FlexboxLayout flexDirection="row" flexWrap="wrap">
+        <ng-container *ngFor="let item of element.acc">
+            <ng-container *ngIf="item.howMany>0">
+                <Label [text]="'('+item.acc.name+' '+item.howMany+'+)'" textWrap="true"></Label>
+            </ng-container>
+            <ng-container *ngIf="item.howMany==-1">
+                <Label [text]="'(bez '+item.acc.name+')'" textWrap="true"></Label>
+            </ng-container>
+        </ng-container>
+    </FlexboxLayout>
+    <FlexboxLayout flexDirection="row" class="extra-plus" flexWrap="wrap" *ngIf="element.extra>0">
+        <Label [text]="'extra: '+element.extra+' x '+order.oneExtraPrice+' pln'" textWrap="true"></Label>
+    </FlexboxLayout>
+    <FlexboxLayout flexDirection="row" alignItems="center" flexWrap="wrap" justifyContent="center" *ngIf="changeInProgress">
+        <ActivityIndicator [busy]="changeInProgress"></ActivityIndicator>
+    </FlexboxLayout>
+    <FlexboxLayout alignItems="center" justifyContent="flex-end">
+
+    </FlexboxLayout>
+</FlexboxLayout>

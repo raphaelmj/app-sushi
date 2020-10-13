@@ -1,0 +1,36 @@
+@import "../../assets/scss/variables.scss";
+
+Label.role-label {
+  color: #ac955c;
+  text-align: center;
+  padding: 10;
+}
+
+Button.active {
+  background-color: #4e412c;
+  color: #ffffff;
+}
+
+Label.label-section {
+  text-align: center;
+  font-size: 20;
+  padding: 10;
+}
+
+Button.check-updates {
+  background-color: #806e42;
+  color: #ffffff;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+
+Button.link {
+  margin: 0 0 10 0 !important;
+  padding: 0 !important;
+}
+
+Button.logout {
+  margin: 0 !important;
+  padding: 0 !important;
+}

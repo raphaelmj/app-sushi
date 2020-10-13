@@ -1,0 +1,166 @@
+@import "../../assets/scss/variables.scss";
+
+TextView {
+    margin-top: 30;
+    placeholder-color: #ffffff;
+    color: #ffffff;
+    border-color: #ffffff;
+}
+
+TextField {
+    placeholder-color: #ffffff;
+    color: #ffffff;
+    border-color: #ffffff;
+    font-size: 16;
+}
+
+TextField.ng-valid {
+    margin-bottom: 2;
+}
+
+TextField.ng-invalid {
+    margin-bottom: 2;
+    border-color: #ff0000;
+}
+
+TextField.q-field {
+    width: 60 !important;
+    text-align: center;
+}
+
+TextField.price-f {
+    width: 100;
+}
+
+
+Button.clear-close {
+    margin: 0 !important;
+    padding: 0 !important;
+    background-color: #000000 !important;
+    color: #ffffff;
+    height: 40;
+    font-size: 14;
+}
+
+Button.options-bt {
+    margin: 0 !important;
+    padding: 0 !important;
+    background-color: #504426 !important;
+    color: #ffffff;
+    height: 40;
+    font-size: 14;
+}
+
+Button.add-bt {
+    margin: 0 !important;
+    padding: 0 !important;
+    background-color: #504426 !important;
+    color: #ffffff;
+    height: 40;
+    font-size: 14;
+}
+
+FlexboxLayout.bt-qua {
+    height: 50 !important;
+    width: 50 !important;
+    margin: 5 0 0 0 !important;
+    padding: 0 !important;
+    background-color: #504426;
+    color: #ffffff;
+}
+
+Label.price-red {
+    color: #ff0000;
+    font-size: 28;
+    text-align: right;
+}
+
+Label.label-info {
+    font-size: 16;
+}
+
+FlexboxLayout.sea-button.sea {
+    Image {
+        opacity: 1;
+    }
+}
+
+FlexboxLayout.sea-button {
+    Image {
+        opacity: 0.4;
+    }
+}
+
+FlexboxLayout.button-opt {
+    margin-bottom: 20px;
+}
+
+Button {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+Button.in-active-bt {
+    opacity: 0.4;
+}
+
+
+Label.label-icon {
+    font-size: 40;
+    width: 50;
+    text-align: center;
+}
+
+Button.bt-tag {
+    background-color: $body-bg;
+    margin: 0 0 0 0 !important;
+    padding: 0 10 0 10 !important;
+    border-radius: 0;
+    color: #ffffff;
+}
+
+Button.button-option {
+    margin: 0 !important;
+    padding: 0 10 0 10 !important;
+    color: #ffffff;
+    background-color: #4e412c;
+}
+
+GridLayout.grid-view {
+    border-color: #ffffff;
+    border-width: 1;
+}
+
+StackLayout.stack-view {
+    background-color: $body-bg;
+}
+
+FlexboxLayout.step-tag {
+    height: 45;
+    background-color: #4e412c;
+    color: #ffffff;
+    margin-right: 5;
+    margin-bottom: 5;
+
+    Label {
+        font-size: 14;
+    }
+
+    Label.label-price {
+        color: #ff0000;
+        font-size: 14;
+        padding-left: 10;
+        padding-right: 10;
+    }
+
+    Label.label-name {
+        font-size: 14;
+    }
+
+    Label.minus {
+        margin: 0 !important;
+        padding: 0 10 0 10 !important;
+        color: #ffffff;
+        background-color: transparent;
+    }
+}

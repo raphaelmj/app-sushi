@@ -1,0 +1,13 @@
+<FlexboxLayout alignItems="center" justifyContent="center" style="width: 100%;">
+  <Button (tap)="change('prev')" [ngClass]="{ 'inactive-bt': current == 1 || pages == 0 }">
+    <FormattedString>
+      <Span text="&#xf053;" class="fas"></Span>
+    </FormattedString>
+  </Button>
+  <Label [text]="(pages == 0 ? 0 : current) + '/' + pages"></Label>
+  <Button (tap)="change('next')" [ngClass]="{ 'inactive-bt': current == pages || pages == 0 }">
+    <FormattedString>
+      <Span text="&#xf054;" class="fas"></Span>
+    </FormattedString>
+  </Button>
+</FlexboxLayout>

@@ -1,0 +1,11 @@
+<GridLayout rows="*,*,*" class="grid-ele p-10" width="50%">
+    <Label [text]="element.name | stripTags" class="htmlLabel" width="100%" textWrap="true" row="0"></Label>
+    <Label [text]="'cena w konfiguracji'" class="red-price" row="1"></Label>
+    <FlexboxLayout flexDirection="row" justifyContent="flex-start" row="2">
+        <Button class="add-cart-bt" (tap)="addToCart()" height="40" width="100%">
+            <FormattedString>
+                <Span text="&#xf217;" class="fas"></Span>
+            </FormattedString>
+        </Button>
+    </FlexboxLayout>
+</GridLayout>

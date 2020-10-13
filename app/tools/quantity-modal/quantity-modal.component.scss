@@ -1,0 +1,55 @@
+@import "../../assets/scss/variables.scss";
+
+TextView {
+    placeholder-color: #000000;
+    color: #ffffff;
+    border-color: #ffffff;
+}
+
+TextField {
+    margin-bottom: 2;
+    placeholder-color: #000000;
+    color: #ffffff;
+    border-color: #ffffff;
+    font-size: 16;
+}
+
+TextField.ng-valid {
+    margin-bottom: 2;
+}
+
+TextField.ng-invalid {
+    margin-bottom: 2;
+}
+
+FlexboxLayout.bt-qua {
+    height: 48;
+    width: 48l
+}
+
+Label.label-info {
+    font-size: 16;
+}
+
+Label.label-icon {
+    font-size: 40;
+    width: 50;
+    text-align: center;
+    margin-right: 20;
+}
+
+FlexboxLayout.button-acc {
+    padding-left: 20;
+    padding-right: 20;
+
+    Label {
+        font-size: 16;
+    }
+}
+
+Button.add-bt {
+    background-color: #504426;
+    // padding: 0 !important;
+    border-radius: 0;
+    color: #ffffff;
+}

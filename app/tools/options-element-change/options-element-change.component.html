@@ -1,0 +1,23 @@
+<FlexboxLayout flexDirection="column" alignItems="center" justifyContent="center">
+    <FlexboxLayout>
+        <ScrollView orientation="horizontal">
+            <FlexboxLayout>
+                <Button *ngFor="let p of options" (tap)="pushType(p)" [text]="p" class="bt-add-tag"></Button>
+            </FlexboxLayout>
+        </ScrollView>
+    </FlexboxLayout>
+    <FlexboxLayout flexDirection="row" flexWrap="wrap">
+        <Button *ngFor="let optse of optionsElements;let i=index" class="bt-tag" (tap)="clearTag(i)">
+            <FormattedString>
+                <Span [text]="optse"></Span>
+                <Span text=" "></Span>
+                <Span text="&#xf00d;" class="fas"></Span>
+            </FormattedString>
+        </Button>
+    </FlexboxLayout>
+    <FlexboxLayout>
+        <Button (tap)="close()" text="Dodaj" class="btn-add" width="100%">
+
+        </Button>
+    </FlexboxLayout>
+</FlexboxLayout>

@@ -1,0 +1,187 @@
+<WrapLayout orientation="horizontal" [ngClass]="{'margin-top-10': plusElements.length>0}">
+    <ng-container *ngFor="let pl of plusElements; let i = index">
+
+        <ng-container *ngIf="pl.elementType!=elementType.configStepsPriceMany && pl.optionsElements.length==0">
+
+            <FlexboxLayout
+                           flexDirection="row"
+                           [width]="widthNormalPlus"
+                           alignItems="center"
+                           flexWrap="wrap"
+                           class="row-config-options"
+                           justifyContent="space-between">
+                <FlexboxLayout alignItems="center" alignItems="center" justifyContent="space-between" width="100%">
+
+                    <Label [text]="pl.shortName" class="p-10" textWrap="true"></Label>
+
+                    <FlexboxLayout [flexDirection]="(widthNormalPlus=='50%')?'column':'row'">
+                        <FlexboxLayout *ngIf="pl.grill>0 && pl.canGrill">
+                            <Label text=" ("></Label>
+                            <Image src="~/images/grill.png" width="18" class="image-elems" loadMode="async"></Image>
+                            <Label [text]="pl.grill+'/'+pl.qunatity"></Label>
+                            <Label text=") "></Label>
+                        </FlexboxLayout>
+                        <FlexboxLayout *ngIf="pl.gluten>0 && pl.hasGluten">
+                            <Label text=" ("></Label>
+                            <Image src="~/images/gluten.png" width="18" class="image-elems" loadMode="async"></Image>
+                            <Label [text]="pl.gluten+'/'+pl.qunatity"></Label>
+                            <Label text=") "></Label>
+                        </FlexboxLayout>
+                    </FlexboxLayout>
+
+                    <Label class="qua-label p-10">
+                        <FormattedString>
+                            <Span text=" "></Span>
+                            <Span text="&#xf00d;" class="fas"></Span>
+                            <Span [text]="' '+pl.qunatity"></Span>
+                        </FormattedString>
+                    </Label>
+                </FlexboxLayout>
+
+                <FlexboxLayout alignItems="center" alignItems="center">
+                    <Label [text]="pl.price + ' pln'" class="red-price p-10"></Label>
+                    <Image
+                           src="~/images/krewetka.png"
+                           width="30"
+                           class="image-elems"
+                           *ngIf="pl.isSea">
+                    </Image>
+                </FlexboxLayout>
+
+                <FlexboxLayout class="remove" alignItems="center" (tap)="removePlusEl(i)">
+                    <Label class="p-10">
+                        <FormattedString>
+                            <Span text="&#xf068;" class="fas"></Span>
+                        </FormattedString>
+                    </Label>
+                </FlexboxLayout>
+            </FlexboxLayout>
+
+        </ng-container>
+
+
+        <ng-container *ngIf="pl.elementType==elementType.configStepsPriceMany  && pl.optionsElements.length==0">
+            <FlexboxLayout flexDirection="row" class="row-config-options" flexWrap="wrap" width="100%">
+                <FlexboxLayout alignItems="center" [width]="stepConfigListWidth">
+                    <WrapLayout orientation="horizontal">
+                        <FlexboxLayout
+                                       alignItems="center"
+                                       justifyContent="space-between"
+                                       flexDirection="row"
+                                       flexWrap="wrap"
+                                       *ngFor="let item of pl.stepOptionsList;let j=index"
+                                       [width]="widthOptionsSteps"
+                                       class="element-step-option">
+                            <Label [text]="item|configStepElementName:pl.configStepsPrice" class="nameLabel p-5" textWrap="true"></Label>
+                            <FlexboxLayout class="remove-step" (tap)="removePlusStep(i,j)">
+                                <Label class="p-10">
+                                    <FormattedString>
+                                        <Span text="&#xf00d;" class="fas"></Span>
+                                    </FormattedString>
+                                </Label>
+                            </FlexboxLayout>
+                        </FlexboxLayout>
+                    </WrapLayout>
+                </FlexboxLayout>
+                <FlexboxLayout alignItems="center" justifyContent="space-between" [width]="stepConfigPriceWidth">
+                    <Label [text]="pl.price + ' pln'" class="red-price p-5"></Label>
+                    <Image
+                           src="~/images/krewetka.png"
+                           width="30"
+                           class="image-elems"
+                           *ngIf="pl.isSea">
+                    </Image>
+                    <FlexboxLayout *ngIf="pl.grill>0 && pl.canGrill">
+                        <Label text=" ("></Label>
+                        <Image src="~/images/grill.png" width="18" class="image-elems" loadMode="async"></Image>
+                        <Label [text]="pl.grill+'/'+pl.qunatity"></Label>
+                        <Label text=") "></Label>
+                    </FlexboxLayout>
+                    <FlexboxLayout *ngIf="pl.gluten>0 && pl.hasGluten">
+                        <Label text=" ("></Label>
+                        <Image src="~/images/gluten.png" width="18" class="image-elems" loadMode="async"></Image>
+                        <Label [text]="pl.gluten+'/'+pl.qunatity"></Label>
+                        <Label text=") "></Label>
+                    </FlexboxLayout>
+                    <FlexboxLayout class="remove p-10" (tap)="removePlusEl(i)" justifyContent="center" alignItems="center">
+                        <Label>
+                            <FormattedString>
+                                <Span text="&#xf068;" class="fas"></Span>
+                            </FormattedString>
+                        </Label>
+                    </FlexboxLayout>
+                </FlexboxLayout>
+            </FlexboxLayout>
+        </ng-container>
+
+        <ng-container *ngIf="pl.optionsElements.length>0">
+
+            <FlexboxLayout flexDirection="row" class="row-config-options" alignItems="center" flexWrap="wrap" width="100%">
+                <FlexboxLayout alignItems="center" [width]="stepConfigListWidth">
+                    <WrapLayout orientation="horizontal">
+                        <FlexboxLayout
+                                       alignItems="center"
+                                       justifyContent="space-between"
+                                       flexDirection="row"
+                                       flexWrap="wrap"
+                                       *ngFor="let item of pl.optionsElements;let j=index"
+                                       [width]="widthOptionsSteps"
+                                       class="element-step-option">
+                            <Label [text]="pl.shortName+' >> '+item" class="nameLabel p-5" textWrap="true"></Label>
+                            <!-- <FlexboxLayout *ngIf="pl.grill>0 && pl.canGrill">
+                  <Label text=" ("></Label>
+                  <Image src="~/images/grill.png" width="18" class="image-elems" loadMode="async"></Image>
+                  <Label [text]="pl.grill+'/'+pl.qunatity"></Label>
+                  <Label text=") "></Label>
+                </FlexboxLayout>
+                <FlexboxLayout *ngIf="pl.gluten>0 && pl.hasGluten">
+                  <Label text=" ("></Label>
+                  <Image src="~/images/gluten.png" width="18" class="image-elems" loadMode="async"></Image>
+                  <Label [text]="pl.gluten+'/'+pl.qunatity"></Label>
+                  <Label text=") "></Label>
+                </FlexboxLayout> -->
+                            <FlexboxLayout class="remove-step" (tap)="removePlusOption(i,j)">
+                                <Label class="p-10">
+                                    <FormattedString>
+                                        <Span text="&#xf00d;" class="fas"></Span>
+                                    </FormattedString>
+                                </Label>
+                            </FlexboxLayout>
+                        </FlexboxLayout>
+                    </WrapLayout>
+                </FlexboxLayout>
+                <FlexboxLayout alignItems="center" justifyContent="space-between" [width]="stepConfigPriceWidth">
+                    <Label [text]="pl.price + ' pln'" class="red-price p-5"></Label>
+                    <Image
+                           src="~/images/krewetka.png"
+                           width="30"
+                           class="image-elems"
+                           *ngIf="pl.isSea">
+                    </Image>
+                    <FlexboxLayout *ngIf="pl.grill>0 && pl.canGrill">
+                        <Label text=" ("></Label>
+                        <Image src="~/images/grill.png" width="18" class="image-elems" loadMode="async"></Image>
+                        <Label [text]="pl.grill+'/'+pl.qunatity"></Label>
+                        <Label text=") "></Label>
+                    </FlexboxLayout>
+                    <FlexboxLayout *ngIf="pl.gluten>0 && pl.hasGluten">
+                        <Label text=" ("></Label>
+                        <Image src="~/images/gluten.png" width="18" class="image-elems" loadMode="async"></Image>
+                        <Label [text]="pl.gluten+'/'+pl.qunatity"></Label>
+                        <Label text=") "></Label>
+                    </FlexboxLayout>
+                    <FlexboxLayout class="remove p-10" (tap)="removePlusEl(i)" justifyContent="center" alignItems="center">
+                        <Label>
+                            <FormattedString>
+                                <Span text="&#xf068;" class="fas"></Span>
+                            </FormattedString>
+                        </Label>
+                    </FlexboxLayout>
+                </FlexboxLayout>
+            </FlexboxLayout>
+
+
+
+        </ng-container>
+    </ng-container>
+</WrapLayout>

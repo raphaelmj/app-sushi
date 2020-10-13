@@ -1,0 +1,153 @@
+<GridLayout class="sideStackLayout" rows="*,50" class="p-10">
+    <StackLayout row="0">
+        <TabView
+                 tabTextFontSize="16"
+                 selectedIndex="0"
+                 (selectedIndexChanged)="onSelectedIndexchanged($event)">
+            <StackLayout *tabItem="{ title: 'Opis' }" [formGroup]="formDesc">
+                <ScrollView [height]="scrollHeight">
+                    <GridLayout rows="120,90,90,*">
+                        <GridLayout columns="*" row="0">
+                            <TextView formControlName="description" hint="Opis..."></TextView>
+                        </GridLayout>
+                        <GridLayout columns="180,*" row="1">
+                            <StackLayout column="0">
+                                <FlexboxLayout flexDirection="row" alignItems="center" width="100%">
+                                    <TextField formControlName="price" keyboardType="integer" class="price-f"></TextField>
+                                    <Label text=" pln"></Label>
+                                </FlexboxLayout>
+                            </StackLayout>
+                            <StackLayout column="1">
+                                <FlexboxLayout flexDirection="row" alignItems="center">
+                                    <FlexboxLayout (tap)="qChange('minus')" class="bt-qua" alignItems="center" justifyContent="center">
+                                        <Label>
+                                            <FormattedString>
+                                                <Span text="&#xf068;" class="fas"></Span>
+                                            </FormattedString>
+                                        </Label>
+                                    </FlexboxLayout>
+                                    <TextField
+                                               class="q-field"
+                                               editable="false"
+                                               keyboardType="integer"
+                                               formControlName="quantity">
+                                    </TextField>
+                                    <FlexboxLayout (tap)="qChange('plus')" class="bt-qua" alignItems="center" justifyContent="center">
+                                        <Label>
+                                            <FormattedString>
+                                                <Span text="&#xf067;" class="fas"></Span>
+                                            </FormattedString>
+                                        </Label>
+                                    </FlexboxLayout>
+                                </FlexboxLayout>
+
+                            </StackLayout>
+                        </GridLayout>
+                        <StackLayout row="2" class="p-15">
+                            <Label [text]="priceTotal+' pln'" class="price-red"></Label>
+                        </StackLayout>
+                        <FlexboxLayout row="3" flexDirection="column" class="p-15">
+                            <FlexboxLayout class="sea-button button-opt" column="1" alignItems="center" justifyContent="space-between" [ngClass]="{'sea': isSea}">
+                                <Image src="~/images/krewetka.png" width="50" class="image-elems" loadMode="async" (tap)="changeSea()"></Image>
+                                <FlexboxLayout>
+                                    <Label text="z owocami morza" class="label-info" *ngIf="isSea" (tap)="changeSea()"></Label>
+                                    <Label text="bez owoców morza" class="label-info" *ngIf="!isSea" (tap)="changeSea()"></Label>
+                                </FlexboxLayout>
+                            </FlexboxLayout>
+
+                            <FlexboxLayout class="button-opt" alignItems="center" justifyContent="space-between">
+                                <Image src="~/images/gluten.png" width="50" class="image-elems" loadMode="async" (tap)="selectGluten()"></Image>
+                                <Label class="label-info" (tap)="selectGluten()">
+                                    <FormattedString>
+                                        <Span [text]="gluten+'/'+formDesc.get('quantity').value"></Span>
+                                        <Span text=" bez glutenu"></Span>
+                                    </FormattedString>
+                                </Label>
+                            </FlexboxLayout>
+                            <FlexboxLayout class="button-opt" alignItems="center" justifyContent="space-between">
+                                <Image src="~/images/grill.png" width="50" class="image-elems" loadMode="async" (tap)="selectGrill()"></Image>
+                                <Label class="label-info" (tap)="selectGrill()">
+                                    <FormattedString>
+                                        <Span [text]="grill+'/'+formDesc.get('quantity').value"></Span>
+                                        <Span text=" grillowane"></Span>
+                                    </FormattedString>
+                                </Label>
+                            </FlexboxLayout>
+                            <FlexboxLayout class="button-opt" alignItems="center" justifyContent="space-between">
+                                <Label class="label-icon" *ngIf="serveType=='plate'" (tap)="changeServe()">
+                                    <FormattedString>
+                                        <Span text="&#xf2e7;" class="fas"></Span>
+                                    </FormattedString>
+                                </Label>
+                                <Label class="label-icon" *ngIf="serveType=='pack'" (tap)="changeServe()">
+                                    <FormattedString>
+                                        <Span text="&#xf49e;" class="fas"></Span>
+                                    </FormattedString>
+                                </Label>
+                                <Label class="label-info" *ngIf="serveType=='plate'" (tap)="changeServe()">
+                                    <FormattedString>
+                                        <Span text="na miejscu"></Span>
+                                    </FormattedString>
+                                </Label>
+                                <Label class="label-info" *ngIf="serveType=='pack'" (tap)="changeServe()">
+                                    <FormattedString>
+                                        <Span text="zapakować na wynos"></Span>
+                                    </FormattedString>
+                                </Label>
+                            </FlexboxLayout>
+                            <FlexboxLayout class="button-opt" alignItems="center" justifyContent="space-between">
+                                <Image src="~/images/plate.png" width="50" class="image-elems" loadMode="async" *ngIf="onOnePlate" (tap)="changeOnePlate()"></Image>
+                                <Image src="~/images/plates.png" width="50" class="image-elems" loadMode="async" *ngIf="!onOnePlate" (tap)="changeOnePlate()"></Image>
+                                <Label class="label-info" *ngIf="onOnePlate" (tap)="changeOnePlate()">
+                                    <FormattedString>
+                                        <Span text=" "></Span>
+                                        <Span text="na jednym talerzu"></Span>
+                                    </FormattedString>
+                                </Label>
+                                <Label class="label-info" *ngIf="!onOnePlate" (tap)="changeOnePlate()">
+                                    <FormattedString>
+                                        <Span text=" "></Span>
+                                        <Span text="na wielu talerzach"></Span>
+                                    </FormattedString>
+                                </Label>
+                            </FlexboxLayout>
+                            <!-- <FlexboxLayout flexDirection="row" justifyContent="center" flexWrap="wrap" class="p-10">
+                                <FlexboxLayout class="button-acc" alignItems="center" justifyContent="space-between" *ngFor="let item of accArray">
+                                    <Label [text]="'+ '+item.acc.name+' x '+item.howMany" (tap)="selectAcc(item.acc)"></Label>
+                                </FlexboxLayout>
+                            </FlexboxLayout> -->
+                            <FlexboxLayout flexDirection="row" class="p-10" width="100%">
+                                <app-acc-elements-config [acc]="appConfig.data.acc" [dataAcc]="accArray" (emitAccData)="changeAcc($event)"></app-acc-elements-config>
+                            </FlexboxLayout>
+                        </FlexboxLayout>
+                    </GridLayout>
+                </ScrollView>
+
+            </StackLayout>
+            <StackLayout *tabItem="{ title: 'Uwagi' }">
+                <app-desc-view
+                               [descWordsGroups]="elementOptions.desc"
+                               [(wordsOutput)]="wordsOutput"></app-desc-view>
+            </StackLayout>
+
+        </TabView>
+    </StackLayout>
+    <StackLayout row="1">
+        <GridLayout columns="*,*">
+            <Button class="close" (tap)="closeAndSave()" column="0">
+                <FormattedString>
+                    <Span text="&#xf0c7;" class="fas"></Span>
+                    <Span text=" Zapisz i zamknij" class="fas"></Span>
+                </FormattedString>
+            </Button>
+
+            <Button class="clear-close" (tap)="closeExit()" column="1">
+                <FormattedString>
+                    <Span text="&#xf00d;" class="fas"></Span>
+                    <Span text=" Anuluj" class="fas"></Span>
+                </FormattedString>
+            </Button>
+        </GridLayout>
+
+    </StackLayout>
+</GridLayout>

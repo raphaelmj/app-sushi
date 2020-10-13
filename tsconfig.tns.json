@@ -1,0 +1,8 @@
+{
+    "extends": "./tsconfig",
+    "compilerOptions": {
+        "outDir": "app",
+        "module": "esNext",
+        "moduleResolution": "node"
+    }
+}

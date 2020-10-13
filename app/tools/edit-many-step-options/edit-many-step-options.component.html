@@ -1,0 +1,82 @@
+<GridLayout [rows]="'*,80'">
+    <ScrollView row="0">
+        <GridLayout [rows]="'auto,auto,auto,auto,auto'">
+            <StackLayout row="0" *ngIf="!element.skipStepOne">
+                <FlexboxLayout flexDirection="row" flexWrap="wrap" class="p-15" justifyContent="center">
+                    <Button
+                            *ngFor="let item of element.configStepsPrice;let i=index"
+                            [text]="item.name"
+                            class="button-option"
+                            (tap)="selectFirstType(i)"
+                            [ngClass]="{'active': configFirstIndex==i}"></Button>
+                </FlexboxLayout>
+                <FlexboxLayout flexDirection="row" flexWrap="wrap" class="p-15" justifyContent="center" *ngIf="element.configStepsPrice[configFirstIndex].types.length>1">
+                    <Button
+                            *ngFor="let item of element.configStepsPrice[configFirstIndex].types;let i=index"
+                            [text]="item.type"
+                            class="button-option"
+                            (tap)="selectSecondType(i)"
+                            [ngClass]="{'active': configSecondIndex==i}"></Button>
+                </FlexboxLayout>
+                <FlexboxLayout flexDirection="row" flexWrap="wrap" class="p-15" justifyContent="center">
+                    <Button
+                            *ngFor="let item of element.configStepsPrice[configFirstIndex].types[configSecondIndex].options;let i=index"
+                            [text]="item.name"
+                            (tap)="selectThirdType(i)"
+                            [ngClass]="{'active': configThirdIndex==i}"
+                            class="button-option"></Button>
+                </FlexboxLayout>
+            </StackLayout>
+            <StackLayout row="0" *ngIf="element.skipStepOne">
+                <FlexboxLayout flexDirection="row" flexWrap="wrap" class="p-15" justifyContent="center">
+                    <Button
+                            *ngFor="let item of mergeSteps;let i=index"
+                            [text]="item.name"
+                            class="button-option"
+                            (tap)="selectFirstSecondType(item)"
+                            [ngClass]="{'active': configFirstIndex==item.indexOne && configSecondIndex==item.indexTwo}"></Button>
+                </FlexboxLayout>
+                <FlexboxLayout flexDirection="row" flexWrap="wrap" class="p-15" justifyContent="center">
+                    <Button
+                            *ngFor="let item of element.configStepsPrice[configFirstIndex].types[configSecondIndex].options;let i=index"
+                            [text]="item.name"
+                            (tap)="selectThirdType(i)"
+                            [ngClass]="{'active': configThirdIndex==i}"
+                            class="button-option"></Button>
+                </FlexboxLayout>
+            </StackLayout>
+            <GridLayout row="1" rows="45,auto">
+                <StackLayout row="0">
+                    <Button class="plus-bt" (tap)="addStepOption()">
+                        <FormattedString>
+                            <Span text="&#xf067;" class="fas"></Span>
+                        </FormattedString>
+                    </Button>
+                </StackLayout>
+                <FlexboxLayout flexDirection="row" flexWrap="wrap" row="1">
+                    <FlexboxLayout flexDirection="row" alignItems="center" class="step-tag p-10" *ngFor="let stp of stepOptionsList;let i=index">
+                        <Label [text]="stp|configStepName:element:element.configStepsPrice" class="label-name" textWrap="true"></Label>
+                        <Label class="label-price">
+                            <FormattedString>
+                                <Span [text]="stp|configStepPrice:element.configStepsPrice"></Span>
+                                <Span [text]="' pln'"></Span>
+                            </FormattedString>
+                        </Label>
+                        <Label class="minus" (tap)="removeStepOption(i)">
+                            <FormattedString>
+                                <Span text="&#xf00d;" class="fas"></Span>
+                            </FormattedString>
+                        </Label>
+                    </FlexboxLayout>
+                </FlexboxLayout>
+            </GridLayout>
+            <StackLayout row="1" class="p-15">
+                <!-- <Label [text]="priceTotal+' pln'" class="price-red" *ngIf="priceTotal"></Label> -->
+            </StackLayout>
+        </GridLayout>
+    </ScrollView>
+
+    <GridLayout [rows]="'*'" row="1">
+        <Button text="Zapisz zamknij" row="1" (tap)="close()" class="add-bt"></Button>
+    </GridLayout>
+</GridLayout>

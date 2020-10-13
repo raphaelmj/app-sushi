@@ -1,0 +1,98 @@
+TextView {
+    margin-top: 30;
+    placeholder-color: #ffffff;
+    color: #ffffff;
+    border-color: #ffffff;
+}
+
+TextField {
+    placeholder-color: #ffffff;
+    color: #ffffff;
+    border-color: #ffffff;
+    font-size: 16;
+}
+
+TextField.ng-valid {
+    margin-bottom: 2;
+}
+
+TextField.ng-invalid {
+    margin-bottom: 2;
+    border-color: #ff0000;
+}
+
+TextField.q-field {
+    width: 60 !important;
+    text-align: center;
+}
+
+TextField.price-f {
+    width: 100;
+}
+
+Button.close {
+    margin: 0 !important;
+    padding: 0 !important;
+    background-color: #504426 !important;
+    color: #ffffff;
+    height: 50;
+}
+
+Button.clear-close {
+    margin: 0 !important;
+    padding: 0 !important;
+    background-color: #504426 !important;
+    color: #ffffff;
+    height: 50;
+}
+
+
+FlexboxLayout.bt-qua {
+    height: 50 !important;
+    width: 50 !important;
+    margin: 5 0 0 0 !important;
+    padding: 0 !important;
+    background-color: #504426;
+    color: #ffffff;
+}
+
+Label.price-red {
+    color: #ff0000;
+    font-size: 20;
+    text-align: right;
+}
+
+Label.gluten-label {
+    font-size: 16;
+}
+
+FlexboxLayout.sea-button.sea {
+    opacity: 1;
+}
+
+FlexboxLayout.sea-button {
+    opacity: 0.4;
+}
+
+Label.label-info {
+    font-size: 16;
+}
+
+FlexboxLayout.button-opt {
+    margin-bottom: 20;
+}
+
+Label.label-icon {
+    font-size: 40;
+    width: 50;
+    text-align: center;
+}
+
+FlexboxLayout.button-acc {
+    padding-left: 20;
+    padding-right: 20;
+
+    Label {
+        font-size: 16;
+    }
+}

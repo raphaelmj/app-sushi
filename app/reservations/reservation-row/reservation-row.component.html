@@ -1,0 +1,241 @@
+<GridLayout columns="*,50" [width]="width" class="row-grid" [ngClass]="{'archive-r': order.status=='archive'}">
+    <GridLayout rows="*,*" column="0">
+        <GridLayout row="0" columns="50,*">
+            <FlexboxLayout column="0">
+                <FlexboxLayout
+                               class="number-o"
+                               [ngClass]="{'other-plus': datePosition=='after','other-minus':datePosition=='before'}"
+                               flexDirection="row"
+                               alignItems="center"
+                               justifyContent="center"
+                               width="50"
+                               height="80">
+                    <Label [text]="order.orderNumber"></Label>
+                    <Label *ngIf="datePosition=='after'">
+                        <FormattedString>
+                            <Span [text]="order.endDay|daySuffix:this.day:datePosition"></Span>
+                        </FormattedString>
+                    </Label>
+                </FlexboxLayout>
+
+            </FlexboxLayout>
+            <GridLayout column="1" columns="*,*">
+                <FlexboxLayout
+                               column="0"
+                               height="80"
+                               flexDirection="column"
+                               alignItems="flex-start"
+                               class="w-100 date-col"
+                               (tap)="openEdit()">
+                    <FlexboxLayout alignItems="center" height="40">
+                        <FlexboxLayout
+                                       width="40"
+                                       column="0"
+                                       class="icon"
+                                       alignItems="center"
+                                       justifyContent="center">
+                            <Label>
+                                <FormattedString>
+                                    <Span text="&#xf783;" class="fas"></Span>
+                                </FormattedString>
+                            </Label>
+                        </FlexboxLayout>
+                        <Label
+
+                               [text]="order.endAt | date: 'dd.MM.yyyy'"
+                               class="date-view"></Label>
+                    </FlexboxLayout>
+                    <FlexboxLayout alignItems="center" height="40">
+                        <FlexboxLayout
+                                       width="40"
+                                       column="0"
+                                       class="icon"
+                                       alignItems="center"
+                                       justifyContent="center">
+                            <Label>
+                                <FormattedString>
+                                    <Span text="&#xf017;" class="fas"></Span>
+                                </FormattedString>
+                            </Label>
+                        </FlexboxLayout>
+                        <Label
+
+                               [text]="order.endAt | date: 'H:mm:ss'"
+                               class="date-view"></Label>
+                    </FlexboxLayout>
+                </FlexboxLayout>
+                <FlexboxLayout
+                               column="1"
+                               flexDirection="column"
+                               alignItems="flex-start"
+                               justifyContent="center"
+                               height="80">
+                    <FlexboxLayout class="w-100" height="40" alignItems="center">
+                        <Label
+
+                               [text]="order.status|orderStatus"
+                               (tap)="changeStatus()"
+                               class="status-v p-8"></Label>
+                    </FlexboxLayout>
+                    <FlexboxLayout class="w-100" [ngClass]="{'paid-status': order.paid, 'not-paid':!order.paid}" height="40" alignItems="center">
+                        <Label
+                               column="1"
+                               *ngIf="order.paid"
+                               (tap)="changePaid()"
+                               class="status-v p-8">
+
+                            <FormattedString>
+                                <Span text="&#xf3d1;" class="fas"></Span>
+                                <Span text=" Zapłacone"></Span>
+                            </FormattedString>
+                        </Label>
+                        <Label
+                               column="1"
+                               *ngIf="!order.paid"
+                               (tap)="changePaid()"
+                               class="status-v p-8">
+                            <FormattedString>
+                                <Span text="&#xf3d1;" class="fas"></Span>
+                                <Span text=" Nie zapłacone"></Span>
+                            </FormattedString>
+                        </Label>
+                    </FlexboxLayout>
+
+                </FlexboxLayout>
+            </GridLayout>
+        </GridLayout>
+
+        <GridLayout columns="50,*" rows="auto,auto" row="1">
+            <FlexboxLayout column="0">
+
+            </FlexboxLayout>
+            <GridLayout column="1" rows="auto,auto,auto,auto">
+                <GridLayout row="0" columns="*" class="reserve-size" (tap)="openEdit()">
+                    <FlexboxLayout
+                                   column="0"
+                                   height="30"
+                                   alignItems="center"
+                                   justifyContent="flex-start">
+                        <Label>
+                            <FormattedString>
+                                <Span [text]="order.reservationSize +' x '"></Span>
+                                <Span text="&#xf183;" class="fas"></Span>
+                            </FormattedString>
+                        </Label>
+                    </FlexboxLayout>
+                </GridLayout>
+                <GridLayout row="1" columns="50,auto" (tap)="openEdit()">
+                    <FlexboxLayout
+                                   column="0"
+                                   width="50"
+                                   height="30"
+                                   alignItems="center"
+                                   justifyContent="center">
+                        <Label>
+                            <FormattedString>
+                                <Span text="&#xf507;" class="fas"></Span>
+                            </FormattedString>
+                        </Label>
+                    </FlexboxLayout>
+                    <Label
+                           [text]="order.forWho"
+                           textWrap="true"
+                           column="1"
+                           class="desc-info"
+                           [ngClass]="{'p-5': order.forWho!='' && order.forWho}">
+                    </Label>
+                </GridLayout>
+                <GridLayout row="2" columns="50,auto" (tap)="openEdit()">
+                    <FlexboxLayout
+                                   column="0"
+                                   width="50"
+                                   height="30"
+                                   alignItems="center"
+                                   justifyContent="center">
+                        <Label>
+                            <FormattedString>
+                                <Span text="&#xf098;" class="fas"></Span>
+                            </FormattedString>
+                        </Label>
+                    </FlexboxLayout>
+                    <Label
+                           [text]="order.phone"
+                           textWrap="true"
+                           column="1"
+                           class="desc-info"
+                           [ngClass]="{'p-5': order.phone!='' && order.phone}">
+                    </Label>
+                </GridLayout>
+                <GridLayout row="3" columns="50,auto" (tap)="openEdit()">
+                    <FlexboxLayout
+                                   column="0"
+                                   width="50"
+                                   height="30"
+                                   alignItems="center"
+                                   justifyContent="center">
+                        <Label>
+                            <FormattedString>
+                                <Span text="&#xf10e;" class="fas"></Span>
+                            </FormattedString>
+                        </Label>
+                    </FlexboxLayout>
+                    <Label
+                           [text]="order.description"
+                           textWrap="true"
+                           column="1"
+                           class="desc-info"
+                           [ngClass]="{'p-5': order.description!='' && order.description}">
+                    </Label>
+                </GridLayout>
+            </GridLayout>
+        </GridLayout>
+    </GridLayout>
+    <FlexboxLayout column="1" flexDirection="column" justifyContent="space-between">
+        <FlexboxLayout flexDirection="column">
+            <FlexboxLayout
+                           class="edit-reserve"
+                           flexDirection="row"
+                           alignItems="center"
+                           justifyContent="center"
+                           width="50"
+                           height="40"
+                           (tap)="goToEdit()">
+                <Label>
+                    <FormattedString>
+                        <Span text="&#xf044;" class="fas"></Span>
+                    </FormattedString>
+                </Label>
+            </FlexboxLayout>
+
+            <FlexboxLayout
+                           class="archive-reserve"
+                           flexDirection="row"
+                           alignItems="center"
+                           justifyContent="center"
+                           width="50"
+                           height="40"
+                           (tap)="archiveReservation()">
+                <Label>
+                    <FormattedString>
+                        <Span text="&#xf187;" class="fas"></Span>
+                    </FormattedString>
+                </Label>
+            </FlexboxLayout>
+        </FlexboxLayout>
+
+        <FlexboxLayout
+                       class="minus-reserve"
+                       flexDirection="row"
+                       alignItems="center"
+                       justifyContent="center"
+                       width="50"
+                       height="40"
+                       (tap)="removeReservation()">
+            <Label>
+                <FormattedString>
+                    <Span text="&#xf068;" class="fas"></Span>
+                </FormattedString>
+            </Label>
+        </FlexboxLayout>
+    </FlexboxLayout>
+</GridLayout>

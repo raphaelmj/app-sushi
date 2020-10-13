@@ -1,0 +1,65 @@
+@import "../../assets/scss/variables.scss";
+
+.nr-label{
+    font-size: 16;
+}
+
+.order-nr{
+    font-size: 20;
+}
+
+.price-t{
+    font-size: 16;
+    color: #ff0000;
+}
+
+.date-v{
+    font-size: 14;
+}
+
+.time-v{
+    font-size: 18;
+}
+
+FlexboxLayout{
+    Button{
+        background-color: #504426 !important;
+        color: #ffffff;
+    }
+    Button:pressed {
+        background-color: #504426 !important;
+        color: #ffffff;
+    }
+    
+}
+
+FlexboxLayout.new-order{
+    border-color: #ffffff;
+    border-width: 1;
+}
+
+FlexboxLayout.o-details{
+
+    Label.g-name{
+        font-size: 24;
+        color: #D7C5AB;
+    }
+
+    Label.el-title{
+        font-size: 18;
+    }
+
+    Label.sub-label{
+        font-size: 16;
+    }
+
+    Label.plus-label{
+        font-size: 14;
+    }
+
+    Label.u-label{
+        font-size: 14;
+        color: #D7C5AB;
+    }
+
+}

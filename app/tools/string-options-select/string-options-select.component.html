@@ -1,0 +1,98 @@
+<FlexboxLayout flexDirection="column" alignItems="center" justifyContent="center" [formGroup]="formQ">
+
+    <FlexboxLayout flexDirection="row" justifyContent="center" alignContent="center" class="qua-form">
+        <FlexboxLayout flexDirection="row" alignItems="center" justifyContent="center" (tap)="qChange('minus')"
+                       class="bt-qua">
+            <Label>
+                <FormattedString>
+                    <Span text="&#xf068;" class="fas"></Span>
+                </FormattedString>
+            </Label>
+        </FlexboxLayout>
+        <TextField editable="false" keyboardType="integer" formControlName="quantity">
+        </TextField>
+        <FlexboxLayout flexDirection="row" alignItems="center" justifyContent="center" (tap)="qChange('plus')"
+                       class="bt-qua">
+            <Label>
+                <FormattedString>
+                    <Span text="&#xf067;" class="fas"></Span>
+                </FormattedString>
+            </Label>
+        </FlexboxLayout>
+    </FlexboxLayout>
+    <ScrollView orientation="horizontal">
+        <FlexboxLayout [ngClass]="{'options-select': opts.length>0}">
+            <Button *ngFor="let p of opts" class="bt-tag" (tap)="pushType(p)" [text]="p"></Button>
+        </FlexboxLayout>
+    </ScrollView>
+
+    <FlexboxLayout flexDirection="row" flexWrap="wrap">
+        <Button *ngFor="let optse of optionsElements;let i=index" class="bt-tag" (tap)="clearTag(i)">
+            <FormattedString>
+                <Span [text]="optse"></Span>
+                <Span text=" "></Span>
+                <Span text="&#xf00d;" class="fas"></Span>
+            </FormattedString>
+        </Button>
+    </FlexboxLayout>
+    <FlexboxLayout flexDirection="row" justifyContent="center" *ngIf="element.canPack" class="p-10">
+        <FlexboxLayout class="button-opt" alignItems="center" justifyContent="space-between">
+            <Label class="label-icon" *ngIf="serveType=='plate'" (tap)="changeServe()">
+                <FormattedString>
+                    <Span text="&#xf2e7;" class="fas"></Span>
+                </FormattedString>
+            </Label>
+            <Label class="label-icon" *ngIf="serveType=='pack'" (tap)="changeServe()">
+                <FormattedString>
+                    <Span text="&#xf49e;" class="fas"></Span>
+                </FormattedString>
+            </Label>
+            <Label class="label-info" *ngIf="serveType=='plate'" (tap)="changeServe()">
+                <FormattedString>
+                    <Span text="na miejscu"></Span>
+                </FormattedString>
+            </Label>
+            <Label class="label-info" *ngIf="serveType=='pack'" (tap)="changeServe()">
+                <FormattedString>
+                    <Span text="zapakować na wynos"></Span>
+                </FormattedString>
+            </Label>
+        </FlexboxLayout>
+
+    </FlexboxLayout>
+    <FlexboxLayout flexDirection="row" justifyContent="center" *ngIf="element.canOnePlate" class="p-10">
+        <FlexboxLayout class="button-opt" alignItems="center" justifyContent="space-between">
+            <Image src="~/images/plate.png" width="50" class="image-elems" loadMode="async" *ngIf="onOnePlate" (tap)="changeOnePlate()"></Image>
+            <Image src="~/images/plates.png" width="50" class="image-elems" loadMode="async" *ngIf="!onOnePlate" (tap)="changeOnePlate()"></Image>
+            <Label class="label-info" *ngIf="onOnePlate" (tap)="changeOnePlate()">
+                <FormattedString>
+                    <Span text=" "></Span>
+                    <Span text="na jednym talerzu"></Span>
+                </FormattedString>
+            </Label>
+            <Label class="label-info" *ngIf="!onOnePlate" (tap)="changeOnePlate()">
+                <FormattedString>
+                    <Span text=" "></Span>
+                    <Span text="na wielu talerzach"></Span>
+                </FormattedString>
+            </Label>
+        </FlexboxLayout>
+    </FlexboxLayout>
+
+    <!-- <FlexboxLayout flexDirection="row" justifyContent="center" flexWrap="wrap" *ngIf="element.canAcc" class="p-10">
+        <FlexboxLayout class="button-acc" alignItems="center" justifyContent="space-between" *ngFor="let item of accArray">
+            <Label [text]="'+ '+item.acc.name+' x '+item.howMany" (tap)="selectAcc(item.acc)"></Label>
+        </FlexboxLayout>
+    </FlexboxLayout> -->
+
+    <FlexboxLayout flexDirection="row" *ngIf="element.canAcc">
+        <app-acc-elements-config [acc]="appConfig.data.acc" [dataAcc]="accArray" (emitAccData)="changeAcc($event)"></app-acc-elements-config>
+    </FlexboxLayout>
+
+
+    <FlexboxLayout>
+        <Button (tap)="close()" text="Dodaj" width="100%" class="add-bt">
+
+        </Button>
+    </FlexboxLayout>
+</FlexboxLayout>

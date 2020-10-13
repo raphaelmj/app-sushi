@@ -1,0 +1,18 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "cli": {
+    "defaultCollection": "@nativescript/schematics",
+    "analytics": "7887244e-4e59-452c-ac16-8e7e63a26bcb"
+  },
+  "projects": {
+    "oshinapp": {
+      "root": "",
+      "sourceRoot": ".",
+      "projectType": "application",
+      "prefix": "app"
+    }
+  },
+  "defaultProject": "oshinapp"
+}

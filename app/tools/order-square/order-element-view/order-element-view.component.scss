@@ -1,0 +1,116 @@
+@import "../../../assets/scss/variables.scss";
+
+FlexboxLayout {
+    font-size: 18;
+}
+
+FlexboxLayout.elem-data {
+    border-width: 1;
+    border-color: #ffffff;
+    margin: 2 2 2 0;
+    padding: 5;
+    background-color: #000000;
+    color: #ffffff;
+
+    FlexboxLayout.gluten-free {
+        color: #ffff00;
+    }
+}
+
+FlexboxLayout.elem-data.ready {
+    border-width: 1;
+    border-color: #747474;
+    margin: 2 2 2 0;
+    padding: 5;
+    background-color: #000000;
+    color: #747474;
+
+    FlexboxLayout.gluten-free {
+        color: #747474;
+    }
+
+    Label.label-icon {
+        color: #747474;
+    }
+
+    SVGImage {
+        opacity: 0.5;
+    }
+
+    Image {
+        opacity: 0.5;
+    }
+}
+
+FlexboxLayout.elem-data.is-grill {
+    border-width: 1;
+    border-color: #ffffff;
+    margin: 2 2 2 0;
+    padding: 5;
+    background-color: #680000;
+    color: #ffffff;
+
+    FlexboxLayout.gluten-free {
+        color: #ffff00;
+    }
+}
+
+FlexboxLayout.elem-data.ready.is-grill {
+    border-width: 1;
+    border-color: #747474;
+    margin: 2 2 2 0;
+    padding: 5;
+    background-color: #3a0c00;
+    color: #747474;
+
+    FlexboxLayout.gluten-free {
+        color: #747474;
+    }
+}
+
+
+FlexboxLayout.elem-data.is-drink {
+    border-width: 1;
+    border-color: #ffffff;
+    margin: 2 2 2 0;
+    padding: 5;
+    background-color: #185fa1;
+    color: #ffffff;
+
+    FlexboxLayout.gluten-free {
+        color: #ffff00;
+    }
+}
+
+FlexboxLayout.elem-data.ready.is-drink {
+    border-width: 1;
+    border-color: #747474;
+    margin: 2 2 2 0;
+    padding: 5;
+    background-color: #06233b;
+    color: #747474;
+
+    FlexboxLayout.gluten-free {
+        color: #747474;
+    }
+}
+
+
+Image.image-elems.ready-image {
+    opacity: 0.5;
+}
+
+HtmlView.desc-label {
+    font-style: italic;
+}
+
+Label.label-icon {
+    font-size: 20;
+    margin-left: 15;
+    color: #ffffff;
+    width: 40;
+}
+
+FlexboxLayout.step-tag {
+    margin: 0 0 0 0;
+}

@@ -1,0 +1,332 @@
+@import "../../assets/scss/variables.scss";
+
+TextView {
+  placeholder-color: #000000;
+  color: #000000;
+  border-color: #000000;
+}
+
+TextField {
+  margin-bottom: 2;
+  placeholder-color: #000000;
+  color: #000000;
+  border-color: #000000;
+  font-size: 16;
+}
+
+TextField.ng-valid {
+  margin-bottom: 2;
+}
+
+TextField.ng-invalid {
+  margin-bottom: 2;
+}
+
+FlexboxLayout.row-data {
+  // min-height: 120;
+  margin-bottom: 15;
+}
+
+Button.bt-qua {
+  height: 40 !important;
+  width: 40 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background-color: #000000;
+  color: #ffffff;
+}
+
+FlexboxLayout.name-flex {
+  width: 70%;
+
+  Label.name-label {
+    font-size: 20;
+  }
+
+}
+
+FlexboxLayout.price-flex {
+  width: 30%;
+
+  Label.red-price-big {
+    font-size: 20;
+    color: #000000;
+    font-weight: 600;
+  }
+}
+
+FlexboxLayout.qua-form {
+  width: 70%;
+  margin-right: 0;
+}
+
+FlexboxLayout.remove-bt-flex {
+  width: 30%;
+}
+
+FlexboxLayout.remove-bt-flex.w-100 {
+  width: 100%;
+}
+
+Button.remove-bt {
+  height: 55 !important;
+  width: 50 !important;
+  background-color: $buttonColor;
+  margin: 0 !important;
+  padding: 0 !important;
+  background-color: #000000;
+  color: #ffffff;
+}
+
+FlexboxLayout.gluten {
+  margin-bottom: 15;
+
+  Button.gluten-btn {
+    padding: 0 10 0 10 !important;
+    margin: 0 !important;
+    height: 30 !important;
+    background-color: #000000;
+    color: #ffffff;
+  }
+}
+
+FlexboxLayout.plus-elements {
+  margin-bottom: 15;
+}
+
+FlexboxLayout.reverse-f {
+  // margin-top: 10;
+  background-color: #000000;
+  color: #ffffff;
+}
+
+Button.remove {
+  width: 20 !important;
+  height: 20 !important;
+  color: #ffffff;
+}
+
+FlexboxLayout.remove {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+FlexboxLayout.gluten-grill {
+  width: 100%;
+  background-color: #000000;
+}
+
+FlexboxLayout.edit {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+Label.desc-el {
+  // font-size: 14;
+}
+
+FlexboxLayout.desc-list {
+  margin-bottom: 15;
+}
+
+Button.button-plus-el {
+  padding: 0 10 0 10 !important;
+  margin: 0 0 0 0 !important;
+  height: 40 !important;
+  background-color: #000000;
+  color: #ffffff;
+
+}
+
+
+
+
+// FlexboxLayout.row-config-options {
+//   // border-right-width: 1;
+//   // border-right-color: #ffffff;
+//   // border-bottom-width: 1;
+//   // border-bottom-color: #ffffff;
+//   background-color: #000000;
+//   color: #ffffff;
+//   margin-top: 10;
+// }
+
+// FlexboxLayout.element-step-option {
+//   border-right-width: 1;
+//   border-right-color: #ffffff;
+//   border-bottom-width: 1;
+//   border-bottom-color: #ffffff;
+//   background-color: #000000;
+
+//   Label {
+//     color: #ffffff;
+//   }
+
+//   FlexboxLayout.remove-step {
+//     Label {
+//       color: #ffffff;
+//       font-size: 14;
+//     }
+//   }
+
+//   FlexboxLayout.remove {
+//     Label {
+//       color: #ffffff;
+//       font-size: 14;
+//     }
+//   }
+
+// }
+
+FlexboxLayout.more-info {
+  height: 90;
+}
+
+FlexboxLayout.ready-sts {
+  margin-bottom: 18;
+
+  Label {
+    font-size: 20;
+    color: #ff0000;
+  }
+}
+
+FlexboxLayout.opt-row {
+  background-color: #000000;
+
+  Image {
+    margin-right: 20;
+  }
+
+  Label {
+    color: #ffffff;
+  }
+}
+
+Label.label-opt {
+  font-size: 14;
+}
+
+FlexboxLayout.opt-row.one-plate {
+  margin-bottom: 10;
+}
+
+FlexboxLayout.opt-row.extra {
+  margin-bottom: 20;
+}
+
+FlexboxLayout.acc-options {
+  margin-bottom: 10;
+
+  Label.acc-label {
+    font-size: 16;
+  }
+}
+
+Label.extra-label {
+  font-size: 14;
+  color: #ffffff;
+  background-color: #000000;
+
+}
+
+FlexboxLayout.opt-row.serve-type {
+  margin-bottom: 10;
+}
+
+Label.label-serve-icon {
+  color: #ffffff;
+  font-size: 26;
+}
+
+Label.label-serve {
+  color: #ffffff;
+  font-size: 14;
+}
+
+Label.label-extra-bt {
+  color: #ffffff;
+  font-size: 18;
+}
+
+Label.change-price-icon {
+  font-size: 18;
+  background-color: #000000;
+  color: #ffffff;
+}
+
+Label.change-price-label {
+  font-size: 14;
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.sea-opacity {
+  opacity: 0.4;
+}
+
+FlexboxLayout.step-tag {
+  background-color: #000000;
+  color: #ffffff;
+
+  FlexboxLayout.s-name {
+
+    Label {}
+  }
+
+  Label {
+    font-size: 14;
+  }
+
+  FlexboxLayout.label-action {}
+
+  Label.label-name {
+    font-size: 14;
+  }
+
+  Label.price {
+    color: #ff0000;
+    font-size: 14;
+  }
+
+  Label.minus {
+    color: #ffffff;
+    background-color: transparent;
+  }
+}
+
+FlexboxLayout.type-element {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+FlexboxLayout.type-element-list {
+  margin-top: 10;
+}
+
+FlexboxLayout.desc-flex {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+FlexboxLayout.step-list {
+  margin-bottom: 20;
+}
+
+FlexboxLayout.types-alerts {
+  margin-top: 10;
+
+  Label.alert-types {
+    font-size: 14;
+    color: #ff0000;
+  }
+}
+
+Button.button-step-options {
+  padding: 0 10 0 10 !important;
+  margin: 0 0 0 0 !important;
+  height: 40 !important;
+  background-color: #000000;
+  color: #ffffff;
+  width: 100%;
+}

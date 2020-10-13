@@ -1,0 +1,27 @@
+TextField {
+    margin-bottom: 2;
+    font-size: 16;
+}
+
+TextField.ng-valid {
+    margin-bottom: 2;
+}
+
+TextField.ng-invalid {
+    margin-bottom: 2;
+}
+
+Label.label-price {
+    color: #ff0000;
+    font-size: 20;
+}
+
+Label.qua-label {
+    width: 30;
+    font-size: 16;
+}
+
+Label.icon-label {
+    font-size: 16;
+    width: 30;
+}

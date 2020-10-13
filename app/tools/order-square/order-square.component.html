@@ -1,0 +1,197 @@
+<GridLayout columns="*" [rows]="rowsSquare">
+  <GridLayout columns="90,30,*,*,50" rows="*" row="0">
+    <FlexboxLayout row="0" column="0" justifyContent="center" alignItems="center" class="f-id" [ngClass]="{'other-plus': datePosition=='after','other-minus':datePosition=='before'}" height="30">
+
+      <Label [text]="order.orderNumber"></Label>
+      <Label *ngIf="datePosition=='before'">
+        <FormattedString>
+          <Span [text]="order.endDay|daySuffix:this.day:datePosition"></Span>
+        </FormattedString>
+      </Label>
+      <Label *ngIf="datePosition=='after'">
+        <FormattedString>
+          <Span [text]="order.endDay|daySuffix:this.day:datePosition"></Span>
+        </FormattedString>
+      </Label>
+    </FlexboxLayout>
+    <FlexboxLayout row="0" column="1" justifyContent="center" alignItems="center" class="f-type" height="30" (tap)="changeActionType()">
+      <Label [text]="order.actionType | actionShortName"></Label>
+    </FlexboxLayout>
+    <FlexboxLayout row="0" column="2" justifyContent="center" alignItems="center" class="f-price" height="30" (tap)="changeDate()">
+      <Label [text]="order.total+' pln'" *ngIf="!order.bonusUsed"></Label>
+      <Label [text]="order.bonusTotal+' pln'" *ngIf="order.bonusUsed"></Label>
+    </FlexboxLayout>
+    <FlexboxLayout row="0" column="3" justifyContent="center" alignItems="center" class="f-hour" height="30" (tap)="changeDateTime()">
+      <Label [text]="order.endAt | date: 'H:mm:ss'"></Label>
+    </FlexboxLayout>
+    <FlexboxLayout row="0" column="5" justifyContent="center" class="edit-bt" alignItems="center" height="30" (tap)="goToEdit()">
+      <Label>
+        <FormattedString>
+          <Span text="&#xf044;" class="fas"></Span>
+        </FormattedString>
+      </Label>
+    </FlexboxLayout>
+  </GridLayout>
+  <GridLayout [columns]="'*,*'" rows="*" row="1" *ngIf="order.reservation">
+    <FlexboxLayout column="0" justifyContent="center" alignItems="center" class="f-r" [ngClass]="{'reserve-active': order.reservation}" (tap)="changeReservation()">
+      <Label text="rezerwacja" *ngIf="order.reservation"></Label>
+    </FlexboxLayout>
+    <FlexboxLayout
+                   column="1"
+                   justifyContent="center"
+                   alignItems="center"
+                   class="f-r-size"
+                   *ngIf="order.reservation"
+                   (tap)="changeResSize()"
+                   [ngClass]="{'reserve-active': order.reservation}">
+      <Label>
+        <FormattedString>
+          <Span [text]="order.reservationSize +' x '"></Span>
+          <Span text="&#xf183;" class="fas"></Span>
+        </FormattedString>
+      </Label>
+    </FlexboxLayout>
+  </GridLayout>
+  <GridLayout columns="*,60,80,60" rows="*" [row]="(order.reservation)?2:1">
+    <FlexboxLayout row="0" column="0" justifyContent="center" alignItems="center" class="f-limit" (tap)="plusMinutes()" [ngClass]="{ 'before-time': !diff.firstDateWasLater, 'after-time': diff.firstDateWasLater }" height="30">
+      <Label [text]="diff | orderLimitTime"></Label>
+    </FlexboxLayout>
+    <FlexboxLayout height="30" row="0" column="1" class="sts-flex" justifyContent="center" alignItems="center" (tap)="changeStatus()">
+      <Label [text]="order.status | orderStatus"></Label>
+    </FlexboxLayout>
+
+    <FlexboxLayout column="2" class="to-archive" justifyContent="center" alignItems="center" (tap)="toArchive()">
+      <Label *ngIf="order.status != 'archive'">
+        <FormattedString>
+          <Span text="&#xf187;" class="fas"></Span>
+          <Span text=" Arch."></Span>
+        </FormattedString>
+      </Label>
+      <Label *ngIf="order.status == 'archive'">
+        <FormattedString>
+          <Span text="&#xf2ea;" class="fas"></Span>
+          <Span text=" Przywróć"></Span>
+        </FormattedString>
+      </Label>
+    </FlexboxLayout>
+    <FlexboxLayout
+                   column="3"
+                   justifyContent="center"
+                   alignItems="center"
+                   class="inprogress-status"
+                   [ngClass]="{'active': order.inProgress}"
+                   (tap)="changeInProgress()">
+      <Label>
+        <FormattedString>
+          <Span text="&#xf593;" class="fas"></Span>
+        </FormattedString>
+      </Label>
+    </FlexboxLayout>
+  </GridLayout>
+  <GridLayout columns="*" rows="*" [row]="(order.reservation)?3:2" *ngIf="!hidden">
+    <!-- <FlexboxLayout row="1" column="auto" flexWrap="wrap" flexDirection="row">
+      <app-order-element-view *ngFor="let el of order.cartOrderElements" [element]="el" [order]="order"> </app-order-element-view>
+    </FlexboxLayout> -->
+    <WrapLayout orientation="horizontal" row="1">
+      <app-order-element-view *ngFor="let el of order.cartOrderElements" [element]="el" [order]="order"> </app-order-element-view>
+    </WrapLayout>
+  </GridLayout>
+  <GridLayout [row]="(order.reservation)?4:3" rows="auto">
+    <WrapLayout orientation="horizontal">
+      <FlexboxLayout
+                     class="info-row-bt"
+                     flexDirection="row"
+                     alignItems="center"
+                     justifyContent="center"
+                     (tap)="changeReservationData()"
+                     *ngIf="isOrderInfoEmpty" width="100%">
+        <Label>
+          <FormattedString>
+            <Span text="&#xf507;" class="fas"></Span>
+            <Span text="  "></Span>
+            <Span text="&#xf098;" class="fas"></Span>
+            <Span text="  "></Span>
+            <Span text="&#xf10e;" class="fas"></Span>
+          </FormattedString>
+        </Label>
+      </FlexboxLayout>
+      <ng-container *ngIf="!isOrderInfoEmpty">
+
+        <GridLayout class="reserv-desc-who" width="50%" columns="30,*" row="0" *ngIf="order.forWho!=''">
+          <FlexboxLayout column="0" class="p-5" (tap)="changeReservationData()">
+            <Label>
+              <FormattedString>
+                <Span text="&#xf507;" class="fas"></Span>
+              </FormattedString>
+            </Label>
+          </FlexboxLayout>
+          <Label [text]="order.forWho" textWrap="true" [ngClass]="{'p-5': order.forWho!='' && order.forWho}" column="1" (tap)="changeReservationData()"></Label>
+        </GridLayout>
+        <GridLayout class="reserv-phone-who" width="50%" columns="30,*" row="0" *ngIf="order.phone!=''">
+          <FlexboxLayout column="0" class="p-5" (tap)="changeReservationData()">
+            <Label>
+              <FormattedString>
+                <Span text="&#xf098;" class="fas"></Span>
+              </FormattedString>
+            </Label>
+          </FlexboxLayout>
+          <Label [text]="order.phone" textWrap="true" [ngClass]="{'p-5': order.phone!='' && order.phone}" column="1" (tap)="changeReservationData()"></Label>
+        </GridLayout>
+
+        <GridLayout class="reserv-desc-who" width="100%" columns="30,*" *ngIf="order.description!=''">
+          <FlexboxLayout column="0" class="p-5" (tap)="changeReservationData()">
+            <Label>
+              <FormattedString>
+                <Span text="&#xf10e;" class="fas"></Span>
+              </FormattedString>
+            </Label>
+          </FlexboxLayout>
+          <Label [text]="order.description" textWrap="true" [ngClass]="{'p-5': order.description!='' && order.description}" column="1" (tap)="changeReservationData()"></Label>
+        </GridLayout>
+
+      </ng-container>
+
+
+
+    </WrapLayout>
+
+  </GridLayout>
+  <GridLayout columns="*,70,*" rows="*" [row]="(order.reservation)?5:4">
+    <FlexboxLayout flexDirection="row" column="0" alignItems="center" justifyContent="center" class="ready-bt" [ngClass]="{ 'order-ready': order.status == 'ready' }" (tap)="setAsReady()">
+      <Label *ngIf="order.status != 'ready'" class="label-as-bt">
+        <FormattedString>
+          <Span text="&#xf110;" class="fas"></Span>
+          <Span text=" Oznacz got."></Span>
+        </FormattedString>
+      </Label>
+      <Label *ngIf="order.status == 'ready'" class="label-as-bt">
+        <FormattedString>
+          <Span text="&#xf00c;" class="fas"></Span>
+          <Span text=" Odznacz got."></Span>
+        </FormattedString>
+      </Label>
+    </FlexboxLayout>
+    <FlexboxLayout flexDirection="row" column="1" alignItems="center" justifyContent="center" class="bonus-bt" [ngClass]="{ 'bonus-used': order.bonusUsed }" (tap)="setBonus()">
+      <Label class="label-as-bt">
+        <FormattedString>
+          <!-- <Span text="&#xf3ff;" class="fas"></Span> -->
+          <Span [text]="'Bon'"></Span>
+        </FormattedString>
+      </Label>
+    </FlexboxLayout>
+    <FlexboxLayout flexDirection="row" column="2" alignItems="center" justifyContent="center" class="paid-bt" [ngClass]="{ 'order-paid': order.paid }" (tap)="setPaid()">
+      <Label *ngIf="order.paid" class="label-as-bt">
+        <FormattedString>
+          <Span text="&#xf3d1;" class="fas"></Span>
+          <Span text=" Zap."></Span>
+        </FormattedString>
+      </Label>
+      <Label *ngIf="!order.paid" class="label-as-bt">
+        <FormattedString>
+          <Span text="&#xf3d1;" class="fas"></Span>
+          <Span text=" Nie zap."></Span>
+        </FormattedString>
+      </Label>
+    </FlexboxLayout>
+  </GridLayout>
+</GridLayout>

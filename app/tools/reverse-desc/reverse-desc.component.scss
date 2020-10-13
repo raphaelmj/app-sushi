@@ -1,0 +1,56 @@
+@import "../../assets/scss/variables.scss";
+
+Button.cat-bt {
+  background-color: $body-bg;
+  margin: 0 0 0 0 !important;
+  border-radius: 0;
+  color: #ffffff;
+  font-size: 12;
+}
+
+Button.active-g {
+  text-decoration: underline;
+  color: #ff0000;
+}
+
+Label.conjunction {
+  font-size: 18;
+  text-transform: uppercase;
+}
+
+FlexboxLayout.list-el {
+  Label {}
+}
+
+FlexboxLayout.list-el.active {
+  Label {
+    color: #ff0000;
+  }
+}
+
+GridLayout.grid-added {
+  background-color: #504426;
+}
+
+Button.add-r-bt {
+  background-color: #504426;
+  color: #ffffff;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 12;
+  height: 30;
+}
+
+Button.reverse-rem-bt {
+  height: 20;
+  margin: 0 !important;
+  background-color: transparent;
+  color: #ffffff;
+}
+
+Button.close {
+  background-color: #504426 !important;
+  width: 100%;
+  margin: 0 !important;
+  color: #ffffff;
+}

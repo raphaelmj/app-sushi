@@ -1,0 +1,149 @@
+@import "../../assets/scss/variables.scss";
+
+GridLayout {
+    padding: 0 !important;
+}
+
+FlexboxLayout.new-order {
+    border-color: #ffffff;
+    border-width: 1;
+}
+
+FlexboxLayout.f-id {
+    background-color: #0300b8;
+    color: #ffffff;
+    font-size: 18;
+
+}
+
+FlexboxLayout.f-id.other-plus {
+    background-color: #020152;
+    color: #ffffff;
+    font-size: 18;
+
+}
+
+FlexboxLayout.f-id.other-minus {
+    background-color: #520606;
+    color: #ffffff;
+    font-size: 18;
+
+}
+
+FlexboxLayout.f-type {
+    background-color: #99d1ff;
+    color: #000000;
+    font-size: 18;
+}
+
+FlexboxLayout.f-hour {
+    background-color: #d0ff00;
+    color: #000000;
+    font-size: 18;
+}
+
+FlexboxLayout.f-price {
+    font-size: 16;
+}
+
+FlexboxLayout.ready-bt {
+    background-color: #e4a1ff;
+    color: #000000;
+}
+
+FlexboxLayout.edit-bt {
+    background-color: #4E412C;
+}
+
+FlexboxLayout.f-limit {
+    font-size: 18;
+    color: #000000;
+}
+
+FlexboxLayout.f-limit.before-time {
+    background-color: #00ff0d;
+}
+
+FlexboxLayout.f-limit.after-time {
+    background-color: #ff0000;
+}
+
+FlexboxLayout.ready-bt {
+    background-color: $buttonColor;
+}
+
+FlexboxLayout.ready-bt.order-ready {
+    background-color: #00ff0d;
+}
+
+
+
+FlexboxLayout.paid-bt {
+    background-color: #ff0000;
+    color: #000000;
+}
+
+FlexboxLayout.paid-bt.order-paid {
+    background-color: #00ff0d;
+}
+
+
+FlexboxLayout.bonus-bt {}
+
+FlexboxLayout.bonus-bt.bonus-used {
+    background-color: #ffff99;
+    color: #000000;
+}
+
+FlexboxLayout.f-start-day {
+    font-size: 16;
+}
+
+FlexboxLayout.sts-flex {
+    font-size: 16;
+}
+
+FlexboxLayout.to-archive {
+    font-size: 16;
+}
+
+FlexboxLayout.inprogress-status {
+    font-size: 18;
+    opacity: 0.5;
+    color: #000000;
+    background-color: #ffee00;
+}
+
+FlexboxLayout.inprogress-status.active {
+    opacity: 1;
+}
+
+FlexboxLayout.f-r-size {
+    font-size: 18;
+}
+
+FlexboxLayout.f-r {
+    font-size: 18;
+}
+
+FlexboxLayout.reserve-active {
+    background-color: #c8ff00;
+    color: #000000;
+}
+
+GridLayout.reserv-desc-who {
+    font-size: 16;
+}
+
+GridLayout.reserv-phone-who {
+    font-size: 16
+}
+
+Label.label-as-bt {
+    font-size: 18;
+}
+
+FlexboxLayout.info-row-bt {
+    height: 35;
+    font-size: 16;
+}

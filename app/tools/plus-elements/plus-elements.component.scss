@@ -1,0 +1,83 @@
+@import "../../assets/scss/variables.scss";
+
+
+Button.active-tab {
+  background-color: #ffffff !important;
+  color: #000000;
+}
+
+Button {
+  background-color: #504426 !important;
+  color: #ffffff;
+  margin: 0 !important;
+  padding: auto 15 auto 15 !important;
+}
+
+Button.btn-add {
+  margin: 0 !important;
+}
+
+Button.small-bt.bt-cart {
+  margin: 0 !important;
+}
+
+HtmlView.htmlLabel {
+  font-size: 14;
+}
+
+FlexboxLayout.row-list {
+  padding-top: 20;
+  padding-bottom: 20;
+}
+
+FlexboxLayout.row-list.added {
+  background-color: #504426;
+}
+
+
+.plus-label {
+  font-size: 16;
+}
+
+Button.clear-close {
+  margin: 0 !important;
+  padding: 0 !important;
+  background-color: #000000 !important;
+  color: #ffffff;
+  height: 40;
+  font-size: 14;
+}
+
+Button.add-bt {
+  margin: 0 !important;
+  padding: 0 !important;
+  background-color: #504426 !important;
+  color: #ffffff;
+  height: 40;
+  font-size: 14;
+}
+
+Button.close {
+  margin: 0 !important;
+  padding: 0 !important;
+  background-color: #504426 !important;
+  color: #ffffff;
+  height: 40;
+  font-size: 14;
+}
+
+Button.bt-tag {
+  background-color: $body-bg;
+  margin: 0 0 0 0 !important;
+  padding: 0 !important;
+  border-radius: 0;
+  color: #ffffff;
+}
+
+Button.bt-tag:active {
+  background-color: $body-bg;
+  margin: 0 20 0 0 !important;
+  padding: 0 !important;
+  border-radius: 0;
+  color: #ffffff;
+}

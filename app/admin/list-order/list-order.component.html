@@ -1,0 +1,76 @@
+<FlexboxLayout flexDirection="column" alignItems="center" justifyContent="space-between" class="p-15 w-100"
+               [ngClass]="{'new-order': order.status=='create'}">
+    <FlexboxLayout flexDirection="row" alignItems="center" justifyContent="space-between" class="p-15 w-100">
+        <FlexboxLayout flexDirection="row" alignItems="center">
+            <Label [text]="'nr:'" class="nr-label"></Label>
+            <Label [text]="order.id" class="order-nr"></Label>
+        </FlexboxLayout>
+        <FlexboxLayout flexDirection="row" alignItems="center">
+            <Label [text]="order.total+' pln '" class="price-t"></Label>
+            <Label [text]="order.cartOrderElements.length+' dań'"></Label>
+        </FlexboxLayout>
+        <FlexboxLayout flexDirection="row" alignItems="center">
+            <Label [text]="order.createdAt | date:'HH:mm:ss'" class="time-v"></Label>
+            <Label [text]="order.createdAt | date:'dd.MM.yy'" class="date-v"></Label>
+        </FlexboxLayout>
+        <FlexboxLayout flexDirection="row" alignItems="center">
+            <Label [text]="order.status"></Label>
+            <Button text="zmień" (tap)="changeStatus()"></Button>
+        </FlexboxLayout>
+        <FlexboxLayout flexDirection="row" alignItems="center">
+            <Button text="edycja" (tap)="showDetails()"></Button>
+        </FlexboxLayout>
+        <FlexboxLayout flexDirection="row" alignItems="center">
+            <Button text="szczegóły" (tap)="showShortDetails()"></Button>
+        </FlexboxLayout>
+        <FlexboxLayout flexDirection="row" alignItems="center">
+            <Button [text]="'archiwizuj'" (tap)="toArchive()"></Button>
+        </FlexboxLayout>
+    </FlexboxLayout>
+    <FlexboxLayout flexDirection="row" flexWrap="wrap" justifyContent="space-between"
+                   [visibility]="isOrderDetails ? 'visible' : 'collapsed'" *ngIf="details" class="o-details">
+        <!-- <TextView [text]="details|json"></TextView> -->
+        <FlexboxLayout flexDirection="column" *ngFor="let g of details.group" width="50%">
+            <Label [text]="g.type.name" class="g-name"></Label>
+            <FlexboxLayout flexDirection="column" *ngFor="let el of g.elements" class="p-10">
+                <FlexboxLayout flexDirection="row">
+                    <Label [text]="el.quantity+'x '+el.viewName" class="el-title"></Label>
+                    <Image src="~/images/krewetka.png" width="50px" class="image-elems" *ngIf="el.isSea"></Image>
+                </FlexboxLayout>
+                <FlexboxLayout flexDirection="column" *ngIf="el.elastic && el.plusElements.length>0" margin="10 0 0 15">
+                    <Label text="Dodatki" class="sub-label"></Label>
+                    <!-- <TextView [text]="el.plusElements|json"></TextView> -->
+                    <FlexboxLayout flexDirection="row" flexWrap="wrap">
+                        <FlexboxLayout *ngFor="let pe of el.plusElements">
+                            <Label [text]="'+ '+pe.viewName" class="plus-label"></Label>
+                            <Image src="~/images/krewetka.png" width="50px" class="image-elems" *ngIf="pe.isSea">
+                            </Image>
+                        </FlexboxLayout>
+                    </FlexboxLayout>
+                </FlexboxLayout>
+                <FlexboxLayout flexDirection="column" *ngIf="el.descElements.length>0" margin="10 0 0 15">
+                    <Label text="Krótkie informcje" class="sub-label"></Label>
+                    <FlexboxLayout flexDirection="row" flexWrap="wrap">
+                        <Label [text]="'! '+u" class="u-label" *ngFor="let u of el.descElements"></Label>
+                    </FlexboxLayout>
+                </FlexboxLayout>
+                <FlexboxLayout flexDirection="column" margin="10 0 0 15">
+                    <Label text="bez Gluten" class="sub-label"></Label>
+                    <FlexboxLayout flexDirection="row" flexWrap="wrap">
+                        <Label [text]="el.gluten+' / '+el.quantity" class="u-label"></Label>
+                    </FlexboxLayout>
+                </FlexboxLayout>
+
+                <FlexboxLayout flexDirection="column" margin="10 0 0 15">
+                    <Label text="Opis tekstowy" class="sub-label"></Label>
+                    <HtmlView [text]="el.description" class="u-label"></HtmlView>
+                </FlexboxLayout>
+
+            </FlexboxLayout>
+        </FlexboxLayout>
+        <FlexboxLayout flexDirection="column">
+            <Label text="Opis ogólny" class="sub-label"></Label>
+            <HtmlView [text]="details.order.description"></HtmlView>
+        </FlexboxLayout>
+    </FlexboxLayout>
+</FlexboxLayout>

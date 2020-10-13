@@ -1,0 +1,381 @@
+<StackLayout row="0" class="p-15 stack-view">
+    <GridLayout [rows]="'*,50'" [formGroup]="formData" class="grid-view">
+        <TabView
+                 tabTextFontSize="16"
+                 selectedIndex="0"
+                 (selectedIndexChanged)="onSelectedIndexchanged($event)">
+            <StackLayout *tabItem="{ title: 'Konfigurcja' }">
+                <ScrollView row="0" [height]="scrollHeight">
+                    <GridLayout [rows]="(element.elementType!='config_steps_price_many')?'60,auto,auto,200,*':'auto,auto,200'">
+                        <ng-container *ngIf="element.elementType!='config_steps_price_many'">
+                            <GridLayout columns="*" row="0">
+
+                                <StackLayout column="0">
+                                    <FlexboxLayout flexDirection="row" alignItems="center" justifyContent="center">
+                                        <FlexboxLayout (tap)="qChange('minus')" class="bt-qua" alignItems="center" justifyContent="center">
+                                            <Label>
+                                                <FormattedString>
+                                                    <Span text="&#xf068;" class="fas"></Span>
+                                                </FormattedString>
+                                            </Label>
+                                        </FlexboxLayout>
+                                        <TextField
+                                                   class="q-field"
+                                                   editable="false"
+                                                   keyboardType="integer"
+                                                   formControlName="quantity">
+                                        </TextField>
+                                        <FlexboxLayout (tap)="qChange('plus')" class="bt-qua" alignItems="center" justifyContent="center">
+                                            <Label>
+                                                <FormattedString>
+                                                    <Span text="&#xf067;" class="fas"></Span>
+                                                </FormattedString>
+                                            </Label>
+                                        </FlexboxLayout>
+                                    </FlexboxLayout>
+
+                                </StackLayout>
+
+                            </GridLayout>
+                        </ng-container>
+                        <!-- <ng-container [ngSwitch]="element.elementType">
+                            <ng-container *ngSwitchCase="'one_name'">
+
+                            </ng-container>
+                            <ng-container *ngSwitchCase="'many_names'">
+
+                            </ng-container>
+                            <ng-container *ngSwitchCase="'desc_elements'">
+
+                            </ng-container>
+                            <ng-container *ngSwitchCase="'config_price'">
+
+                            </ng-container>
+                            <ng-container *ngSwitchCase="'config_steps_price'">
+
+                            </ng-container>
+                            <ng-container *ngSwitchCase="'config_steps_price_many'">
+
+                            </ng-container>
+                        </ng-container> -->
+
+                        <ng-container *ngIf="element.elementType!='config_price' && element.elementType!='config_steps_price' && element.elementType!='config_steps_price_many'">
+                            <FlexboxLayout flexDirection="column" row="1" class="p-15">
+                                <FlexboxLayout class="sea-button button-opt" column="1" alignItems="center" justifyContent="space-between" [ngClass]="{'sea': isSea}" *ngIf="hasSea && pricesCount>1" (tap)="changeSea()">
+                                    <Image src="~/images/krewetka.png" width="50" class="image-elems" loadMode="async"></Image>
+                                    <FlexboxLayout>
+                                        <Label text="z owocami morza" class="label-info" *ngIf="isSea"></Label>
+                                        <Label text="bez owoców morza" class="label-info" *ngIf="!isSea"></Label>
+                                    </FlexboxLayout>
+                                </FlexboxLayout>
+                                <FlexboxLayout class="sea-button button-opt sea" column="1" alignItems="center" justifyContent="space-between" *ngIf="hasSea && pricesCount==1">
+                                    <Image src="~/images/krewetka.png" width="50" class="image-elems" loadMode="async"></Image>
+                                    <FlexboxLayout>
+                                        <Label text="wersja jedynie z owocami morza" class="label-info"></Label>
+                                    </FlexboxLayout>
+                                </FlexboxLayout>
+                                <FlexboxLayout class="sea-button button-opt" column="1" alignItems="center" justifyContent="space-between" *ngIf="!hasSea && pricesCount==1">
+                                    <Image src="~/images/krewetka.png" width="50" class="image-elems" loadMode="async"></Image>
+                                    <FlexboxLayout>
+                                        <Label text="wersja bez owoców morza" class="label-info"></Label>
+                                    </FlexboxLayout>
+                                </FlexboxLayout>
+                                <FlexboxLayout class="button-opt" alignItems="center" *ngIf="element.hasGluten && !element.onlyGluten" justifyContent="space-between">
+                                    <Image src="~/images/gluten.png" width="50" class="image-elems" loadMode="async" (tap)="selectGluten()"></Image>
+                                    <Label class="label-info" (tap)="selectGluten()">
+                                        <FormattedString>
+                                            <Span [text]="gluten+'/'+formData.get('quantity').value"></Span>
+                                            <Span text=" bez glutenu"></Span>
+                                        </FormattedString>
+                                    </Label>
+                                </FlexboxLayout>
+                                <FlexboxLayout class="button-opt" alignItems="center" *ngIf="element.onlyGluten" justifyContent="space-between">
+                                    <Image src="~/images/gluten.png" width="50" class="image-elems" loadMode="async"></Image>
+                                    <Label class="label-info">
+                                        <FormattedString>
+                                            <Span text=" jedynie wersja glutenowa"></Span>
+                                        </FormattedString>
+                                    </Label>
+                                </FlexboxLayout>
+                                <FlexboxLayout class="button-opt" alignItems="center" *ngIf="element.canGrill && !element.onlyGrill" justifyContent="space-between">
+                                    <Image src="~/images/grill.png" width="50" class="image-elems" loadMode="async" (tap)="selectGrill()"></Image>
+                                    <Label class="label-info" (tap)="selectGrill()">
+                                        <FormattedString>
+                                            <Span [text]="grill+'/'+formData.get('quantity').value"></Span>
+                                            <Span text=" grillowane"></Span>
+                                        </FormattedString>
+                                    </Label>
+                                </FlexboxLayout>
+                                <FlexboxLayout class="button-opt" alignItems="center" *ngIf="element.onlyGrill" justifyContent="space-between">
+                                    <Image src="~/images/grill.png" width="50" class="image-elems" loadMode="async"></Image>
+                                    <Label class="label-info">
+                                        <FormattedString>
+                                            <Span text=" jedynie wersja grillowna"></Span>
+                                        </FormattedString>
+                                    </Label>
+                                </FlexboxLayout>
+                                <FlexboxLayout class="button-opt" alignItems="center" *ngIf="element.canPack" justifyContent="space-between">
+                                    <Label class="label-icon" *ngIf="serveType=='plate'" (tap)="changeServe()">
+                                        <FormattedString>
+                                            <Span text="&#xf2e7;" class="fas"></Span>
+                                        </FormattedString>
+                                    </Label>
+                                    <Label class="label-icon" *ngIf="serveType=='pack'" (tap)="changeServe()">
+                                        <FormattedString>
+                                            <Span text="&#xf49e;" class="fas"></Span>
+                                        </FormattedString>
+                                    </Label>
+                                    <Label class="label-info" *ngIf="serveType=='plate'" (tap)="changeServe()">
+                                        <FormattedString>
+                                            <Span text="na miejscu"></Span>
+                                        </FormattedString>
+                                    </Label>
+                                    <Label class="label-info" *ngIf="serveType=='pack'" (tap)="changeServe()">
+                                        <FormattedString>
+                                            <Span text="zapakować na wynos"></Span>
+                                        </FormattedString>
+                                    </Label>
+                                </FlexboxLayout>
+                                <FlexboxLayout class="button-opt" alignItems="center" *ngIf="!element.canPack" justifyContent="space-between">
+                                    <Label class="label-icon">
+                                        <FormattedString>
+                                            <Span text="&#xf2e7;" class="fas"></Span>
+                                        </FormattedString>
+                                    </Label>
+                                    <Label class="label-info">
+                                        <FormattedString>
+                                            <Span text="do podania na miejscu"></Span>
+                                        </FormattedString>
+                                    </Label>
+                                </FlexboxLayout>
+                            </FlexboxLayout>
+                        </ng-container>
+                        <ng-container *ngIf="element.elementType=='config_price'">
+                            <GridLayout rows="*,*" row="1">
+                                <FlexboxLayout flexDirection="column" row="0" class="p-15">
+                                    <FlexboxLayout class="sea-button button-opt" column="1" alignItems="center" justifyContent="space-between" [ngClass]="{'sea': isSea}" *ngIf="hasSea">
+                                        <Image src="~/images/krewetka.png" width="50" class="image-elems" loadMode="async"></Image>
+                                        <FlexboxLayout>
+                                            <Label text="z owocami morza" class="label-info" *ngIf="isSea"></Label>
+                                            <Label text="bez owoców morza" class="label-info" *ngIf="!isSea"></Label>
+                                        </FlexboxLayout>
+                                    </FlexboxLayout>
+
+                                    <FlexboxLayout class="button-opt" alignItems="center" justifyContent="space-between">
+                                        <Image src="~/images/gluten.png" width="50" class="image-elems" loadMode="async" (tap)="selectGluten()"></Image>
+                                        <Label class="label-info" (tap)="selectGluten()">
+                                            <FormattedString>
+                                                <Span [text]="gluten+'/'+formData.get('quantity').value"></Span>
+                                                <Span text=" bez glutenu"></Span>
+                                            </FormattedString>
+                                        </Label>
+                                    </FlexboxLayout>
+                                    <FlexboxLayout class="button-opt" alignItems="center" justifyContent="space-between">
+                                        <Image src="~/images/grill.png" width="50" class="image-elems" loadMode="async" (tap)="selectGrill()"></Image>
+                                        <Label class="label-info" (tap)="selectGrill()">
+                                            <FormattedString>
+                                                <Span [text]="grill+'/'+formData.get('quantity').value"></Span>
+                                                <Span text=" grillowane"></Span>
+                                            </FormattedString>
+                                        </Label>
+                                    </FlexboxLayout>
+                                </FlexboxLayout>
+                                <FlexboxLayout flexDirection="column" row="1" class="p-15">
+                                    <app-config-price-select [priceConfigSort]="priceConfigSort" [(index)]="index" [scrollHeight]="scrollHeight" (emitChange)="changeConfigElement($event)"></app-config-price-select>
+                                </FlexboxLayout>
+                            </GridLayout>
+                        </ng-container>
+                        <ns-container *ngIf="element.elementType=='config_steps_price'">
+                            <FlexboxLayout row="1" flexDirection="column">
+                                <FlexboxLayout flexDirection="column" alignItems="center" justifyContent="center">
+                                    <app-three-steps-view [element]="element" [hasPushBt]="false" (emitChange)="changeOneTypeElement($event)"></app-three-steps-view>
+                                </FlexboxLayout>
+                                <FlexboxLayout class="p-10" flexDirection="column" alignItems="center" justifyContent="center">
+                                    <FlexboxLayout class="sea-button button-opt" column="1" alignItems="center" justifyContent="space-between" [ngClass]="{'sea': isSea}" *ngIf="hasSea && pricesCount>1" (tap)="changeSea()">
+                                        <Image src="~/images/krewetka.png" width="50" class="image-elems" loadMode="async"></Image>
+                                        <FlexboxLayout>
+                                            <Label text="z owocami morza" class="label-info" *ngIf="isSea"></Label>
+                                            <Label text="bez owoców morza" class="label-info" *ngIf="!isSea"></Label>
+                                        </FlexboxLayout>
+                                    </FlexboxLayout>
+                                    <FlexboxLayout class="sea-button button-opt sea" column="1" alignItems="center" justifyContent="space-between" *ngIf="hasSea && pricesCount==1">
+                                        <Image src="~/images/krewetka.png" width="50" class="image-elems" loadMode="async"></Image>
+                                        <FlexboxLayout>
+                                            <Label text="wersja jedynie z owocami morza" class="label-info"></Label>
+                                        </FlexboxLayout>
+                                    </FlexboxLayout>
+                                    <FlexboxLayout class="sea-button button-opt" column="1" alignItems="center" justifyContent="space-between" *ngIf="!hasSea && pricesCount==1">
+                                        <Image src="~/images/krewetka.png" width="50" class="image-elems" loadMode="async"></Image>
+                                        <FlexboxLayout>
+                                            <Label text="wersja bez owoców morza" class="label-info"></Label>
+                                        </FlexboxLayout>
+                                    </FlexboxLayout>
+                                    <FlexboxLayout class="button-opt" alignItems="center" *ngIf="element.hasGluten && !element.onlyGluten" justifyContent="space-between">
+                                        <Image src="~/images/gluten.png" width="50" class="image-elems" loadMode="async" (tap)="selectGluten()"></Image>
+                                        <Label class="label-info" (tap)="selectGluten()">
+                                            <FormattedString>
+                                                <Span [text]="gluten+'/'+formData.get('quantity').value"></Span>
+                                                <Span text=" bez glutenu"></Span>
+                                            </FormattedString>
+                                        </Label>
+                                    </FlexboxLayout>
+                                    <FlexboxLayout class="button-opt" alignItems="center" *ngIf="element.onlyGluten" justifyContent="space-between">
+                                        <Image src="~/images/gluten.png" width="50" class="image-elems" loadMode="async"></Image>
+                                        <Label class="label-info">
+                                            <FormattedString>
+                                                <Span text=" jedynie wersja glutenowa"></Span>
+                                            </FormattedString>
+                                        </Label>
+                                    </FlexboxLayout>
+                                    <FlexboxLayout class="button-opt" alignItems="center" *ngIf="element.canGrill && !element.onlyGrill" justifyContent="space-between">
+                                        <Image src="~/images/grill.png" width="50" class="image-elems" loadMode="async" (tap)="selectGrill()"></Image>
+                                        <Label class="label-info" (tap)="selectGrill()">
+                                            <FormattedString>
+                                                <Span [text]="grill+'/'+formData.get('quantity').value"></Span>
+                                                <Span text=" grillowane"></Span>
+                                            </FormattedString>
+                                        </Label>
+                                    </FlexboxLayout>
+                                    <FlexboxLayout class="button-opt" alignItems="center" *ngIf="element.onlyGrill" justifyContent="space-between">
+                                        <Image src="~/images/grill.png" width="50" class="image-elems" loadMode="async"></Image>
+                                        <Label class="label-info">
+                                            <FormattedString>
+                                                <Span text=" jedynie wersja grillowna"></Span>
+                                            </FormattedString>
+                                        </Label>
+                                    </FlexboxLayout>
+                                    <FlexboxLayout class="button-opt" alignItems="center" *ngIf="element.canPack" justifyContent="space-between">
+                                        <Label class="label-icon" *ngIf="serveType=='plate'" (tap)="changeServe()">
+                                            <FormattedString>
+                                                <Span text="&#xf2e7;" class="fas"></Span>
+                                            </FormattedString>
+                                        </Label>
+                                        <Label class="label-icon" *ngIf="serveType=='pack'" (tap)="changeServe()">
+                                            <FormattedString>
+                                                <Span text="&#xf49e;" class="fas"></Span>
+                                            </FormattedString>
+                                        </Label>
+                                        <Label class="label-info" *ngIf="serveType=='plate'" (tap)="changeServe()">
+                                            <FormattedString>
+                                                <Span text="na miejscu"></Span>
+                                            </FormattedString>
+                                        </Label>
+                                        <Label class="label-info" *ngIf="serveType=='pack'" (tap)="changeServe()">
+                                            <FormattedString>
+                                                <Span text="zapakować na wynos"></Span>
+                                            </FormattedString>
+                                        </Label>
+                                    </FlexboxLayout>
+                                    <FlexboxLayout class="button-opt" alignItems="center" *ngIf="!element.canPack" justifyContent="space-between">
+                                        <Label class="label-icon">
+                                            <FormattedString>
+                                                <Span text="&#xf2e7;" class="fas"></Span>
+                                            </FormattedString>
+                                        </Label>
+                                        <Label class="label-info">
+                                            <FormattedString>
+                                                <Span text="do podania na miejscu"></Span>
+                                            </FormattedString>
+                                        </Label>
+                                    </FlexboxLayout>
+                                </FlexboxLayout>
+                            </FlexboxLayout>
+                        </ns-container>
+                        <ns-container *ngIf="element.elementType=='config_steps_price_many'">
+                            <FlexboxLayout row="0" flexDirection="column">
+                                <FlexboxLayout flexDirection="column" alignItems="center" justifyContent="center">
+                                    <app-three-steps-view [element]="element" [hasPushBt]="true" (addElement)="pushStepElement($event)"></app-three-steps-view>
+                                </FlexboxLayout>
+                                <FlexboxLayout flexDirection="row" flexWrap="wrap" row="1">
+                                    <FlexboxLayout flexDirection="row" alignItems="center" class="step-tag p-10" *ngFor="let stp of stepOptionsList;let i=index">
+                                        <Label [text]="stp|configStepName:element:element.configStepsPrice" class="label-name" textWrap="true"></Label>
+                                        <Label class="label-price">
+                                            <FormattedString>
+                                                <Span [text]="stp|configStepPrice:element.configStepsPrice"></Span>
+                                                <Span [text]="' pln'"></Span>
+                                            </FormattedString>
+                                        </Label>
+                                        <Label class="minus" (tap)="removeStepOption(i)">
+                                            <FormattedString>
+                                                <Span text="&#xf00d;" class="fas"></Span>
+                                            </FormattedString>
+                                        </Label>
+                                    </FlexboxLayout>
+                                </FlexboxLayout>
+                            </FlexboxLayout>
+                        </ns-container>
+                        <ng-container *ngIf="element.elementType!='config_steps_price' && element.elementType!='config_steps_price_many'">
+                            <GridLayout columns="*,*" [row]="2" class="p-15">
+                                <ng-container *ngIf="options.length>0">
+                                    <ScrollView orientation="vertical" column="0">
+                                        <WrapLayout orientation="horizontal">
+                                            <Button *ngFor="let p of options" [text]="p" class="button-option" (tap)="addOptions(p)"></Button>
+                                        </WrapLayout>
+                                    </ScrollView>
+                                </ng-container>
+                                <FlexboxLayout column="1">
+                                    <ng-container *ngIf="options.length>0">
+                                        <ScrollView orientation="vertical" column="0">
+                                            <WrapLayout orientation="horizontal">
+                                                <Button *ngFor="let p of optionsElements;let i=index" class="bt-tag" (tap)="removeOption(i)">
+                                                    <FormattedString>
+                                                        <Span [text]="p"></Span>
+                                                        <Span text=" "></Span>
+                                                        <Span text="&#xf00d;" class="fas"></Span>
+                                                    </FormattedString>
+                                                </Button>
+                                            </WrapLayout>
+                                        </ScrollView>
+                                    </ng-container>
+                                </FlexboxLayout>
+                            </GridLayout>
+                            <StackLayout [row]="3" class="p-15">
+                                <Label [text]="priceTotal+' pln'" class="price-red" *ngIf="priceTotal"></Label>
+                            </StackLayout>
+                            <StackLayout [row]="4">
+                                <TextView formControlName="description" hint="Opis..."></TextView>
+                            </StackLayout>
+                        </ng-container>
+                        <ng-container *ngIf="element.elementType=='config_steps_price' || element.elementType=='config_steps_price_many'">
+                            <ng-container *ngIf="element.elementType=='config_steps_price'">
+                                <StackLayout [row]="2" class="p-15">
+                                    <Label [text]="priceTotal+' pln'" class="price-red" *ngIf="priceTotal"></Label>
+                                </StackLayout>
+                                <StackLayout [row]="3">
+                                    <TextView formControlName="description" hint="Opis..."></TextView>
+                                </StackLayout>
+                            </ng-container>
+                            <ng-container *ngIf="element.elementType=='config_steps_price_many'">
+                                <StackLayout [row]="1" class="p-15">
+                                    <Label [text]="priceTotal+' pln'" class="price-red" *ngIf="priceTotal"></Label>
+                                </StackLayout>
+                                <StackLayout [row]="2">
+                                    <TextView formControlName="description" hint="Opis..."></TextView>
+                                </StackLayout>
+                            </ng-container>
+                        </ng-container>
+                    </GridLayout>
+                </ScrollView>
+            </StackLayout>
+            <ng-container *ngIf="element.optionsOnInit=='custom' || element.optionsOnInit=='all'">
+                <StackLayout *tabItem="{ title: 'Zamiany' }">
+                    <app-reverse-view (emitChange)="changeReverse($event)"
+                                      [reversWordsGroups]="elementOptions.reverse"
+                                      [(reverseElements)]="reverseElements">
+                    </app-reverse-view>
+                </StackLayout>
+                <StackLayout *tabItem="{ title: 'Uwagi' }">
+                    <app-desc-view
+                                   (emitChange)="changeDesc($event)"
+                                   [descWordsGroups]="elementOptions.desc"
+                                   [(wordsOutput)]="descElements"></app-desc-view>
+                </StackLayout>
+            </ng-container>
+        </TabView>
+
+        <GridLayout [columns]="'*,*'" row="1">
+            <Button text="Anuluj" column="1" (tap)="close()" class="clear-close"></Button>
+            <Button text="Dodaj" row="1" (tap)="add()" class="add-bt"></Button>
+        </GridLayout>
+    </GridLayout>
+</StackLayout>

@@ -1,0 +1,216 @@
+<Tabs [selectedIndex]="selectedIndex" swipeEnabled="false" [formGroup]="formData">
+    <TabContentItem>
+        <GridLayout [rows]="'*,80'">
+            <ScrollView row="0">
+                <GridLayout [rows]="(formData.get('quantity').value==1)?'*,60,*,*,*':'*,60,*,*,*'">
+                    <StackLayout row="0" *ngIf="!element.skipStepOne">
+                        <FlexboxLayout flexDirection="row" flexWrap="wrap" class="p-15" justifyContent="center">
+                            <Button
+                                    *ngFor="let item of element.configStepsPrice;let i=index"
+                                    [text]="item.name"
+                                    class="button-option"
+                                    (tap)="selectFirstType(i)"
+                                    [ngClass]="{'active': configFirstIndex==i}"></Button>
+                        </FlexboxLayout>
+                        <FlexboxLayout flexDirection="row" flexWrap="wrap" class="p-15" justifyContent="center" *ngIf="element.configStepsPrice[configFirstIndex].types.length>1">
+                            <Button
+                                    *ngFor="let item of element.configStepsPrice[configFirstIndex].types;let i=index"
+                                    [text]="item.type"
+                                    class="button-option"
+                                    (tap)="selectSecondType(i)"
+                                    [ngClass]="{'active': configSecondIndex==i}"></Button>
+                        </FlexboxLayout>
+                        <FlexboxLayout flexDirection="row" flexWrap="wrap" class="p-15" justifyContent="center">
+                            <Button
+                                    *ngFor="let item of element.configStepsPrice[configFirstIndex].types[configSecondIndex].options;let i=index"
+                                    [text]="item.name"
+                                    (tap)="selectThirdType(i)"
+                                    [ngClass]="{'active': configThirdIndex==i}"
+                                    class="button-option"></Button>
+                        </FlexboxLayout>
+                    </StackLayout>
+                    <StackLayout row="0" *ngIf="element.skipStepOne">
+                        <FlexboxLayout flexDirection="row" flexWrap="wrap" class="p-15" justifyContent="center">
+                            <Button
+                                    *ngFor="let item of mergeSteps;let i=index"
+                                    [text]="item.name"
+                                    class="button-option"
+                                    (tap)="selectFirstSecondType(item)"
+                                    [ngClass]="{'active': configFirstIndex==item.indexOne && configSecondIndex==item.indexTwo}"></Button>
+                        </FlexboxLayout>
+                        <FlexboxLayout flexDirection="row" flexWrap="wrap" class="p-15" justifyContent="center">
+                            <Button
+                                    *ngFor="let item of element.configStepsPrice[configFirstIndex].types[configSecondIndex].options;let i=index"
+                                    [text]="item.name"
+                                    (tap)="selectThirdType(i)"
+                                    [ngClass]="{'active': configThirdIndex==i}"
+                                    class="button-option"></Button>
+                        </FlexboxLayout>
+                    </StackLayout>
+                    <GridLayout columns="*" row="1">
+                        <StackLayout column="0">
+                            <FlexboxLayout flexDirection="row" alignItems="center" justifyContent="center">
+                                <FlexboxLayout (tap)="qChange('minus')" class="bt-qua" alignItems="center" justifyContent="center">
+                                    <Label>
+                                        <FormattedString>
+                                            <Span text="&#xf068;" class="fas"></Span>
+                                        </FormattedString>
+                                    </Label>
+                                </FlexboxLayout>
+                                <TextField
+                                           class="q-field"
+                                           editable="false"
+                                           keyboardType="integer"
+                                           formControlName="quantity">
+                                </TextField>
+                                <FlexboxLayout (tap)="qChange('plus')" class="bt-qua" alignItems="center" justifyContent="center">
+                                    <Label>
+                                        <FormattedString>
+                                            <Span text="&#xf067;" class="fas"></Span>
+                                        </FormattedString>
+                                    </Label>
+                                </FlexboxLayout>
+                            </FlexboxLayout>
+
+                        </StackLayout>
+                    </GridLayout>
+
+
+                    <FlexboxLayout flexDirection="column" row="2" class="p-15">
+                        <FlexboxLayout class="sea-button button-opt sea" column="1" alignItems="center" justifyContent="space-between" *ngIf="hasSea && isSea && pricesCount==1">
+                            <Image src="~/images/krewetka.png" width="50" class="image-elems" loadMode="async"></Image>
+                            <FlexboxLayout>
+                                <Label text="wersja z owocami morza" class="label-info"></Label>
+                            </FlexboxLayout>
+                        </FlexboxLayout>
+                        <FlexboxLayout class="sea-button button-opt" column="1" alignItems="center" justifyContent="space-between" *ngIf="hasSea && !isSea && pricesCount==1">
+                            <Image src="~/images/krewetka.png" width="50" class="image-elems" loadMode="async"></Image>
+                            <FlexboxLayout>
+                                <Label text="wersja bez owoców morza" class="label-info"></Label>
+                            </FlexboxLayout>
+                        </FlexboxLayout>
+                        <FlexboxLayout class="button-opt" alignItems="center" *ngIf="element.hasGluten && !element.onlyGluten" justifyContent="space-between">
+                            <Image src="~/images/gluten.png" width="50" class="image-elems" loadMode="async" (tap)="selectGluten()"></Image>
+                            <Label class="label-info" (tap)="selectGluten()">
+                                <FormattedString>
+                                    <Span [text]="gluten+'/'+formData.get('quantity').value"></Span>
+                                    <Span text=" bez glutenu"></Span>
+                                </FormattedString>
+                            </Label>
+                        </FlexboxLayout>
+                        <FlexboxLayout class="button-opt" alignItems="center" *ngIf="element.onlyGluten" justifyContent="space-between">
+                            <Image src="~/images/gluten.png" width="50" class="image-elems" loadMode="async" (tap)="selectGluten()"></Image>
+                            <Label class="label-info">
+                                <FormattedString>
+                                    <Span text=" jedynie wersja glutenowa"></Span>
+                                </FormattedString>
+                            </Label>
+                        </FlexboxLayout>
+                        <FlexboxLayout class="button-opt" alignItems="center" *ngIf="element.canGrill && !element.onlyGrill" justifyContent="space-between">
+                            <Image src="~/images/grill.png" width="50" class="image-elems" loadMode="async" (tap)="selectGrill()"></Image>
+                            <Label class="label-info" (tap)="selectGrill()">
+                                <FormattedString>
+                                    <Span [text]="grill+'/'+formData.get('quantity').value"></Span>
+                                    <Span text=" grillowane"></Span>
+                                </FormattedString>
+                            </Label>
+                        </FlexboxLayout>
+                        <FlexboxLayout class="button-opt" alignItems="center" *ngIf="element.onlyGrill" justifyContent="space-between">
+                            <Image src="~/images/grill.png" width="50" class="image-elems" loadMode="async"></Image>
+                            <Label class="label-info">
+                                <FormattedString>
+                                    <Span text=" jedynie wersja grillowna"></Span>
+                                </FormattedString>
+                            </Label>
+                        </FlexboxLayout>
+                        <FlexboxLayout class="button-opt" alignItems="center" *ngIf="element.canPack" justifyContent="space-between">
+                            <Label class="label-icon" *ngIf="serveType=='plate'" (tap)="changeServe()">
+                                <FormattedString>
+                                    <Span text="&#xf2e7;" class="fas"></Span>
+                                </FormattedString>
+                            </Label>
+                            <Label class="label-icon" *ngIf="serveType=='pack'" (tap)="changeServe()">
+                                <FormattedString>
+                                    <Span text="&#xf49e;" class="fas"></Span>
+                                </FormattedString>
+                            </Label>
+                            <Label class="label-info" *ngIf="serveType=='plate'" (tap)="changeServe()">
+                                <FormattedString>
+                                    <Span text="na miejscu"></Span>
+                                </FormattedString>
+                            </Label>
+                            <Label class="label-info" *ngIf="serveType=='pack'" (tap)="changeServe()">
+                                <FormattedString>
+                                    <Span text="zapakować na wynos"></Span>
+                                </FormattedString>
+                            </Label>
+                        </FlexboxLayout>
+                        <FlexboxLayout class="button-opt" alignItems="center" *ngIf="!element.canPack" justifyContent="space-between">
+                            <Label class="label-icon">
+                                <FormattedString>
+                                    <Span text="&#xf2e7;" class="fas"></Span>
+                                </FormattedString>
+                            </Label>
+                            <Label class="label-info">
+                                <FormattedString>
+                                    <Span text="do podania na miejscu"></Span>
+                                </FormattedString>
+                            </Label>
+                        </FlexboxLayout>
+                        <FlexboxLayout class="button-opt" alignItems="center" *ngIf="element.canOnePlate" justifyContent="space-between">
+                            <Image src="~/images/plate.png" width="50" class="image-elems" loadMode="async" *ngIf="onOnePlate" (tap)="changeOnePlate()"></Image>
+                            <Image src="~/images/plates.png" width="50" class="image-elems" loadMode="async" *ngIf="!onOnePlate" (tap)="changeOnePlate()"></Image>
+                            <Label class="label-info" *ngIf="onOnePlate" (tap)="changeOnePlate()">
+                                <FormattedString>
+                                    <Span text=" "></Span>
+                                    <Span text="na jednym talerzu"></Span>
+                                </FormattedString>
+                            </Label>
+                            <Label class="label-info" *ngIf="!onOnePlate" (tap)="changeOnePlate()">
+                                <FormattedString>
+                                    <Span text=" "></Span>
+                                    <Span text="na wielu talerzach"></Span>
+                                </FormattedString>
+                            </Label>
+                        </FlexboxLayout>
+                        <FlexboxLayout flexDirection="row" justifyContent="center" flexWrap="wrap" *ngIf="element.canAcc" class="p-10">
+                            <FlexboxLayout class="button-acc" alignItems="center" justifyContent="space-between" *ngFor="let item of accArray">
+                                <Label [text]="'+ '+item.acc.name+' x '+item.howMany" (tap)="selectAcc(item.acc)"></Label>
+                            </FlexboxLayout>
+                        </FlexboxLayout>
+                    </FlexboxLayout>
+
+                    <StackLayout row="3" class="p-15">
+                        <Label [text]="priceTotal+' pln'" class="price-red" *ngIf="priceTotal"></Label>
+                    </StackLayout>
+                    <StackLayout row="4">
+                        <TextView formControlName="description" hint="Opis..."></TextView>
+                    </StackLayout>
+                </GridLayout>
+            </ScrollView>
+
+            <GridLayout [rows]="'*,*'" row="1">
+                <GridLayout [columns]="(formData.get('quantity').value==1 && (element.optionsOnInit=='all' || element.optionsOnInit=='custom'))?'*,*':'*'" row="0">
+                    <Button text="Dodaj elementy dodatkowe" column="0" class="options-bt" *ngIf="formData.get('quantity').value==1 && element.elastic && element.optionsOnInit=='all'" (tap)="openAllOptionsPlus()"></Button>
+                    <Button text="Dodaj opcje szczegółowe" column="0" class="options-bt" *ngIf="!element.elastic && (element.optionsOnInit=='all' || element.optionsOnInit=='custom')" (tap)="openCustomOptions()"></Button>
+                    <Button text="Anuluj" column="1" (tap)="closeExit()" class="clear-close"></Button>
+                </GridLayout>
+                <Button text="Dodaj" row="1" (tap)="add()" class="add-bt"></Button>
+            </GridLayout>
+        </GridLayout>
+    </TabContentItem>
+    <TabContentItem>
+        <GridLayout rows="*,60,80">
+            <StackLayout row="0">
+                <ng-template #temp></ng-template>
+            </StackLayout>
+            <StackLayout row="1">
+                <Label [text]="priceTotal+' pln'" class="price-red" *ngIf="priceTotal"></Label>
+            </StackLayout>
+            <StackLayout row="2">
+                <Button text="Anuluj" (tap)="closeExit()" class="clear-close"></Button>
+                <Button text="Dodaj" (tap)="add()" class="add-bt"></Button>
+            </StackLayout>
+        </GridLayout>
+    </TabContentItem>
+</Tabs>

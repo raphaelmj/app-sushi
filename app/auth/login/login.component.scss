@@ -1,0 +1,26 @@
+@import "../../assets/scss/variables.scss";
+
+TextField.ng-valid {
+    margin-bottom: 2;
+}
+
+TextField.ng-invalid {
+    margin-bottom: 2;
+}
+
+
+.error-desc {
+    color: #ff0000;
+    padding: 10;
+    text-align: center;
+}
+
+.error-input {}
+
+Button.login-bt {
+    margin: 0;
+    padding: 0;
+    font-size: 16;
+    background-color: #4E412C;
+    color: #ffffff;
+}

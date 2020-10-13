@@ -1,0 +1,22 @@
+@import "../../../assets/scss/variables.scss";
+
+Button.cat-bt {
+  background-color: $body-bg;
+  margin: 0 0 0 0 !important;
+  border-radius: 0;
+  color: #ffffff;
+  font-size: 12;
+}
+
+Button.active-g {
+  background-color: $body-bg;
+  color: #ff0000;
+}
+
+FlexboxLayout.added-descs {
+  background-color: #504426;
+}
+
+.plus-label {
+  font-size: 16;
+}

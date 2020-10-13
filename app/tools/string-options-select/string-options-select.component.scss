@@ -1,0 +1,71 @@
+@import "../../assets/scss/variables.scss";
+
+TextView {
+    placeholder-color: #000000;
+    color: #ffffff;
+    border-color: #ffffff;
+}
+
+TextField {
+    margin-bottom: 2;
+    placeholder-color: #000000;
+    color: #ffffff;
+    border-color: #ffffff;
+    font-size: 16;
+}
+
+TextField.ng-valid {
+    margin-bottom: 2;
+}
+
+TextField.ng-invalid {
+    margin-bottom: 2;
+}
+
+FlexboxLayout.bt-qua {
+    height: 48;
+    width: 48l
+}
+
+FlexboxLayout.options-select {
+    margin-bottom: 20;
+    margin-top: 20;
+}
+
+Button.bt-tag {
+    background-color: #504426;
+    margin: 0 10 0 0 !important;
+    // padding: 0 !important;
+    border-radius: 0;
+    color: #ffffff;
+}
+
+Button.bt-tag:active {
+    background-color: #504426;
+    margin: 0 0 0 0 !important;
+    // padding: 0 !important;
+    border-radius: 0;
+    color: #ffffff;
+}
+
+FlexboxLayout.button-opt {
+    margin-bottom: 20;
+}
+
+Label.label-info {
+    font-size: 16;
+}
+
+Label.label-icon {
+    font-size: 40;
+    width: 50;
+    text-align: center;
+    margin-right: 20;
+}
+
+Button.add-bt {
+    background-color: #504426;
+    // padding: 0 !important;
+    border-radius: 0;
+    color: #ffffff;
+}

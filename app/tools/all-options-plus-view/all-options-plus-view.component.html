@@ -1,0 +1,45 @@
+<GridLayout [rows]="gridRows">
+    <ng-template #temp></ng-template>
+    <FlexboxLayout row="0" [height]="(plusElements.length==0)?0:scrollHeight/cartPlusDiv">
+        <ScrollView [height]="(plusElements.length==0)?0:scrollHeight/cartPlusDiv">
+            <WrapLayout *ngIf="showAdded" orientation="horizontal" width="100%">
+                <ng-container *ngFor="let item of plusElements;let i=index">
+                    <app-plus-element-row
+                                          [plusElement]="item"
+                                          [index]="i"
+                                          (emitRemove)="removePlusElement($event)"
+                                          (emitRemoveStep)="removePlusElementStep($event)"
+                                          (emitRemoveOption)="removeElementOption($event)"></app-plus-element-row>
+                </ng-container>
+            </WrapLayout>
+        </ScrollView>
+    </FlexboxLayout>
+    <StackLayout row="1">
+        <TabView
+                 tabTextFontSize="16"
+                 [selectedIndex]="current"
+                 (selectedIndexChanged)="onSelectedIndexchanged($event)">
+            <ng-container *ngFor="let c of cartPlusCategoriesTabs;let i=index">
+                <StackLayout *tabItem="{ title: c.name }">
+                    <app-options-plus-view [elements]="c.elements" (emitPlus)="plusElement($event)"></app-options-plus-view>
+                </StackLayout>
+            </ng-container>
+            <ng-container *ngIf="initOthers">
+                <StackLayout *tabItem="{ title: 'Zamiany' }">
+                    <app-reverse-view (emitChange)="changeReverse($event)"
+                                      [reversWordsGroups]="elementOptions.reverse"
+                                      [(reverseElements)]="reverseElements">
+                    </app-reverse-view>
+                </StackLayout>
+                <StackLayout *tabItem="{ title: 'Uwagi' }">
+                    <app-desc-view
+                                   (emitChange)="changeDesc($event)"
+                                   [descWordsGroups]="elementOptions.desc"
+                                   [(wordsOutput)]="descElements"></app-desc-view>
+                </StackLayout>
+            </ng-container>
+
+
+        </TabView>
+    </StackLayout>
+</GridLayout>

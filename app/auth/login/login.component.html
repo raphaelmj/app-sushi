@@ -1,0 +1,24 @@
+<GridLayout class="page p-15" rows="*">
+  <StackLayout row="0" orientation="horizontal" width="100%">
+    <ScrollView orientation="vertical" width="100%" id="login-page">
+      <StackLayout row="1" orientation="vertical" class="form-stack" [formGroup]="formLogin" width="100%">
+        <FlexboxLayout flexDirection="row" alignItems="center" width="100%">
+          <FlexboxLayout flexDirection="column" width="30%">
+            <ListPicker [items]="loginTypes" selectedIndex="0" (selectedIndexChange)="onSelectedIndexChanged($event)">
+            </ListPicker>
+          </FlexboxLayout>
+          <FlexboxLayout flexDirection="column" width="70%">
+            <TextField hint="Nick" formControlName="nick"></TextField>
+            <TextField hint="Hasło" secure="true" formControlName="password">
+            </TextField>
+          </FlexboxLayout>
+        </FlexboxLayout>
+        <FlexboxLayout flexDirection="column" alignItems="center" width="100%">
+          <Button text="Logowanie" (tap)="submitForm()" width="100%" class="login-bt"></Button>
+          <Label *ngIf="loginFail" text="Błąd autoryzacji" class="error-desc" width="100%"></Label>
+          <ActivityIndicator [busy]="loading"></ActivityIndicator>
+        </FlexboxLayout>
+      </StackLayout>
+    </ScrollView>
+  </StackLayout>
+</GridLayout>

@@ -1,0 +1,199 @@
+@import "../assets/scss/variables.scss";
+
+.sideStackLayout {
+  background-color: #4e412c;
+}
+
+StackLayout.nav-beam {
+  Button {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+}
+
+FlexboxLayout.button-nav {}
+
+
+FlexboxLayout.flex-btn {
+  padding: 0 !important;
+  margin: 0 !important;
+  background-color: #4e412c;
+  height: 100%;
+
+  Label {
+    font-size: 18;
+    text-transform: uppercase;
+  }
+}
+
+FlexboxLayout.flex-btn.active-cat {
+  background-color: $accent;
+
+  Label {
+    color: $body-bg;
+  }
+}
+
+FlexboxLayout.cart-bt {
+  padding: 0 !important;
+  margin: 0 !important;
+  background-color: #4e412c;
+  height: 100%;
+  padding-left: 40;
+  padding-right: 40;
+
+  Label.trash {
+    font-size: 20;
+    text-transform: uppercase;
+  }
+
+  Label.cart-count {
+    font-size: 27;
+  }
+
+  Label.price {
+    color: #ff0000;
+    font-size: 27;
+  }
+}
+
+Button.btn-submit {
+  margin-right: 5%;
+  margin-left: 0;
+  width: 80%;
+  font-size: 22;
+  text-transform: uppercase;
+  height: 50 !important;
+}
+
+Button.btn-close {
+  margin-right: 0;
+  margin-left: 0;
+  font-size: 17;
+}
+
+FlexboxLayout.order-col {
+  // border-width: 1;
+  // border-color: #ffffff;
+  margin: 5;
+}
+
+FlexboxLayout.change-day-bt {
+  background-color: $body-bg;
+  color: #ffffff;
+  padding: 0 !important;
+  font-size: 16;
+  margin: 0 0 0 10 !important;
+}
+
+FlexboxLayout.reserve-bt {
+  background-color: $body-bg;
+  color: #ffffff;
+  padding: 0 !important;
+  font-size: 20;
+  width: 60;
+  margin: 0 0 0 0 !important;
+}
+
+.tablet {
+  FlexboxLayout.change-day-bt {
+    margin: 0 0 0 10 !important;
+  }
+}
+
+.phone {
+  FlexboxLayout.change-day-bt {
+    margin: 0 0 0 10 !important;
+  }
+
+  FlexboxLayout.change-day-bt {
+    font-size: 14;
+  }
+
+  FlexboxLayout.reserve-bt {
+    font-size: 18;
+  }
+}
+
+Button.bt-refresh {
+  font-size: 20;
+  height: 40 !important;
+  margin: 10 0 0 0 !important;
+  padding: 0 !important;
+  background-color: transparent;
+  color: #ffffff;
+}
+
+Button.bt-stats {
+  font-size: 20;
+  height: 40 !important;
+  margin: 10 0 0 0 !important;
+  padding: 0 !important;
+  background-color: transparent;
+  color: #ffffff;
+}
+
+Button.burger {
+  font-size: 28;
+  height: 40 !important;
+  margin: 10 0 0 0 !important;
+  padding: 0 !important;
+  background-color: transparent;
+  color: #ffffff;
+}
+
+Label.burger {
+  font-size: 28;
+  width: 35;
+  margin: 0 0 5 0 !important;
+  padding: 0 !important;
+  background-color: transparent;
+  color: #ffffff;
+}
+
+Label.bt-refresh {
+  font-size: 20;
+  margin: 15 0 0 0 !important;
+  background-color: transparent;
+  color: #ffffff;
+}
+
+Label.bt-stats {
+  font-size: 20;
+  margin: 15 0 0 0 !important;
+  background-color: transparent;
+  color: #ffffff;
+}
+
+.portrait {
+  Label.bt-refresh {
+    font-size: 20;
+    margin: 0 0 5 0 !important;
+  }
+
+  Label.bt-stats {
+    font-size: 20;
+    margin: 0 0 0 0 !important;
+  }
+}
+
+Label.anim-bt-stats {
+  animation-name: opacityChange;
+  animation-duration: 600ms;
+  animation-iteration-count: infinite;
+}
+
+
+@keyframes opacityChange {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}

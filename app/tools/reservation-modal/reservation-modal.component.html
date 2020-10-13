@@ -1,0 +1,88 @@
+<FlexboxLayout flexDirection="column" alignItems="center" justifyContent="center" [formGroup]="formData">
+
+    <FlexboxLayout flexDirection="row" justifyContent="center" alignContent="center" class="label-size">
+        <Label text="Liczba osób" class="size"></Label>
+    </FlexboxLayout>
+
+    <FlexboxLayout flexDirection="row" justifyContent="center" alignContent="center" class="qua-form">
+        <FlexboxLayout flexDirection="row" alignItems="center" justifyContent="center" (tap)="qSize('minus')"
+                       class="bt-qua">
+            <Label>
+                <FormattedString>
+                    <Span text="&#xf068;" class="fas"></Span>
+                </FormattedString>
+            </Label>
+        </FlexboxLayout>
+        <TextField editable="false" keyboardType="integer" formControlName="reservationSize">
+        </TextField>
+        <FlexboxLayout flexDirection="row" alignItems="center" justifyContent="center" (tap)="qSize('plus')"
+                       class="bt-qua">
+            <Label>
+                <FormattedString>
+                    <Span text="&#xf067;" class="fas"></Span>
+                </FormattedString>
+            </Label>
+        </FlexboxLayout>
+    </FlexboxLayout>
+    <FlexboxLayout flexDirection="row" justifyContent="center" alignContent="center">
+        <TextField
+                   width="300"
+                   hint="dla kogo?"
+                   formControlName="forWho">
+        </TextField>
+    </FlexboxLayout>
+    <FlexboxLayout flexDirection="row" justifyContent="center" alignContent="center">
+        <TextField
+                   width="300"
+                   hint="telefon"
+                   keyboardType="phone"
+                   formControlName="phone">
+        </TextField>
+    </FlexboxLayout>
+    <FlexboxLayout flexDirection="row" justifyContent="center" alignContent="center">
+
+        <TextView hint="Opis..."
+                  width="300"
+                  formControlName="description">
+        </TextView>
+    </FlexboxLayout>
+    <FlexboxLayout flexDirection="row" justifyContent="center" alignItems="center" class="set-row">
+        <FlexboxLayout flexDirection="row" *ngIf="readyDate">
+            <Label class="set-label" (tap)="chooseDateTime()">
+                <FormattedString>
+                    <Span text="&#xf783;" class="fas"></Span>
+                    <Span text=" "></Span>
+                    <Span [text]="readyDate | date: 'dd.MM.yy'"></Span>
+                </FormattedString>
+            </Label>
+            <Label text=" / " class="set-label"></Label>
+            <Label class="set-label" (tap)="chooseDateTime()">
+                <FormattedString>
+                    <Span text="&#xf017;" class="fas"></Span>
+                    <Span text=" "></Span>
+                    <Span [text]="readyDate | date: 'HH:mm:ss'"></Span>
+                </FormattedString>
+            </Label>
+        </FlexboxLayout>
+        <FlexboxLayout flexDirection="row" justifyContent="center" alignItems="center" *ngIf="!readyDate">
+            <Label class="set-label" (tap)="chooseDateTime()">
+                <FormattedString>
+                    <Span text="&#xf783;" class="fas"></Span>
+                    <Span text=" "></Span>
+                    <Span text="&#xf017;" class="fas"></Span>
+                    <Span text=" "></Span>
+                    <Span text=" ustaw datę/godzinę"></Span>
+                </FormattedString>
+            </Label>
+        </FlexboxLayout>
+
+
+
+    </FlexboxLayout>
+
+    <GridLayout rows="50,50">
+        <Button (tap)="setReservation()" class="set-bt" [text]="(isCreate)?'Ustaw rezerwację':'Aktualizuj dane'" row="0"></Button>
+        <Button (tap)="unsetReservation()" class="unset-bt" [text]="(isCreate)?'Nie ustawiaj':'Anuluj'" row="1"></Button>
+    </GridLayout>
+
+</FlexboxLayout>

@@ -1,0 +1,10 @@
+<ScrollView orientation="horizontal">
+    <FlexboxLayout flexDirection="row" alignItems="center" justifyContent="center" class="p-15 bts-row">
+        <Button *ngFor="let p of pluses" class="bt" (tap)="addPlus(p)">
+            <FormattedString>
+                <Span text="&#xf067;" class="fas"></Span>
+                <Span [text]="' '+p+' minut'"></Span>
+            </FormattedString>
+        </Button>
+    </FlexboxLayout>
+</ScrollView>

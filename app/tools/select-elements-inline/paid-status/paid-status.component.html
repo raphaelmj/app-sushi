@@ -1,0 +1,28 @@
+<FlexboxLayout
+               alignItems="center"
+               justifyContent="center"
+               class="bt"
+               [ngClass]="{ 
+                       active: (paid=='all'||paid=='1') && inprogress!='1', 
+                       'active-all':paid=='all' && inprogress!='1',
+                       'in-active-change':inprogress=='1',
+                       'phone': device.deviceType=='Phone',
+                       'tablet': device.deviceType!='Phone'
+                }"
+               (tap)="changePaidStatus('1')">
+        <Label [text]="'Zapłacone'"></Label>
+</FlexboxLayout>
+<FlexboxLayout
+               alignItems="center"
+               justifyContent="center"
+               class="bt"
+               [ngClass]="{ 
+                       active: (paid=='all'||paid=='0') && inprogress!='1', 
+                       'active-all':paid=='all' && inprogress!='1',
+                       'in-active-change':inprogress=='1',
+                       'phone': device.deviceType=='Phone',
+                       'tablet': device.deviceType!='Phone'
+                }"
+               (tap)="changePaidStatus('0')">
+        <Label [text]="'Niezapłacone'"></Label>
+</FlexboxLayout>

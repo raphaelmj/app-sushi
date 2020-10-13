@@ -1,0 +1,17 @@
+<FlexboxLayout alignContent="flex-start" flexDirection="column" justifyContent="space-between" class="row-m-flex p-10 " width="100%">
+  <Label [text]="element.name" class="htmlLabel" textWrap="true" width="100%"></Label>
+  <GridLayout columns="*,*" *ngFor="let p of prices; let i = index" [ngStyle]="{'margin-bottom': '15px'}">
+    <Label [text]="'' + p.perSize + ' szt.'" class="per-size" column="0"></Label>
+    <FlexboxLayout flexDirection="column" alignItems="flex-start" column="1" justifyContent="flex-start">
+      <FlexboxLayout *ngFor="let pel of p.data; let j = index">
+        <Label [text]="pel.price + ' pln'" class="red-price"></Label>
+        <Image src="~/images/krewetka.png" *ngIf="pel.isSea" width="25" class="image-elems" loadMode="async"></Image>
+      </FlexboxLayout>
+    </FlexboxLayout>
+  </GridLayout>
+  <Button class="add-cart-bt" (tap)="addToCart()" width="40" height="40">
+    <FormattedString>
+      <Span text="&#xf217;" class="fas"></Span>
+    </FormattedString>
+  </Button>
+</FlexboxLayout>

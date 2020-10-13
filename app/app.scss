@@ -1,0 +1,174 @@
+@import "~@nativescript/theme/core";
+@import "~/assets/scss/variables.scss";
+@import "~@nativescript/theme/index";
+
+.far {
+  font-family: Font Awesome 5 Free, fa-regular-400;
+  font-weight: 400;
+}
+
+.fab {
+  font-family: Font Awesome 5 Brands, fa-brands-400;
+  font-weight: 400;
+}
+
+.fas {
+  font-family: Font Awesome 5 Free, fa-solid-900;
+  font-weight: 900;
+}
+
+TextField.input-border {
+  placeholder-color: #4e412c;
+  border-width: 0 0 2 0;
+  border-bottom-color: #4e412c;
+}
+
+TextField.input-border.invalid {
+  placeholder-color: #4e412c;
+  border-width: 0 0 2 0;
+  border-bottom-color: #ff0000;
+}
+
+FlexboxLayout.menu-cats {
+  background-color: #000000;
+
+  Button {
+    height: 40 !important;
+    margin: 0;
+    padding: auto 20 auto 20;
+    width: 33%;
+  }
+}
+
+StackLayout.form-stack {
+  vertical-align: middle;
+  padding-left: 5%;
+  padding-left: 5%;
+}
+
+Button {
+  background-color: $buttonColor;
+  color: #100e09;
+}
+
+.padding-left-10 {
+  padding-left: 10;
+}
+
+Button:highlighted {
+  background-color: #000000;
+}
+
+Button:active {
+  background-color: $buttonColor;
+  color: #100e09;
+}
+
+Button.small-bt {
+  font-size: 16;
+  padding-left: 2px;
+}
+
+Button.bt-cart {
+  width: 40 !important;
+  height: 40 !important;
+}
+
+Label.htmlLabel {
+  font-size: 16;
+  width: 70%;
+}
+
+Label.htmlLabelTitle {
+  font-size: 16;
+  width: 100%;
+}
+
+Label.infoLabel {
+  font-size: 14;
+  width: 70%;
+}
+
+
+Label.red-price {
+  font-size: 16;
+  color: #ff0000;
+}
+
+Label.red-price-min {
+  font-size: 14;
+  color: #ff0000;
+}
+
+HtmlView.price-total {
+  font-size: 26;
+  color: #ff0000;
+}
+
+Label.price-total {
+  font-size: 26;
+  color: #ff0000;
+}
+
+TextView {
+  placeholder-color: #ffffff;
+}
+
+Label.per-size {
+  font-size: 16;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.d-none {
+  visibility: collapsed;
+}
+
+FlexboxLayout.ready-element {
+  opacity: 0.5;
+}
+
+.margin-bottom-10 {
+  margin-bottom: 10;
+}
+
+Button.add-cart-bt {
+  margin: 0;
+  padding: 0;
+  font-size: 12;
+  background-color: #100e09;
+  color: #ffffff;
+  line-height: 0;
+}
+
+FlexboxLayout.row-m-flex {
+  border-bottom-width: 1;
+  border-right-width: 1;
+  border-color: #D7C5AB;
+}
+
+FlexboxLayout.row-m-flex-bottom {
+  border-bottom-width: 1;
+  border-color: #D7C5AB;
+}
+
+GridLayout.grid-ele {
+  border-bottom-width: 1;
+  border-right-width: 1;
+  border-color: #D7C5AB;
+  min-height: 120;
+}
+
+FlexboxLayout.row-config {
+  border-bottom-width: 1;
+  border-right-width: 1;
+  border-color: #D7C5AB;
+}
+
+FlexboxLayout.row-desc {
+  border-bottom-width: 1;
+  border-right-width: 1;
+  border-color: #D7C5AB;
+}

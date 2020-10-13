@@ -1,0 +1,58 @@
+<FlexboxLayout flexDirection="row" row="0">
+  <FlexboxLayout
+                 flexDirection="column"
+                 alignItems="flex-start"
+                 justifyContent="flex-start"
+                 width="26%">
+    <Button
+            *ngFor="let item of descWordsGroups"
+            [text]="item.name"
+            class="cat-bt"
+            [ngClass]="{ 'active-g': currentGroup.id == item.id }"
+            (tap)="changeCategory(item)"></Button>
+  </FlexboxLayout>
+  <FlexboxLayout
+                 flexDirection="column"
+                 justifyContent="space-between"
+                 width="37%">
+    <StackLayout>
+      <ListView [items]="wordsFiltered" [height]="scrollHeight">
+        <ng-template let-item="item" let-i="index">
+          <ScrollView>
+            <FlexboxLayout
+                           flexDirection="row"
+                           alignItems="center">
+              <Label [text]="item" (tap)="addInfo(item)"></Label>
+            </FlexboxLayout>
+          </ScrollView>
+        </ng-template>
+      </ListView>
+    </StackLayout>
+  </FlexboxLayout>
+  <FlexboxLayout
+                 flexDirection="column"
+                 justifyContent="flex-start"
+                 class="added-descs"
+                 width="38%">
+    <ScrollView [height]="scrollHeight">
+      <WrapLayout>
+        <FlexboxLayout
+                       flexDirection="row"
+                       alignItems="center"
+                       justifyContent="space-between"
+                       class="p-10"
+                       width="100%"
+                       (tap)="removeInfo(i)"
+                       *ngFor="let item of wordsOutput; let i = index">
+          <Label [text]="item+' '"></Label>
+          <Label>
+            <FormattedString>
+              <Span text="&#xf00d;" class="fas"></Span>>
+            </FormattedString>
+          </Label>
+        </FlexboxLayout>
+      </WrapLayout>
+    </ScrollView>
+
+  </FlexboxLayout>
+</FlexboxLayout>
