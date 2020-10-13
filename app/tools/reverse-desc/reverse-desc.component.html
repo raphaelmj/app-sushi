@@ -1,133 +1,153 @@
-<GridLayout rows="*,40,220,40">
+<GridLayout rows="*,50">
+  <GridLayout [rows]="gridR" [columns]="gridC" row="0">
 
-
-  <FlexboxLayout flexDirection="row" flexWrap="wrap" row="0">
-
-    <FlexboxLayout
-                   flexDirection="row"
-                   justifyContent="space-between"
-                   width="100%">
-      <FlexboxLayout
-                     flexDirection="row"
-                     alignItems="flex-start"
-                     justifyContent="flex-start"
-                     width="46%">
-        <FlexboxLayout
-                       flexDirection="column"
-                       alignItems="flex-start"
-                       justifyContent="flex-start"
-                       width="67%">
-          <Button
-                  *ngFor="let item of reversWordsGroups"
-                  [text]="item.name"
-                  class="cat-bt"
-                  [ngClass]="{ 'active-g': currentGroupLeft.id == item.id }"
-                  (tap)="changeCategoryLeft(item)"></Button>
-        </FlexboxLayout>
-
-        <StackLayout>
-          <ListView [items]="currentGroupLeft.tags" [height]="scrollHeight">
-            <ng-template let-item="item" let-i="index">
-              <ScrollView>
-                <FlexboxLayout
-                               flexDirection="row"
-                               alignItems="center"
-                               justifyContent="center"
-                               (tap)="addInfoLeft(item)"
-                               class="list-el"
-                               [ngClass]="{ active: leftTag == item }">
-                  <Label [text]="item"></Label>
-                </FlexboxLayout>
-              </ScrollView>
-            </ng-template>
-          </ListView>
-        </StackLayout>
-      </FlexboxLayout>
+    <FlexboxLayout flexDirection="row" flexWrap="wrap" [row]="(orient=='vertical')?0:0" [column]="(orient=='vertical')?0:0">
 
       <FlexboxLayout
                      flexDirection="row"
-                     alignItems="flex-start"
-                     justifyContent="flex-start"
-                     width="8%">
-        <Label class="conjunction">
-          <FormattedString>
-            <Span text="&#xf101;" class="fas"></Span>>
-          </FormattedString>
-        </Label>
-      </FlexboxLayout>
-      <FlexboxLayout
-                     flexDirection="row"
-                     alignItems="flex-start"
-                     justifyContent="flex-start"
-                     width="46%">
+                     justifyContent="space-between"
+                     *ngIf="currentGroupLeft && currentGroupRight"
+                     width="100%">
         <FlexboxLayout
-                       flexDirection="column"
+                       flexDirection="row"
                        alignItems="flex-start"
                        justifyContent="flex-start"
-                       width="67%">
-          <Button
-                  *ngFor="let item of reversWordsGroups"
-                  [text]="item.name"
-                  class="cat-bt"
-                  [ngClass]="{ 'active-g': currentGroupRight.id == item.id }"
-                  (tap)="changeCategoryRight(item)"></Button>
-        </FlexboxLayout>
-        <FlexboxLayout
-                       flexDirection="column"
-                       alignItems="flex-start"
-                       justifyContent="flex-start"
-                       alignItems="center">
+                       width="46%">
+          <FlexboxLayout
+                         flexDirection="column"
+                         alignItems="flex-start"
+                         justifyContent="flex-start"
+                         width="69%">
+            <Button
+                    *ngFor="let item of reversWordsGroups"
+                    [text]="item.name"
+                    class="cat-bt"
+                    [ngClass]="{ 'active-g': currentGroupLeft.id == item.id }"
+                    (tap)="changeCategoryLeft(item)"></Button>
+          </FlexboxLayout>
+
           <StackLayout>
-            <ListView [items]="currentGroupRight.tags" [height]="scrollHeight">
-              <ng-template let-item="item" let-i="index">
-                <ScrollView>
+
+            <ScrollView [height]="scrollHeight">
+              <WrapLayout orientation="horizontal">
+                <ng-container *ngFor="let item of currentGroupLeft.tags">
                   <FlexboxLayout
                                  flexDirection="row"
                                  alignItems="center"
                                  justifyContent="center"
+                                 width="100%"
+                                 (tap)="addInfoLeft(item)"
+                                 class="list-el"
+                                 [ngClass]="{ active: leftTag == item }">
+                    <Label [text]="item"></Label>
+                  </FlexboxLayout>
+                </ng-container>
+              </WrapLayout>
+            </ScrollView>
+
+          </StackLayout>
+        </FlexboxLayout>
+
+        <FlexboxLayout
+                       flexDirection="row"
+                       alignItems="center"
+                       justifyContent="center"
+                       width="4%">
+          <Label class="conjunction">
+            <FormattedString>
+              <Span text="&#xf101;" class="fas"></Span>>
+            </FormattedString>
+          </Label>
+        </FlexboxLayout>
+        <FlexboxLayout
+                       flexDirection="row"
+                       alignItems="flex-start"
+                       justifyContent="flex-start"
+                       width="46%">
+          <FlexboxLayout
+                         flexDirection="column"
+                         alignItems="flex-start"
+                         justifyContent="flex-start"
+                         width="69%">
+            <Button
+                    *ngFor="let item of reversWordsGroups"
+                    [text]="item.name"
+                    class="cat-bt"
+                    [ngClass]="{ 'active-g': currentGroupRight.id == item.id }"
+                    (tap)="changeCategoryRight(item)"></Button>
+          </FlexboxLayout>
+          <FlexboxLayout
+                         flexDirection="column"
+                         alignItems="flex-start"
+                         justifyContent="flex-start"
+                         alignItems="center">
+
+            <ScrollView [height]="scrollHeight">
+              <WrapLayout orientation="horizontal">
+                <ng-container *ngFor="let item of currentGroupRight.tags">
+                  <FlexboxLayout
+                                 flexDirection="row"
+                                 alignItems="center"
+                                 justifyContent="center"
+                                 width="100%"
                                  [ngClass]="{ active: rightTag == item }"
                                  (tap)="addInfoRight(item)"
                                  class="list-el">
                     <Label [text]="item"></Label>
                   </FlexboxLayout>
-                </ScrollView>
-              </ng-template>
-            </ListView>
-          </StackLayout>
+                </ng-container>
+              </WrapLayout>
+            </ScrollView>
+
+          </FlexboxLayout>
         </FlexboxLayout>
       </FlexboxLayout>
     </FlexboxLayout>
-  </FlexboxLayout>
-  <FlexboxLayout flexDirection="column" justifyContent="center" width="100%" row="1">
-    <Button (tap)="addReverse()" *ngIf="rightTag && leftTag" class="add-r-bt">
+    <FlexboxLayout
+                   flexDirection="column"
+                   justifyContent="center"
+                   alignItems="center"
+                   [row]="(orient=='vertical')?1:0"
+                   [column]="(orient=='vertical')?0:1"
+                   (tap)="addReverse()"
+                   [ngClass]="{'plus-rev': rightTag && leftTag}">
+      <Label *ngIf="rightTag && leftTag">
+        <FormattedString>
+          <Span text="&#xf067;" class="fas"></Span>>
+        </FormattedString>
+      </Label>
+    </FlexboxLayout>
+    <FlexboxLayout [row]="(orient=='vertical')?2:0" [column]="(orient=='vertical')?0:2" class="added-revs" width="100%">
+      <ScrollView [height]="scrollHeight" width="100%">
+        <WrapLayout orientation="horizontal" width="100%">
+          <FlexboxLayout justifyContent="space-between" alignItems="center" [width]="(orient=='vertical')?'50%':'100%'" class="grid-added" *ngFor="let item of reverseElements;let i= index">
+            <FlexboxLayout class="" justifyContent="space-between" alignItems="center" class="p-10">
+              <Label [text]="item.from+' '"></Label>
+              <Label>
+                <FormattedString>
+                  <Span text="&#xf101;" class="fas"></Span>
+                </FormattedString>
+              </Label>
+              <Label [text]="' '+item.to"></Label>
+            </FlexboxLayout>
+            <FlexboxLayout alignItems="center" justifyContent="center" (tap)="removeReverse(i)" class="reverse-rem-bt p-10">
+              <Label>
+                <FormattedString>
+                  <Span text="&#xf068;" class="fas"></Span>>
+                </FormattedString>
+              </Label>
+            </FlexboxLayout>
+          </FlexboxLayout>
+        </WrapLayout>
+      </ScrollView>
+    </FlexboxLayout>
+
+  </GridLayout>
+  <StackLayout row="1">
+    <Button (tap)="close()" class="close">
       <FormattedString>
-        <Span text="&#xf067;" class="fas"></Span>>
+        <Span text=" Zamknij"></Span>
       </FormattedString>
     </Button>
-  </FlexboxLayout>
-  <StackLayout row="2" width="100%">
-    <ScrollView height="200">
-      <WrapLayout orientation="horizontal">
-        <GridLayout columns="*,20" width="50%" class="grid-added p-5" *ngFor="let item of reverseElements;let i= index">
-          <FlexboxLayout column="0" class="p-5" justifyContent="space-between" alignItems="center">
-            <Label [text]="item.from"></Label>
-            <Label>
-              <FormattedString>
-                <Span text="&#xf101;" class="fas"></Span>>
-              </FormattedString>
-            </Label>
-            <Label [text]="item.to"></Label>
-          </FlexboxLayout>
-          <Button (tap)="removeReverse(i)" class="reverse-rem-bt" column="1">
-            <FormattedString>
-              <Span text="&#xf068;" class="fas"></Span>>
-            </FormattedString>
-          </Button>
-        </GridLayout>
-      </WrapLayout>
-    </ScrollView>
   </StackLayout>
-  <FlexboxLayout row="3">
-    <Button text="Zamknij" (tap)="close()" class="close"></Button>
-  </FlexboxLayout>
 </GridLayout>

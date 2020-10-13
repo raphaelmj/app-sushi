@@ -5,7 +5,7 @@ export const API_URL = 'http://192.168.0.206:3000';
 export const WEBSOCKET_URL = "http://192.168.0.206:3000";
 
 export const API_TOKEN = "94F754AC8F1AA6C8F73DF2BD41A24";
-export const DB_FILE = "oshin.db";
+export const DB_FILE = "mydb.db";
 export const SITE_URL = "https://example.pl";
 
 

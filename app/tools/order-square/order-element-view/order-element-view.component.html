@@ -2,8 +2,8 @@
                [ngClass]="{'ready': element.status,'is-drink':element.type.id==2, 'is-grill':element.grill>0 || isPlusGrill}">
     <FlexboxLayout flexDirection="row" flexWrap="wrap" alignItems="center" justifyContent="space-between">
         <FlexboxLayout *ngIf="element.elementType!='config_steps_price_many'" flexWrap="wrap">
-            <Label [text]="element.quantity+' x '+element.shortName" textWrap="true"></Label>
-            <Label *ngIf="element.elementType=='special'" [text]="'(budżet: '+element.price+' pln)'" textWrap="true"></Label>
+            <Label [text]="element.quantity+' x '+element.shortName" textWrap="true" [ngStyle]="{'margin-right': 10}"></Label>
+            <Label *ngIf="element.elementType=='special'" [text]="'(budżet: '+element.price+' pln)'" textWrap="true" [ngStyle]="{'margin-right': 10}"></Label>
             <Image src="~/images/krewetka.png" width="20" class="image-elems" *ngIf="element.isSea"
                    [ngClass]="{'ready-image': element.status}"></Image>
             <Label class="label-icon" *ngIf="element.serveType=='plate'">
@@ -67,163 +67,177 @@
                [text]="((i!=0)?(', '):(''))+optse" textWrap="true"></Label>
         <Label *ngIf="element.optionsElements.length" text=")"></Label>
     </FlexboxLayout>
-    <FlexboxLayout flexDirection="row" flexWrap="wrap" *ngIf="element.plusElements">
 
-        <FlexboxLayout *ngFor="let d of element.plusElements" class="p-2" flexWrap="wrap">
-            <ng-container [ngSwitch]="d.elementType">
-                <ng-container *ngSwitchCase="'one_name'">
-                    <ng-container *ngIf="d.optionsElements.length==0">
+    <ng-container *ngIf="element.plusElements">
+        <ng-container *ngIf="element.plusElements.length">
+            <FlexboxLayout flexDirection="row" flexWrap="wrap">
+                <FlexboxLayout *ngFor="let d of element.plusElements" class="p-2" flexWrap="wrap">
+                    <ng-container [ngSwitch]="d.elementType">
+                        <ng-container *ngSwitchCase="'one_name'">
+                            <ng-container *ngIf="d.optionsElements.length==0">
 
-                        <Label [text]="' + '+d.shortName" textWrap="true"></Label>
-                        <Label class="label-name" textWrap="true">
-                            <FormattedString>
-                                <Span text=" "></Span>
-                                <Span text="&#xf00d;" class="fas"></Span>
-                                <Span [text]="' '+d.qunatity"></Span>
-                            </FormattedString>
-                        </Label>
+                                <Label [text]="' + '+d.shortName" textWrap="true"></Label>
+                                <Label class="label-name" textWrap="true">
+                                    <FormattedString>
+                                        <Span text=" "></Span>
+                                        <Span text="&#xf00d;" class="fas"></Span>
+                                        <Span [text]="' '+d.qunatity"></Span>
+                                    </FormattedString>
+                                </Label>
 
-                    </ng-container>
-                    <ng-container *ngIf="d.optionsElements.length>0">
+                            </ng-container>
+                            <ng-container *ngIf="d.optionsElements.length>0">
 
-                        <ng-container *ngFor="let opt of d.optionsElements|groupOptionsTypesQuantity">
+                                <ng-container *ngFor="let opt of d.optionsElements|groupOptionsTypesQuantity">
+                                    <Label [text]="' + '+d.shortName"></Label>
+                                    <Label class="label-name" textWrap="true">
+                                        <FormattedString>
+                                            <Span [text]="'('+opt.name+') '"></Span>
+                                            <Span text="&#xf00d;" class="fas"></Span>
+                                            <Span [text]="' '+opt.quantity"></Span>
+                                        </FormattedString>
+                                    </Label>
+                                </ng-container>
+
+                            </ng-container>
+
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'many_names'">
+                            <ng-container *ngIf="d.optionsElements.length==0">
+                                <Label [text]="' + '+d.shortName" textWrap="true"></Label>
+                                <Label class="label-name" textWrap="true">
+                                    <FormattedString>
+                                        <Span text=" "></Span>
+                                        <Span text="&#xf00d;" class="fas"></Span>
+                                        <Span [text]="' '+d.qunatity"></Span>
+                                    </FormattedString>
+                                </Label>
+                            </ng-container>
+
+                            <ng-container *ngIf="d.optionsElements.length>0">
+
+                                <ng-container *ngFor="let opt of d.optionsElements|groupOptionsTypesQuantity">
+                                    <Label [text]="' + '+d.shortName"></Label>
+                                    <Label class="label-name" textWrap="true">
+                                        <FormattedString>
+                                            <Span [text]="'('+opt.name+') '"></Span>
+                                            <Span text="&#xf00d;" class="fas"></Span>
+                                            <Span [text]="' '+opt.quantity"></Span>
+                                        </FormattedString>
+                                    </Label>
+                                </ng-container>
+
+                            </ng-container>
+
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'desc_elements'">
+
+                            <ng-container *ngIf="d.optionsElements.length==0">
+
+                                <Label [text]="' + '+d.shortName" textWrap="true"></Label>
+                                <Label class="label-name" textWrap="true">
+                                    <FormattedString>
+                                        <Span text=" "></Span>
+                                        <Span text="&#xf00d;" class="fas"></Span>
+                                        <Span [text]="' '+d.qunatity"></Span>
+                                    </FormattedString>
+                                </Label>
+
+                            </ng-container>
+
+                            <ng-container *ngIf="d.optionsElements.length>0">
+
+                                <ng-container *ngFor="let opt of d.optionsElements|groupOptionsTypesQuantity">
+                                    <Label [text]="' + '+d.shortName"></Label>
+                                    <Label class="label-name" textWrap="true">
+                                        <FormattedString>
+                                            <Span [text]="'('+opt.name+') '"></Span>
+                                            <Span text="&#xf00d;" class="fas"></Span>
+                                            <Span [text]="' '+opt.quantity"></Span>
+                                        </FormattedString>
+                                    </Label>
+                                </ng-container>
+
+                            </ng-container>
+
+
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'config_price'">
                             <Label [text]="' + '+d.shortName"></Label>
                             <Label class="label-name" textWrap="true">
                                 <FormattedString>
-                                    <Span [text]="'('+opt.name+') '"></Span>
+                                    <Span text=" "></Span>
                                     <Span text="&#xf00d;" class="fas"></Span>
-                                    <Span [text]="' '+opt.quantity"></Span>
+                                    <Span [text]="' '+d.qunatity"></Span>
                                 </FormattedString>
                             </Label>
                         </ng-container>
-
-                    </ng-container>
-
-                </ng-container>
-                <ng-container *ngSwitchCase="'many_names'">
-                    <ng-container *ngIf="d.optionsElements.length==0">
-                        <Label [text]="' + '+d.shortName" textWrap="true"></Label>
-                        <Label class="label-name" textWrap="true">
-                            <FormattedString>
-                                <Span text=" "></Span>
-                                <Span text="&#xf00d;" class="fas"></Span>
-                                <Span [text]="' '+d.qunatity"></Span>
-                            </FormattedString>
-                        </Label>
-                    </ng-container>
-
-                    <ng-container *ngIf="d.optionsElements.length>0">
-
-                        <ng-container *ngFor="let opt of d.optionsElements|groupOptionsTypesQuantity">
-                            <Label [text]="' + '+d.shortName"></Label>
+                        <ng-container *ngSwitchCase="'config_steps_price'">
                             <Label class="label-name" textWrap="true">
                                 <FormattedString>
-                                    <Span [text]="'('+opt.name+') '"></Span>
+                                    <Span text=" + "></Span>
+                                    <Span [text]="d.shortName"></Span>
+                                    <Span text=" "></Span>
                                     <Span text="&#xf00d;" class="fas"></Span>
-                                    <Span [text]="' '+opt.quantity"></Span>
+                                    <Span [text]="' '+d.qunatity"></Span>
                                 </FormattedString>
                             </Label>
                         </ng-container>
+                        <ng-container *ngSwitchCase="'config_steps_price_many'">
+                            <ng-container *ngFor="let step of d|configStepsViewGroup">
+                                <Label class="label-name" textWrap="true">
+                                    <FormattedString>
+                                        <Span text=" + "></Span>
+                                        <Span [text]="step.name"></Span>
+                                        <Span text=" "></Span>
+                                        <Span text="&#xf00d;" class="fas"></Span>
+                                        <Span [text]="' '+step.quantity"></Span>
+                                        <Span text=" "></Span>
+                                    </FormattedString>
+                                </Label>
+                            </ng-container>
 
-                    </ng-container>
-
-                </ng-container>
-                <ng-container *ngSwitchCase="'desc_elements'">
-
-                    <ng-container *ngIf="d.optionsElements.length==0">
-
-                        <Label [text]="' + '+d.shortName" textWrap="true"></Label>
-                        <Label class="label-name" textWrap="true">
-                            <FormattedString>
-                                <Span text=" "></Span>
-                                <Span text="&#xf00d;" class="fas"></Span>
-                                <Span [text]="' '+d.qunatity"></Span>
-                            </FormattedString>
-                        </Label>
-
-                    </ng-container>
-
-                    <ng-container *ngIf="d.optionsElements.length>0">
-
-                        <ng-container *ngFor="let opt of d.optionsElements|groupOptionsTypesQuantity">
-                            <Label [text]="' + '+d.shortName"></Label>
-                            <Label class="label-name" textWrap="true">
-                                <FormattedString>
-                                    <Span [text]="'('+opt.name+') '"></Span>
-                                    <Span text="&#xf00d;" class="fas"></Span>
-                                    <Span [text]="' '+opt.quantity"></Span>
-                                </FormattedString>
-                            </Label>
                         </ng-container>
-
                     </ng-container>
-
-
-                </ng-container>
-                <ng-container *ngSwitchCase="'config_price'">
-                    <Label [text]="' + '+d.shortName"></Label>
-                    <Label class="label-name" textWrap="true">
-                        <FormattedString>
-                            <Span text=" "></Span>
-                            <Span text="&#xf00d;" class="fas"></Span>
-                            <Span [text]="' '+d.qunatity"></Span>
-                        </FormattedString>
-                    </Label>
-                </ng-container>
-                <ng-container *ngSwitchCase="'config_steps_price'">
-                    <Label class="label-name" textWrap="true">
-                        <FormattedString>
-                            <Span text=" + "></Span>
-                            <Span [text]="d.shortName"></Span>
-                            <Span text=" "></Span>
-                            <Span text="&#xf00d;" class="fas"></Span>
-                            <Span [text]="' '+d.qunatity"></Span>
-                        </FormattedString>
-                    </Label>
-                </ng-container>
-                <ng-container *ngSwitchCase="'config_steps_price_many'">
-                    <ng-container *ngFor="let step of d|configStepsViewGroup">
-                        <Label class="label-name" textWrap="true">
-                            <FormattedString>
-                                <Span text=" + "></Span>
-                                <Span [text]="step.name"></Span>
-                                <Span text=" "></Span>
-                                <Span text="&#xf00d;" class="fas"></Span>
-                                <Span [text]="' '+step.quantity"></Span>
-                                <Span text=" "></Span>
-                            </FormattedString>
-                        </Label>
-                    </ng-container>
-
-                </ng-container>
-            </ng-container>
-            <Image src="~/images/krewetka.png" width="20" class="image-elems" *ngIf="d.isSea"
-                   [ngClass]="{'ready-image': element.status}"></Image>
-            <Label text=" "></Label>
-            <FlexboxLayout *ngIf="d.grill>0">
-                <Label text="("></Label>
-                <Image src="~/images/grill.png" width="18" class="image-elems" loadMode="async" [ngClass]="{'ready-image': element.status}"></Image>
-                <Label [text]="d.grill+'/'+d.qunatity"></Label>
-                <Label text=")"></Label>
+                    <Image src="~/images/krewetka.png" width="20" class="image-elems" *ngIf="d.isSea"
+                           [ngClass]="{'ready-image': element.status}"></Image>
+                    <Label text=" "></Label>
+                    <FlexboxLayout *ngIf="d.grill>0">
+                        <Label text="("></Label>
+                        <Image src="~/images/grill.png" width="18" class="image-elems" loadMode="async" [ngClass]="{'ready-image': element.status}"></Image>
+                        <Label [text]="d.grill+'/'+d.qunatity"></Label>
+                        <Label text=")"></Label>
+                    </FlexboxLayout>
+                    <FlexboxLayout *ngIf="d.gluten>0">
+                        <Label text="("></Label>
+                        <Image src="~/images/gluten.png" width="18" class="image-elems" loadMode="async" [ngClass]="{'ready-image': element.status}"></Image>
+                        <Label [text]="d.gluten+'/'+d.qunatity"></Label>
+                        <Label text=")"></Label>
+                    </FlexboxLayout>
+                </FlexboxLayout>
             </FlexboxLayout>
-            <FlexboxLayout *ngIf="d.gluten>0">
-                <Label text="("></Label>
-                <Image src="~/images/gluten.png" width="18" class="image-elems" loadMode="async" [ngClass]="{'ready-image': element.status}"></Image>
-                <Label [text]="d.gluten+'/'+d.qunatity"></Label>
-                <Label text=")"></Label>
+        </ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="element.descElements">
+        <ng-container *ngIf="element.descElements.length">
+            <FlexboxLayout flexDirection="row" flexWrap="wrap">
+                <Label [text]="element.descElements|mergeNamesArray" textWrap="true"></Label>
             </FlexboxLayout>
-        </FlexboxLayout>
+        </ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="element.reverseElements">
+        <ng-container *ngIf="element.reverseElements.length">
+            <FlexboxLayout flexDirection="row" flexWrap="wrap" *ngIf="element.reverseElements">
+                <FlexboxLayout *ngFor="let d of element.reverseElements" class="p-2" flexWrap="wrap">
+                    <Label [text]="d.from+' >> '+d.to" textWrap="true"></Label>
+                </FlexboxLayout>
+            </FlexboxLayout>
+        </ng-container>
+    </ng-container>
 
 
-    </FlexboxLayout>
-    <FlexboxLayout flexDirection="row" flexWrap="wrap" *ngIf="element.descElements">
-        <Label [text]="element.descElements|mergeNamesArray" textWrap="true"></Label>
-    </FlexboxLayout>
-    <FlexboxLayout flexDirection="row" flexWrap="wrap" *ngIf="element.reverseElements">
-        <FlexboxLayout *ngFor="let d of element.reverseElements" class="p-2" flexWrap="wrap">
-            <Label [text]="d.from+' >> '+d.to" textWrap="true"></Label>
-        </FlexboxLayout>
-    </FlexboxLayout>
     <FlexboxLayout flexDirection="row" flexWrap="wrap" *ngIf="element.description!=''">
         <HtmlView [html]="element.description" class="desc-label" textWrap="true"></HtmlView>
     </FlexboxLayout>

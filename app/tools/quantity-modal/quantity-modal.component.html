@@ -71,7 +71,7 @@
         </FlexboxLayout>
     </FlexboxLayout> -->
 
-    <FlexboxLayout flexDirection="row" *ngIf="element.canAcc">
+    <FlexboxLayout flexDirection="row" flexWrap="wrap" *ngIf="element.canAcc">
         <app-acc-elements-config [acc]="appConfig.data.acc" [dataAcc]="accArray" (emitAccData)="changeAcc($event)"></app-acc-elements-config>
     </FlexboxLayout>
 

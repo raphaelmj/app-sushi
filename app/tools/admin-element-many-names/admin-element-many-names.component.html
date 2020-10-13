@@ -1,4 +1,4 @@
-<GridLayout rows="*,*,*"
+<GridLayout rows="*,*,40"
             *ngFor="let item of element.priceNames; let i = index"
             width="50%" class="p-10 grid-ele">
   <Label [text]="item.name | stripTags" class="htmlLabel" width="100%" textWrap="true" row="0"></Label>
@@ -7,12 +7,10 @@
     <Image src="~/images/krewetka.png" *ngIf="item.price[0].isSea" width="25" class="image-elems" loadMode="async">
     </Image>
   </FlexboxLayout>
-  <FlexboxLayout flexDirection="row" justifyContent="flex-start" row="2">
-    <Button class="add-cart-bt" (tap)="addToCart(i)"
-            height="40" width="100%">
-      <FormattedString>
-        <Span text="&#xf217;" class="fas"></Span>
-      </FormattedString>
-    </Button>
-  </FlexboxLayout>
+  <Button class="add-cart-bt" (tap)="addToCart(i)"
+          height="40" width="100%" row="2">
+    <FormattedString>
+      <Span text="&#xf217;" class="fas"></Span>
+    </FormattedString>
+  </Button>
 </GridLayout>

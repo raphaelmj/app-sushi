@@ -1,11 +1,12 @@
+import { Subscription } from 'rxjs';
+import { AccElementsConfigComponent } from './../acc-elements-config/acc-elements-config.component';
 import { CalculateService } from './../../services/calculate/calculate.service';
 import { OrderActionType } from '~/models/cart-order';
 import { AppConfig } from '~/models/app-config';
 import { CartCategory } from '~/models/cart-category';
 import { ServeType, ElementType, AccElement } from './../../models/cart-element';
 import { TextView } from 'tns-core-modules/ui';
-import { OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { AfterViewChecked, OnDestroy } from '@angular/core';
 import { CustomOptionsViewComponent } from './../custom-options-view/custom-options-view.component';
 import { FullOptionsGroup } from '~/models/full-options-group';
 import { ReverseElement } from '~/models/cart-element';
@@ -32,12 +33,15 @@ import { AllOptionsPlusViewComponent } from '../all-options-plus-view/all-option
   templateUrl: './step-options.component.html',
   styleUrls: ['./step-options.component.scss']
 })
-export class StepOptionsComponent implements OnInit, AfterViewInit, OnDestroy {
+export class StepOptionsComponent implements OnInit, AfterViewInit, OnDestroy, AfterViewChecked {
 
   @ViewChild(TextView, { static: false }) textView: TextView
   @ViewChild('temp', { read: ViewContainerRef, static: false }) temp: ViewContainerRef
   allPlusC: ComponentRef<AllOptionsPlusViewComponent>
   customC: ComponentRef<CustomOptionsViewComponent>
+
+  @ViewChild('accTemp', { read: ViewContainerRef, static: true }) accTemp: ViewContainerRef
+  accC: ComponentRef<AccElementsConfigComponent>
 
   element: MenuElement
   menuPlusElements: MenuElement[]
@@ -77,9 +81,11 @@ export class StepOptionsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   subAllChange: Subscription
   subCustomChange: Subscription
+  subAccChange: Subscription
 
   elementType = ElementType
 
+  isCheckedFirstTime: boolean = false
 
   constructor(
     private params: ModalDialogParams,
@@ -125,6 +131,28 @@ export class StepOptionsComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     if (this.textView)
       this.textView.dismissSoftInput();
+  }
+
+  ngAfterViewChecked(): void {
+    if (!this.isCheckedFirstTime) {
+      if (this.element.canAcc) {
+        setTimeout(() => {
+          this.renderAccComponent()
+        }, 500)
+      }
+      this.isCheckedFirstTime = true
+    }
+  }
+
+
+  renderAccComponent() {
+    let acc = this.cf.resolveComponentFactory(<Type<AccElementsConfigComponent>>AccElementsConfigComponent)
+    this.accC = this.accTemp.createComponent(acc)
+    this.accC.instance.acc = this.appConfig.data.acc
+    this.accC.instance.dataAcc = []
+    this.subAccChange = this.accC.instance.emitAccData.subscribe((d: AccElement[]) => {
+      this.changeAcc(d)
+    })
   }
 
   createAccArray() {
@@ -422,6 +450,8 @@ export class StepOptionsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.allPlusC.instance.plusElements = this.plusElements
     this.allPlusC.instance.cartPlusCategories = this.cartPlusCategories
     this.allPlusC.instance.elementOptions = this.baseElementOptions
+    this.allPlusC.instance.descElements = this.descElements
+    this.allPlusC.instance.reverseElements = this.reverseElements
     this.subAllChange = this.allPlusC.instance.emitChange.subscribe((r: { plusElements: PlusElement[], reverseElements: ReverseElement[], descElements: string[] }) => {
       this.plusElements = r.plusElements
       this.reverseElements = r.reverseElements
@@ -439,6 +469,8 @@ export class StepOptionsComponent implements OnInit, AfterViewInit, OnDestroy {
     let custom = this.cf.resolveComponentFactory(<Type<CustomOptionsViewComponent>>CustomOptionsViewComponent)
     this.customC = this.temp.createComponent(custom)
     this.customC.instance.elementOptions = this.baseElementOptions
+    this.customC.instance.wordsOutput = this.descElements
+    this.customC.instance.reverseElements = this.reverseElements
     this.subCustomChange = this.customC.instance.optionChanged.subscribe((r: { reverseElements: ReverseElement[], wordsOutput: Array<string> }) => {
       this.reverseElements = r.reverseElements
       this.descElements = r.wordsOutput
@@ -489,6 +521,8 @@ export class StepOptionsComponent implements OnInit, AfterViewInit, OnDestroy {
       this.subAllChange.unsubscribe()
     if (this.subCustomChange)
       this.subCustomChange.unsubscribe()
+    if (this.subAccChange)
+      this.subAccChange.unsubscribe()
   }
 
 }

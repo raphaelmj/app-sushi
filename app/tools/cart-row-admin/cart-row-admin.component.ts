@@ -23,6 +23,7 @@ import {
   ComponentRef,
   ComponentFactoryResolver,
   Type,
+  AfterViewChecked,
 } from "@angular/core";
 import { CartElement, PlusElement, ServeType } from "~/models/cart-element";
 import { SITE_URL } from "~/config";
@@ -47,7 +48,7 @@ import { Orientation } from 'tns-core-modules/ui/layouts/stack-layout';
   templateUrl: "./cart-row-admin.component.html",
   styleUrls: ["./cart-row-admin.component.scss"],
 })
-export class CartRowAdminComponent implements OnInit, OnDestroy, AfterViewInit {
+export class CartRowAdminComponent implements OnInit, OnDestroy, AfterViewInit, AfterViewChecked {
 
   @ViewChild('accTemp', { read: ViewContainerRef, static: true }) accTemp: ViewContainerRef
   accC: ComponentRef<AccElementsConfigComponent>
@@ -90,6 +91,8 @@ export class CartRowAdminComponent implements OnInit, OnDestroy, AfterViewInit {
 
   subAccChange: Subscription
 
+  isCheckedFirstTime: boolean = false
+
   constructor(
     private fb: FormBuilder,
     private modalService: ModalDialogService,
@@ -101,6 +104,7 @@ export class CartRowAdminComponent implements OnInit, OnDestroy, AfterViewInit {
     private calculateService: CalculateService,
     private cf: ComponentFactoryResolver
   ) { }
+
 
 
 
@@ -126,11 +130,28 @@ export class CartRowAdminComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+
+  }
+
+  ngAfterViewChecked(): void {
+    if (!this.isCheckedFirstTime) {
+      this.renderDeferComponents()
+      this.isCheckedFirstTime = true
+    }
+  }
+
+  renderDeferComponents() {
     if (this.cartEl.canAcc) {
-      this.renderAccComponent()
+      // this.renderAccComponent()
+      setTimeout(() => {
+        this.renderAccComponent()
+      }, 1000)
     }
     if (this.cartEl.elastic && this.cartEl.elementType != 'special') {
-      this.renderPlusComponent()
+      // this.renderPlusComponent()
+      setTimeout(() => {
+        this.renderPlusComponent()
+      }, 1000)
     }
   }
 

@@ -31,8 +31,8 @@ export class AllOptionsPlusViewComponent implements OnInit, OnDestroy, AfterView
   @Input() cartPlusCategoriesTabs: CartCategory[] = []
   @Input() elementOptions: { desc: DescOptions[]; reverse: ReverseOptions[] }
   @Input() plusElements: PlusElement[] = []
-  descElements: string[] = []
-  reverseElements: ReverseElement[] = []
+  @Input() descElements: string[] = []
+  @Input() reverseElements: ReverseElement[] = []
   current: number
   initOthers: boolean = false
   scrollHeight: number = Math.ceil(screen.mainScreen.heightDIPs) - 120;

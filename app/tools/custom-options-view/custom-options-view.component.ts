@@ -13,8 +13,8 @@ export class CustomOptionsViewComponent implements OnInit {
 
   @Output() optionChanged: EventEmitter<{ reverseElements: ReverseElement[], wordsOutput: Array<string> }> = new EventEmitter<{ reverseElements: ReverseElement[], wordsOutput: Array<string> }>()
   @Input() elementOptions: { desc: DescOptions[], reverse: ReverseOptions[] }
-  reverseElements: ReverseElement[] = []
-  wordsOutput: Array<string> = []
+  @Input() reverseElements: ReverseElement[] = []
+  @Input() wordsOutput: Array<string> = []
 
   constructor() { }
 

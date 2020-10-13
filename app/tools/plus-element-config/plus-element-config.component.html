@@ -374,8 +374,18 @@
         </TabView>
 
         <GridLayout [columns]="'*,*'" row="1">
-            <Button text="Anuluj" column="1" (tap)="close()" class="clear-close"></Button>
-            <Button text="Dodaj" row="1" (tap)="add()" class="add-bt"></Button>
+            <Button column="1" (tap)="close()" class="clear-close">
+                <FormattedString>
+                    <Span text="&#xf00d;" class="fas"></Span>
+                    <Span text=" Anuluj" class="fas"></Span>
+                </FormattedString>
+            </Button>
+            <Button row="1" (tap)="add()" class="add-bt">
+                <FormattedString>
+                    <Span text="&#xf217;" class="fas"></Span>
+                    <Span text=" Dodaj" class="fas"></Span>
+                </FormattedString>
+            </Button>
         </GridLayout>
     </GridLayout>
 </StackLayout>

@@ -40,7 +40,7 @@
                 </FormattedString>
               </Button>
               <ScrollView height="100%" column="1">
-                <WrapLayout>
+                <WrapLayout orientation="horizontal">
                   <ng-container *ngFor="let item of mc.elements">
                     <ng-container [ngSwitch]="item.elementType">
                       <app-admin-element-one-name *ngSwitchCase="'one_name'" [element]="item"
@@ -141,7 +141,7 @@
               <Label>
                 <FormattedString>
                   <Span text="&#xf2e7;" class="fas"></Span>
-                  <Span [text]="'  '"></Span>
+                  <Span [text]="' '"></Span>
                   <Span [text]="actionType | actionName"></Span>
                 </FormattedString>
               </Label>
@@ -151,7 +151,7 @@
               <Label>
                 <FormattedString>
                   <Span text="&#xf49e;" class="fas"></Span>
-                  <Span [text]="'  '"></Span>
+                  <Span [text]="' '"></Span>
                   <Span [text]="actionType | actionName"></Span>
                 </FormattedString>
               </Label>
@@ -170,7 +170,7 @@
               <Image src="~/images/plates.png" width="20" class="image-elems" loadMode="async" *ngIf="!onOnePlate"></Image>
               <Label>
                 <FormattedString>
-                  <Span [text]="'wiele'"></Span>
+                  <Span [text]="'Wiele'"></Span>
                 </FormattedString>
               </Label>
 

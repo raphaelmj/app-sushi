@@ -2,7 +2,7 @@
     <TabContentItem>
         <GridLayout [rows]="'*,80'">
             <ScrollView row="0">
-                <GridLayout [rows]="(formData.get('quantity').value==1)?'60,*,*,100,*':'60,*,*,80,*'">
+                <GridLayout [rows]="(formData.get('quantity').value==1)?'60,*,*,auto,100,*':'60,*,*,auto,80,*'">
                     <GridLayout columns="*" row="0">
                         <StackLayout column="0">
                             <FlexboxLayout flexDirection="row" alignItems="center" justifyContent="center">
@@ -114,9 +114,9 @@
                                         <Label [text]="'+ '+item.acc.name+' x '+item.howMany" (tap)="selectAcc(item.acc)"></Label>
                                     </FlexboxLayout>
                                 </FlexboxLayout> -->
-                                <FlexboxLayout flexDirection="row" flexWrap="wrap" *ngIf="element.canAcc">
+                                <!-- <FlexboxLayout flexDirection="row" flexWrap="wrap" *ngIf="element.canAcc">
                                     <app-acc-elements-config [acc]="appConfig.data.acc" [dataAcc]="accArray" (emitAccData)="changeAcc($event)"></app-acc-elements-config>
-                                </FlexboxLayout>
+                                </FlexboxLayout> -->
                             </FlexboxLayout>
 
                             <FlexboxLayout flexDirection="column" row="1" class="p-15">
@@ -240,13 +240,17 @@
                                     <Label [text]="'+ '+item.acc.name+' x '+item.howMany" (tap)="selectAcc(item.acc)"></Label>
                                 </FlexboxLayout>
                             </FlexboxLayout> -->
-                            <FlexboxLayout flexDirection="row" flexWrap="wrap" *ngIf="element.canAcc">
+                            <!-- <FlexboxLayout flexDirection="row" flexWrap="wrap" *ngIf="element.canAcc">
                                 <app-acc-elements-config [acc]="appConfig.data.acc" [dataAcc]="accArray" (emitAccData)="changeAcc($event)"></app-acc-elements-config>
-                            </FlexboxLayout>
+                            </FlexboxLayout> -->
+
 
                         </FlexboxLayout>
                     </ng-container>
-                    <GridLayout columns="*,*" row="2" class="p-15">
+                    <FlexboxLayout flexDirection="row" flexWrap="wrap" row="2" class="p-10">
+                        <ng-template #accTemp></ng-template>
+                    </FlexboxLayout>
+                    <GridLayout columns="*,*" row="3" class="p-15">
                         <ng-container *ngIf="options.length>0">
                             <ScrollView orientation="vertical" column="0">
                                 <WrapLayout orientation="horizontal">
@@ -270,7 +274,7 @@
                             </ng-container>
                         </FlexboxLayout>
                     </GridLayout>
-                    <StackLayout row="3" class="p-15">
+                    <StackLayout row="4" class="p-15">
                         <ng-container *ngIf="plusElements.length==0">
                             <Label [text]="priceTotal+' pln'" class="price-red" *ngIf="priceTotal"></Label>
                         </ng-container>
@@ -286,7 +290,7 @@
                         </ng-container>
 
                     </StackLayout>
-                    <StackLayout row="4">
+                    <StackLayout row="5">
                         <TextView formControlName="description" hint="Opis..."></TextView>
                     </StackLayout>
                 </GridLayout>
@@ -294,11 +298,33 @@
 
             <GridLayout [rows]="'*,*'" row="1">
                 <GridLayout [columns]="(formData.get('quantity').value==1)?'*,*':'*'" row="0">
-                    <Button text="Dodaj elementy dodatkowe" column="0" class="options-bt" *ngIf="formData.get('quantity').value==1 && element.elastic" (tap)="openAllOptionsPlus()"></Button>
-                    <Button text="Dodaj opcje szczegółowe" column="0" class="options-bt" *ngIf="!element.elastic" (tap)="openCustomOptions()"></Button>
-                    <Button text="Anuluj" column="1" (tap)="closeExit()" class="clear-close"></Button>
+                    <Button column="0" class="options-bt" *ngIf="formData.get('quantity').value==1 && element.elastic" (tap)="openAllOptionsPlus()">
+                        <FormattedString>
+                            <Span text="&#xf0fe;" class="fas"></Span>
+                            <Span text=" "></Span>
+                            <Span text="&#xf1b3;" class="fas"></Span>
+                            <Span text=" Elementy dodatkowe" class="fas"></Span>
+                        </FormattedString>
+                    </Button>
+                    <Button column="0" class="options-bt" *ngIf="!element.elastic" (tap)="openCustomOptions()">
+                        <FormattedString>
+                            <Span text="&#xf1b3;" class="fas"></Span>
+                            <Span text=" Opcje szczegółowe" class="fas"></Span>
+                        </FormattedString>
+                    </Button>
+                    <Button column="1" (tap)="closeExit()" class="clear-close">
+                        <FormattedString>
+                            <Span text="&#xf00d;" class="fas"></Span>
+                            <Span text=" Anuluj" class="fas"></Span>
+                        </FormattedString>
+                    </Button>
                 </GridLayout>
-                <Button text="Dodaj" row="1" (tap)="add()" class="add-bt"></Button>
+                <Button (tap)="add()" row="1" class="add-bt">
+                    <FormattedString>
+                        <Span text="&#xf217;" class="fas"></Span>
+                        <Span text=" Dodaj" class="fas"></Span>
+                    </FormattedString>
+                </Button>>
             </GridLayout>
         </GridLayout>
     </TabContentItem>
@@ -312,10 +338,26 @@
             </StackLayout>
             <GridLayout [rows]="'*,*'" row="2">
                 <GridLayout columns="*,*" row="0">
-                    <Button text="Wróć" (tap)="backToElement()" column="0" class="add-bt"></Button>
-                    <Button text="Anuluj" (tap)="closeExit()" column="1" class="clear-close"></Button>
+                    <Button (tap)="backToElement()" column="0" class="add-bt">
+                        <FormattedString>
+                            <Span text="&#xf30a;" class="fas"></Span>
+                            <Span text=" Wróć" class="fas"></Span>
+                        </FormattedString>
+                    </Button>
+                    <Button (tap)="closeExit()" column="1" class="clear-close">
+                        <FormattedString>
+                            <Span text="&#xf00d;" class="fas"></Span>
+                            <Span text=" Anuluj" class="fas"></Span>
+                        </FormattedString>
+                    </Button>
                 </GridLayout>
-                <Button text="Dodaj" (tap)="add()" row="1" class="add-bt"></Button>
+                <Button (tap)="add()" row="1" class="add-bt">
+                    <FormattedString>
+                        <Span text="&#xf217;" class="fas"></Span>
+                        <Span text=" Dodaj" class="fas"></Span>
+                    </FormattedString>
+                </Button>
+
             </GridLayout>
         </GridLayout>
     </TabContentItem>

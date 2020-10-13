@@ -84,12 +84,13 @@
       </Button>
     </FlexboxLayout>
   </FlexboxLayout>
+
   <FlexboxLayout flexDirection="row" flexWrap="wrap" class="step-list" width="100%" *ngIf="cartEl.elementType=='config_steps_price_many'">
     <Button
             text="edytuj opcje"
             (tap)="changeStepOptions()"
             class="button-step-options"></Button>
-    <WrapLayout orientation="horizontal" width="100%" [ngClass]="{'margin-top-10': cartEl.reverseElements.length>0}">
+    <WrapLayout orientation="horizontal" width="100%" [ngClass]="{'margin-top-10': cartEl.stepOptionsList.length>0}">
       <FlexboxLayout
                      flexDirection="row"
                      alignItems="center"
@@ -116,6 +117,7 @@
     </WrapLayout>
 
   </FlexboxLayout>
+
   <FlexboxLayout
                  flexDirection="row"
                  alignItems="center"
@@ -129,6 +131,7 @@
       </FormattedString>
     </Label>
   </FlexboxLayout>
+
   <ng-container *ngIf="cartEl.element">
     <ng-container *ngIf="cartEl.element.options.length>0">
       <FlexboxLayout

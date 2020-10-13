@@ -93,7 +93,7 @@
       <app-order-element-view *ngFor="let el of order.cartOrderElements" [element]="el" [order]="order"> </app-order-element-view>
     </FlexboxLayout> -->
     <WrapLayout orientation="horizontal" row="1">
-      <app-order-element-view *ngFor="let el of order.cartOrderElements" [element]="el" [order]="order"> </app-order-element-view>
+      <app-order-element-view *ngFor="let el of order.cartOrderElements" [element]="el" [order]="order"></app-order-element-view>
     </WrapLayout>
   </GridLayout>
   <GridLayout [row]="(order.reservation)?4:3" rows="auto">

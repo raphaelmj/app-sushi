@@ -25,6 +25,9 @@ export class ReverseDescComponent implements OnInit, OnDestroy {
   isInitView: boolean = true
   orient: Orientation
 
+  gridR: string = '160,30,160'
+  gridC: string = '*'
+
 
   constructor(
     private params: ModalDialogParams,
@@ -35,6 +38,9 @@ export class ReverseDescComponent implements OnInit, OnDestroy {
     this.reversWordsGroups = params.context.baseReverseElements;
     this.currentGroupLeft = this.reversWordsGroups[0];
     this.currentGroupRight = this.reversWordsGroups[0];
+    this.scrollHeight = (screen.mainScreen.heightDIPs > screen.mainScreen.widthDIPs) ? 160 : screen.mainScreen.widthDIPs - 200;
+    this.orient = (screen.mainScreen.heightDIPs > screen.mainScreen.widthDIPs) ? 'vertical' : 'horizontal'
+    this.changeDataByOrient(this.orient)
   }
 
 
@@ -46,11 +52,42 @@ export class ReverseDescComponent implements OnInit, OnDestroy {
   subscribeToOrientChange() {
     this.subOrientChange = this.orientationChangeService.action$.subscribe((data: { orient: Orientation, deviceType: 'Phone' | 'Tablet', width?: number }) => {
       this.orient = data.orient
-      if (!this.isInitView)
-        this.changeScrollHeight(data.orient)
-      this.isInitView = false
+      // if (!this.initData)
+      this.changeDataByOrient(data.orient)
+      // this.initData = false
       this._changeDetectionRef.detectChanges()
     })
+  }
+
+  changeDataByOrient(orient: Orientation) {
+    switch (orient) {
+      case "vertical":
+        // this.scrollHeight = Math.ceil(screen.mainScreen.heightDIPs) - 160;
+        if (screen.mainScreen.heightDIPs > 1000) {
+          this.gridR = '420,30,420'
+          this.scrollHeight = 420
+        } else if (screen.mainScreen.heightDIPs <= 1000 && screen.mainScreen.heightDIPs > 600) {
+          this.gridR = '260,30,260'
+          this.scrollHeight = 260
+        } else {
+          this.gridR = '160,30,160'
+          this.scrollHeight = 160
+        }
+        this.gridC = '*'
+        break
+      case "horizontal":
+
+        this.gridR = '*'
+        if (screen.mainScreen.widthDIPs > 1000) {
+          this.gridC = '*,30,320'
+          this.scrollHeight = Math.ceil(screen.mainScreen.widthDIPs) - 200;
+        } else {
+          this.gridC = '*,30,220'
+          this.scrollHeight = 260;
+        }
+
+        break;
+    }
   }
 
 

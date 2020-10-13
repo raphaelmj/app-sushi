@@ -19,7 +19,7 @@ Label.conjunction {
 }
 
 FlexboxLayout.list-el {
-  Label {}
+  height: 40;
 }
 
 FlexboxLayout.list-el.active {
@@ -28,13 +28,19 @@ FlexboxLayout.list-el.active {
   }
 }
 
-GridLayout.grid-added {
+FlexboxLayout.grid-added {
+  background-color: #504426;
+}
+
+FlexboxLayout.plus-rev {
+  background-color: #504426;
+}
+
+FlexboxLayout.added-revs {
   background-color: #504426;
 }
 
 Button.add-r-bt {
-  background-color: #504426;
-  color: #ffffff;
   margin: 0 !important;
   padding: 0 !important;
   font-size: 12;
