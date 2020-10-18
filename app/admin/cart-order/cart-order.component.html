@@ -130,7 +130,7 @@
           </FlexboxLayout>
         </ScrollView>
       </StackLayout>
-      <StackLayout row="2" orientation="horizontal" class="navi-beam">
+      <FlexboxLayout row="2" justifyContent="space-between" class="navi-beam">
         <FlexboxLayout flexDirection="row" flexWrap="wrap" class="p-10">
           <FlexboxLayout alignItems="center" class="change-bt" (tap)="changeDay()">
             <Label class="set-label">
@@ -154,10 +154,11 @@
             <Label>
               <FormattedString>
                 <Span text="&#xf129;" class="fas"></Span>
-                <Span text="  Dodatkowe info."></Span>
+                <Span text="  Dod. info."></Span>
               </FormattedString>
             </Label>
           </FlexboxLayout>
+
           <!-- <FlexboxLayout alignItems="center" height="40" *ngIf="!order.reservation" class="change-bt-info" (tap)="setUnsetAsReservation()">
             <Label>
               <FormattedString>
@@ -177,7 +178,17 @@
             </Label>
           </FlexboxLayout> -->
         </FlexboxLayout>
-      </StackLayout>
+        <!-- <ng-container *ngIf="tokenUser.user.permission=='superadmin'">
+          <FlexboxLayout alignItems="center" height="40" class="remove-bt m-r-10" (tap)="removeOrder()">
+            <Label>
+              <FormattedString>
+                <Span text="&#xf146;" class="fas"></Span>
+                <Span text="  Usuń"></Span>
+              </FormattedString>
+            </Label>
+          </FlexboxLayout>
+        </ng-container> -->
+      </FlexboxLayout>
     </GridLayout>
   </StackLayout>
 </RadSideDrawer>

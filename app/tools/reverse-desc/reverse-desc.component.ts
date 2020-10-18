@@ -28,6 +28,8 @@ export class ReverseDescComponent implements OnInit, OnDestroy {
   gridR: string = '160,30,160'
   gridC: string = '*'
 
+  width: number
+
 
   constructor(
     private params: ModalDialogParams,
@@ -52,6 +54,7 @@ export class ReverseDescComponent implements OnInit, OnDestroy {
   subscribeToOrientChange() {
     this.subOrientChange = this.orientationChangeService.action$.subscribe((data: { orient: Orientation, deviceType: 'Phone' | 'Tablet', width?: number }) => {
       this.orient = data.orient
+      this.width = data.width
       // if (!this.initData)
       this.changeDataByOrient(data.orient)
       // this.initData = false

@@ -1,3 +1,5 @@
+import { ConfirmPasswordType } from './../../tools/password-confirm/password-confirm.component';
+import { MessageService } from './../../services/message.service';
 import { GetDataOrdersRefreshService } from '~/services/get-data-orders-refresh.service';
 import { CalculateService } from './../../services/calculate/calculate.service';
 import { OrientationChangeService } from './../../services/orientation-change.service';
@@ -90,6 +92,7 @@ export class CartOrderComponent implements OnInit, AfterViewInit, OnDestroy, Aft
     private routerExtensions: RouterExtensions,
     private orientationChangeService: OrientationChangeService,
     private calculateService: CalculateService,
+    private messageService: MessageService,
     private getDataOrdersRefreshService: GetDataOrdersRefreshService
   ) {
     this.page.actionBarHidden = true;
@@ -495,6 +498,18 @@ export class CartOrderComponent implements OnInit, AfterViewInit, OnDestroy, Aft
 
     return { bool, cartIndex };
   }
+
+  // removeOrder() {
+  //   this.messageService.confirmMake('Czy chcesz usunąć zamówienie?').then(bool => {
+  //     if (bool) {
+  //       this.cartService.showModalCheckSomePassword(this.viewContainerRef, ConfirmPasswordType.backend).then(bool => {
+  //         if (bool) {
+
+  //         }
+  //       })
+  //     }
+  //   })
+  // }
 
   logOut() {
     this.authService.logOut().then((r) => {

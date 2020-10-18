@@ -85,8 +85,10 @@ export class SelectElementsInlineComponent implements OnInit, OnChanges, AfterCo
 
     // if (this.oQP.reservation == '1')
     //   return
-    if (this.oQP.reservation == '1')
+    if (this.oQP.reservation == '1') {
       this.oQP.reservation = 'all'
+      this.reservationsStepsIndex = this.findIndex(this.reservationsSteps, this.oQP.reservation)
+    }
 
     var stepsLength: number = this.inProgressSteps.length
     if ((this.inProgressStepsIndex + 1) == stepsLength) {
@@ -136,7 +138,7 @@ export class SelectElementsInlineComponent implements OnInit, OnChanges, AfterCo
     this.oQP.paid = this.paidSteps[this.paidStepsIndex]
     this.saveOQPState.paid = this.paidSteps[this.paidStepsIndex]
     this.selectedOptions = this.oQP.sts.split('|')
-    this.oQP.inprogress = this.oQP.inprogress
+    // this.oQP.inprogress = this.oQP.inprogress
     this.saveQueryParamsState()
     this.setOptionsFromSelectOptionsArray()
 
@@ -194,8 +196,10 @@ export class SelectElementsInlineComponent implements OnInit, OnChanges, AfterCo
     // if (this.oQP.inprogress == '1')
     //   return
 
-    if (this.oQP.inprogress == '1')
+    if (this.oQP.inprogress == '1') {
       this.oQP.inprogress = 'all'
+      this.inProgressStepsIndex = this.findIndex(this.inProgressSteps, this.oQP.inprogress)
+    }
 
     var stepsLength: number = this.reservationsSteps.length
     if ((this.reservationsStepsIndex + 1) == stepsLength) {
@@ -206,7 +210,7 @@ export class SelectElementsInlineComponent implements OnInit, OnChanges, AfterCo
     this.oQP.reservation = this.reservationsSteps[this.reservationsStepsIndex]
     this.saveOQPState.reservation = this.reservationsSteps[this.reservationsStepsIndex]
     this.selectedOptions = this.oQP.sts.split('|')
-    this.oQP.inprogress = this.oQP.inprogress
+    // this.oQP.inprogress = this.oQP.inprogress
     this.saveQueryParamsState()
     this.setOptionsFromSelectOptionsArray()
     this.setStatusIndexes()

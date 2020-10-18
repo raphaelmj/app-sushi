@@ -1,3 +1,5 @@
+import { Orientation } from 'tns-core-modules/ui/layouts/stack-layout';
+import { OrientationChangeService } from './../services/orientation-change.service';
 import { CartService } from '~/services/cart.service';
 import { ViewContainerRef } from '@angular/core';
 import { OrderService } from '~/services/orders/order.service';
@@ -42,10 +44,14 @@ export class ReservationsComponent implements OnInit, OnDestroy, AfterViewInit {
   qp: QPReserve
   tokenUser: TokenBase
   currentDay: Date
-  scrollHeight: number = Math.ceil(screen.mainScreen.heightDIPs) - 160;
+  scrollHeight: number
+  orient: Orientation
 
   subQueryParams: Subscription
   subData: Subscription
+  subOrientChange: Subscription
+
+  isInitView: boolean = true
 
   constructor(
     private page: Page,
@@ -54,6 +60,7 @@ export class ReservationsComponent implements OnInit, OnDestroy, AfterViewInit {
     private _changeDetectionRef: ChangeDetectorRef,
     private orderService: OrderService,
     private viewContainerRef: ViewContainerRef,
+    private orientationChangeService: OrientationChangeService,
     private cartService: CartService
   ) {
     this.page.actionBarHidden = true;
@@ -63,25 +70,37 @@ export class ReservationsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.soonR = this.activatedRoute.snapshot.data['dataR'].soonR
     this.day = this.activatedRoute.snapshot.data['dataR'].day
     this.tokenUser = this.activatedRoute.snapshot.data['user']
+    this.orient = (screen.mainScreen.heightDIPs > screen.mainScreen.widthDIPs) ? 'vertical' : 'horizontal'
+    this.scrollHeight = (this.orient == 'vertical') ? screen.mainScreen.heightDIPs - 60 : screen.mainScreen.widthDIPs - 60;
   }
 
   ngOnInit(): void {
     this.subscribeToQP()
-    this.changeOrientationObserve()
+    this.subscribeToOrientChange()
+    this.orientationChangeService.changeEmit()
   }
 
-  changeOrientationObserve() {
-    on("orientationChanged", (evt) => {
-      switch (evt.newValue) {
-        case "landscape":
-          this.scrollHeight = Math.ceil(screen.mainScreen.widthDIPs) - 160;
-          break;
-        case "portrait":
-          this.scrollHeight = Math.ceil(screen.mainScreen.widthDIPs) - 160;
-          break;
-      }
+
+  subscribeToOrientChange() {
+    this.subOrientChange = this.orientationChangeService.action$.subscribe((data: { orient: Orientation, deviceType: 'Phone' | 'Tablet', width?: number, height?: number }) => {
+      this.orient = data.orient
+      if (!this.isInitView)
+        this.afterOrientationDataChange(data.height, data.width)
+
+      this.isInitView = false
       this._changeDetectionRef.detectChanges()
-    });
+    })
+  }
+
+  afterOrientationDataChange(h: number, w: number) {
+    switch (this.orient) {
+      case "horizontal":
+        this.scrollHeight = h - 160;
+        break;
+      case "vertical":
+        this.scrollHeight = w - 160;
+        break;
+    }
   }
 
   ngAfterViewInit(): void {
@@ -92,9 +111,6 @@ export class ReservationsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   subscribeToQP() {
     this.subQueryParams = this.activatedRoute.queryParams.subscribe((p: { day: string, backTo?: string }) => {
-      // console.log(decodeURIComponent(p.backTo))
-      // console.log(p.backTo)
-      // // p.backTo = decodeURIComponent(p.backTo)
       if (!this.isInit) {
         var qp = { ...this.qp, ...p }
         this.qp = Object.assign({}, qp)
@@ -208,6 +224,9 @@ export class ReservationsComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if (this.subData)
       this.subData.unsubscribe()
+
+    if (this.subOrientChange)
+      this.subOrientChange.unsubscribe()
   }
 
 }

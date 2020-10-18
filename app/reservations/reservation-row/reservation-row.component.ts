@@ -1,3 +1,7 @@
+import { Orientation } from 'tns-core-modules/ui/layouts/stack-layout';
+import { OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { OrientationChangeService } from './../../services/orientation-change.service';
 import { OrderService } from '~/services/orders/order.service';
 import { CartService } from '~/services/cart.service';
 import { MessageService } from '~/services/message.service';
@@ -15,7 +19,7 @@ import { action } from "tns-core-modules/ui/dialogs";
   templateUrl: './reservation-row.component.html',
   styleUrls: ['./reservation-row.component.scss']
 })
-export class ReservationRowComponent implements OnInit {
+export class ReservationRowComponent implements OnInit, OnDestroy {
 
   @Input() order: CartOrder
   @Input() day: Date
@@ -29,42 +33,64 @@ export class ReservationRowComponent implements OnInit {
     [OrderStatusName.archive, OrderStatus.archive],
   ]);
 
+
+  orient: Orientation
+  subOrientChange: Subscription
+
+  isInitView: boolean = true
+
   constructor(
     private _changeDetectionRef: ChangeDetectorRef,
     private routerExtensions: RouterExtensions,
     private messageService: MessageService,
     private cartService: CartService,
     private viewContainerRef: ViewContainerRef,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private orientationChangeService: OrientationChangeService
   ) {
     if (screen.mainScreen.widthDIPs > 1000) {
+      this.width = '33%'
+    } else if (screen.mainScreen.widthDIPs <= 1000 && screen.mainScreen.widthDIPs > 600) {
       this.width = '50%'
     } else {
       this.width = '100%'
     }
+    this.orient = (screen.mainScreen.heightDIPs > screen.mainScreen.widthDIPs) ? 'vertical' : 'horizontal'
   }
+
 
   ngOnInit(): void {
-
-    this.changeOrientationObserve()
+    this.subscribeToOrientChange()
+    this.orientationChangeService.changeEmit()
   }
 
-  changeOrientationObserve() {
-    on("orientationChanged", (evt) => {
-      switch (evt.newValue) {
-        case "landscape":
-          if (screen.mainScreen.heightDIPs > 1000) {
-            this.width = '50%'
-          } else {
-            this.width = '100%'
-          }
-          break;
-        case "portrait":
-          this.width = '100%'
-          break;
-      }
+
+  subscribeToOrientChange() {
+    this.subOrientChange = this.orientationChangeService.action$.subscribe((data: { orient: Orientation, deviceType: 'Phone' | 'Tablet', width?: number, height?: number }) => {
+      this.orient = data.orient
+      if (!this.isInitView)
+        this.afterOrientationDataChange(data.width)
+      this.isInitView = false
       this._changeDetectionRef.detectChanges()
-    });
+    })
+  }
+
+  afterOrientationDataChange(w: number) {
+
+    switch (this.orient) {
+      case "horizontal":
+        if (w > 1000) {
+          this.width = '33%'
+        } else if (w <= 1000 && w > 700) {
+          this.width = '50%'
+        } else {
+          this.width = '100%'
+        }
+        break;
+      case "vertical":
+        this.width = '100%'
+        break;
+    }
   }
 
   goToEdit() {
@@ -152,6 +178,11 @@ export class ReservationRowComponent implements OnInit {
       this.order.paid = paid
       this.emitChange.emit()
     })
+  }
+
+  ngOnDestroy(): void {
+    if (this.subOrientChange)
+      this.subOrientChange.unsubscribe()
   }
 
 }

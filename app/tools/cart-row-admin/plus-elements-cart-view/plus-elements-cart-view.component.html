@@ -1,4 +1,4 @@
-<WrapLayout orientation="horizontal" [ngClass]="{'margin-top-10': plusElements.length>0}">
+<WrapLayout orientation="horizontal">
     <ng-container *ngFor="let pl of plusElements; let i = index">
 
         <ng-container *ngIf="pl.elementType!=elementType.configStepsPriceMany && pl.optionsElements.length==0">

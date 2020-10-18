@@ -1,4 +1,4 @@
-<GridLayout rows="*,*,40" class="grid-ele p-10" width="50%">
+<!-- <GridLayout rows="*,*,40" class="grid-ele p-10" width="50%">
     <Label [text]="element.name | stripTags" class="htmlLabel" width="100%" textWrap="true" row="0"></Label>
     <Label [text]="'cena w konfiguracji'" class="red-price" row="1"></Label>
     <Button class="add-cart-bt" (tap)="addToCart()" height="40" width="100%" row="2">
@@ -6,4 +6,17 @@
             <Span text="&#xf217;" class="fas"></Span>
         </FormattedString>
     </Button>
-</GridLayout>
+</GridLayout> -->
+
+<FlexboxLayout width="50%" flexDirection="column" justifyContent="space-between" class="p-10 flex-ele">
+    <FlexboxLayout flexDirection="column">
+        <Label [text]="element.name | stripTags" class="htmlLabel" width="100%" textWrap="true"></Label>
+        <Label [text]="'cena w konfiguracji'" class="red-price"></Label>
+    </FlexboxLayout>
+
+    <Button class="add-cart-bt" (tap)="addToCart()" height="40" width="100%">
+        <FormattedString>
+            <Span text="&#xf217;" class="fas"></Span>
+        </FormattedString>
+    </Button>
+</FlexboxLayout>

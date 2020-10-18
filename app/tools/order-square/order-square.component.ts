@@ -1,3 +1,4 @@
+import { OrderElementStatusChangeRefreshService } from '~/services/order-element-status-change-refresh.service';
 import { ConfirmPasswordType } from '~/tools/password-confirm/password-confirm.component';
 import { CartService } from '~/services/cart.service';
 import { DatePosition } from './../../models/cart-order';
@@ -60,6 +61,7 @@ export class OrderSquareComponent implements OnInit, OnChanges, OnDestroy {
 
   hidden: boolean = false;
   subInterval: Subscription;
+  subStatusChange: Subscription
   diff: DateDiff;
 
   datePosition: DatePosition
@@ -75,13 +77,15 @@ export class OrderSquareComponent implements OnInit, OnChanges, OnDestroy {
     private modalService: ModalDialogService,
     private viewContainerRef: ViewContainerRef,
     private cartService: CartService,
-    private _changeDetectionRef: ChangeDetectorRef
+    private _changeDetectionRef: ChangeDetectorRef,
+    private orderElementStatusChangeRefreshService: OrderElementStatusChangeRefreshService
   ) { }
 
 
   ngOnInit(): void {
     this.createTimeLimit();
     this.subToInterval();
+    this.subscribeStatusChange()
     this.findDayPos()
   }
 
@@ -103,6 +107,19 @@ export class OrderSquareComponent implements OnInit, OnChanges, OnDestroy {
     this.subInterval = interval(1000).subscribe((n) => {
       this.createTimeLimit();
     });
+  }
+
+  subscribeStatusChange() {
+    this.subStatusChange = this.orderElementStatusChangeRefreshService.action$.subscribe(o => {
+      // console.log(o.orderId)
+      if (o.orderId == this.order.id) {
+        this.order.cartOrderElements.map((el, i) => {
+          if (el.id == o.elementId) {
+            this.order.cartOrderElements[i].status = o.status
+          }
+        })
+      }
+    })
   }
 
   createTimeLimit() {
@@ -272,6 +289,7 @@ export class OrderSquareComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
+
   changeInProgress() {
     let inProgress: boolean = (this.order.inProgress) ? false : true
     this.orderService.changeOrderField('inProgress', inProgress, this.order.id).then(r => {
@@ -355,5 +373,6 @@ export class OrderSquareComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.subInterval) this.subInterval.unsubscribe();
+    if (this.subStatusChange) this.subStatusChange.unsubscribe()
   }
 }

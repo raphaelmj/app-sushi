@@ -120,7 +120,7 @@
     <FlexboxLayout [row]="(orient=='vertical')?2:0" [column]="(orient=='vertical')?0:2" class="added-revs" width="100%">
       <ScrollView [height]="scrollHeight" width="100%">
         <WrapLayout orientation="horizontal" width="100%">
-          <FlexboxLayout justifyContent="space-between" alignItems="center" [width]="(orient=='vertical')?'50%':'100%'" class="grid-added" *ngFor="let item of reverseElements;let i= index">
+          <FlexboxLayout justifyContent="space-between" alignItems="center" [width]="(orient=='vertical')?((width<600)?'100%':'50%'):'100%'" class="grid-added" *ngFor="let item of reverseElements;let i= index">
             <FlexboxLayout class="" justifyContent="space-between" alignItems="center" class="p-10">
               <Label [text]="item.from+' '"></Label>
               <Label>

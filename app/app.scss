@@ -158,7 +158,14 @@ GridLayout.grid-ele {
   border-bottom-width: 1;
   border-right-width: 1;
   border-color: #D7C5AB;
-  min-height: 120;
+  // min-height: 120;
+}
+
+FlexboxLayout.flex-ele {
+  border-bottom-width: 1;
+  border-right-width: 1;
+  border-color: #D7C5AB;
+  // min-height: 120;
 }
 
 FlexboxLayout.row-config {
@@ -171,4 +178,8 @@ FlexboxLayout.row-desc {
   border-bottom-width: 1;
   border-right-width: 1;
   border-color: #D7C5AB;
+}
+
+.margin-top-10 {
+  margin-top: 10;
 }

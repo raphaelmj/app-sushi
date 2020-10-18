@@ -1,4 +1,4 @@
-<Label [text]="element.name | stripTags" class="htmlLabelTitle p-10" textWrap="true" width="100%"></Label>
+<!-- <Label [text]="element.name | stripTags" class="htmlLabelTitle p-10" textWrap="true" width="100%"></Label>
 <GridLayout rows="*,*,40" *ngFor="let item of element.descElements; let i = index" width="50%" class="p-10 grid-ele">
   <Label [text]="item.info" class="infoLabel" textWrap="true" width="100%" row="0"></Label>
   <FlexboxLayout flexDirection="column" row="1">
@@ -16,4 +16,25 @@
       <Span text="&#xf217;" class="fas"></Span>
     </FormattedString>
   </Button>
-</GridLayout>
+</GridLayout> -->
+
+<Label [text]="element.name | stripTags" class="htmlLabelTitle p-10" textWrap="true" width="100%"></Label>
+<FlexboxLayout flexDirection="column" justifyContent="space-between" rows="*,*,40" *ngFor="let item of element.descElements; let i = index" width="50%" class="p-10 flex-ele">
+
+  <FlexboxLayout flexDirection="column">
+    <Label [text]="item.info" class="infoLabel" textWrap="true" width="100%"></Label>
+    <FlexboxLayout *ngIf="item.price!=''">
+      <Label [text]="item.price + ' pln'" class="red-price"></Label>
+    </FlexboxLayout>
+    <FlexboxLayout *ngIf="item.isSea && item.seaPrice!=''">
+      <Label [text]="item.seaPrice + ' pln'" class="red-price"></Label>
+      <Image src="~/images/krewetka.png" width="25" class="image-elems" loadMode="async">
+      </Image>
+    </FlexboxLayout>
+  </FlexboxLayout>
+  <Button class="add-cart-bt" (tap)="addToCart(i)" height="40">
+    <FormattedString>
+      <Span text="&#xf217;" class="fas"></Span>
+    </FormattedString>
+  </Button>
+</FlexboxLayout>
