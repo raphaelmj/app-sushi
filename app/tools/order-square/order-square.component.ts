@@ -1,7 +1,8 @@
+import { AppConfig } from '~/models/app-config';
 import { OrderElementStatusChangeRefreshService } from '~/services/order-element-status-change-refresh.service';
 import { ConfirmPasswordType } from '~/tools/password-confirm/password-confirm.component';
 import { CartService } from '~/services/cart.service';
-import { DatePosition } from './../../models/cart-order';
+import { BonusType, DatePosition } from './../../models/cart-order';
 import {
   Component,
   OnInit,
@@ -34,6 +35,7 @@ import { DateDiff } from "~/models/date-diff";
 import { ModalDialogService, ModalDialogOptions, RouterExtensions } from "@nativescript/angular";
 import { PlusTimeComponent } from "../plus-time/plus-time.component";
 import { isNull } from 'util';
+import { BonusResponseData } from '../bonus-set-config/bonus-set-config.component';
 
 @Component({
   selector: "app-order-square",
@@ -47,6 +49,7 @@ export class OrderSquareComponent implements OnInit, OnChanges, OnDestroy {
   }> = new EventEmitter<{ status: string; id: number }>();
   @Input() order: CartOrder;
   @Input() day: Date;
+  @Input() appConfig: AppConfig;
   actionTypes: Map<string, string> = new Map([
     [OrderActionTypeNames.onSite, OrderActionType.onSite],
     [OrderActionTypeNames.takeAway, OrderActionType.takeAway],
@@ -319,14 +322,49 @@ export class OrderSquareComponent implements OnInit, OnChanges, OnDestroy {
 
   setBonus() {
 
-    this.cartService.showModalCheckSomePassword(this.viewContainerRef, ConfirmPasswordType.imageCode).then(bool => {
-      if (bool) {
-        var ub: boolean = (this.order.bonusUsed) ? false : true
-        this.orderService.bonusSetUnset(this.order.id, ub).then((o: CartOrder) => {
-          this.order = { ...this.order, ...{ bonusUsed: o.bonusUsed, bonusTotal: o.bonusTotal, paid: o.paid } }
-        })
-      }
-    })
+    // this.cartService.showModalCheckSomePassword(this.viewContainerRef, ConfirmPasswordType.imageCode).then(bool => {
+    //   if (bool) {
+    //     var ub: boolean = (this.order.bonusUsed) ? false : true
+    //     this.orderService.bonusSetUnset(this.order.id, ub).then((o: CartOrder) => {
+    //       this.order = { ...this.order, ...{ bonusUsed: o.bonusUsed, bonusTotal: o.bonusTotal, paid: o.paid } }
+    //     })
+    //   }
+    // })
+    // if (this.order.bonusUsed) {
+
+    this.cartService.showModalBonusConfig(
+      this.viewContainerRef,
+      this.order.total,
+      this.appConfig,
+      this.order.bonusType,
+      this.order.currentBonusPrice,
+      this.order.currentBonusPercent).then((r: BonusResponseData | boolean) => {
+        if (r) {
+
+          var bonusData: BonusResponseData = <BonusResponseData>r
+          var bonusUsed: boolean = (bonusData.bonusType == BonusType.none) ? false : true
+          this.orderService.bonusTypeSetUnset(this.order.id, bonusUsed, bonusData.bonusType, bonusData.currentBonusPercent).then((o: CartOrder) => {
+            this.order = { ...this.order, ...{ bonusUsed: o.bonusUsed, bonusTotal: o.bonusTotal, paid: o.paid, bonusType: o.bonusType } }
+          })
+        }
+      })
+
+    // } else {
+    //   this.cartService.showModalBonusConfig(
+    //     this.viewContainerRef,
+    //     this.order.total,
+    //     this.appConfig,
+    //     this.order.bonusType,
+    //     this.order.currentBonusPrice,
+    //     this.order.currentBonusPercent).then((r: BonusResponseData | boolean) => {
+    //       if (r) {
+    //         var bonusData: BonusResponseData = <BonusResponseData>r
+    //         this.orderService.bonusTypeSetUnset(this.order.id, true, bonusData.bonusType, bonusData.currentBonusPercent).then((o: CartOrder) => {
+    //           this.order = { ...this.order, ...{ bonusUsed: o.bonusUsed, bonusTotal: o.bonusTotal, paid: o.paid, bonusType: o.bonusType } }
+    //         })
+    //       }
+    //     })
+    // }
 
 
   }

@@ -1,10 +1,10 @@
 import { API_URL } from '~/config';
 import { QuickStats } from './../../models/quick-stats';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CartElement, CartGroup } from '~/models/cart-element';
 import { OrderQueryParams } from '~/models/order-query-params';
-import { CartOrder, OrderActionType } from '~/models/cart-order';
+import { BonusType, CartOrder, OrderActionType } from '~/models/cart-order';
 import { Observable } from 'rxjs';
 import { device } from "platform";
 
@@ -33,8 +33,10 @@ export class OrderService {
     reservation: boolean,
     reservationSize: number,
     onOnePlate: boolean,
-    bonusUsed: boolean = false): Promise<any> {
-    return this.httpClient.post(API_URL + '/api/orders/create?uuid=' + this.uuid, { cart, total, description, forWho, phone, place, actionType, userId, startAt, endAt, endDay: endAt, reservation, reservationSize, onOnePlate, bonusUsed }).toPromise()
+    bonusUsed: boolean = false,
+    bonusType: BonusType = BonusType.none,
+    currentBonusPercent: number = 0): Promise<any> {
+    return this.httpClient.post(API_URL + '/api/orders/create?uuid=' + this.uuid, { cart, total, description, forWho, phone, place, actionType, userId, startAt, endAt, endDay: endAt, reservation, reservationSize, onOnePlate, bonusUsed, bonusType, currentBonusPercent }).toPromise()
   }
 
   getOrders(qp: OrderQueryParams): Observable<{
@@ -71,12 +73,15 @@ export class OrderService {
   }
 
   getOrder(id: number | string): Observable<{ order: CartOrder, group: CartGroup[] }> {
+    // var headers: HttpHeaders = new HttpHeaders({
+    //   "X-Auth-Token": "lsd"
+    // })
     return this.httpClient.get<{ order: CartOrder, group: CartGroup[] }>(API_URL + "/api/orders/order/" + id)
   }
 
 
-  updateOrder(cartEl: CartElement, orderId: number): Promise<any> {
-    return this.httpClient.post(API_URL + '/api/orders/order/element/update?uuid=' + this.uuid, { element: cartEl, orderId }).toPromise()
+  updateOrder(cartEl: CartElement, orderId: number): Promise<CartOrder> {
+    return this.httpClient.post<CartOrder>(API_URL + '/api/orders/order/element/update?uuid=' + this.uuid, { element: cartEl, orderId }).toPromise()
   }
 
 
@@ -88,13 +93,17 @@ export class OrderService {
     return this.httpClient.post(API_URL + '/api/orders/order/bonus/change?uuid=' + this.uuid, { id, bonusUsed }).toPromise()
   }
 
-  removeOrderElement(id: number, orderId: number) {
-    return this.httpClient.post(API_URL + '/api/orders/order/element/delete?uuid=' + this.uuid, { id, orderId }).toPromise()
+  bonusTypeSetUnset(id: number, bonusUsed: boolean, bonusType: BonusType, percent: number): Promise<any> {
+    return this.httpClient.post(API_URL + '/api/orders/order/bonus/type/change?uuid=' + this.uuid, { id, bonusUsed, bonusType, percent }).toPromise()
+  }
+
+  removeOrderElement(id: number, orderId: number): Promise<CartOrder> {
+    return this.httpClient.post<CartOrder>(API_URL + '/api/orders/order/element/delete?uuid=' + this.uuid, { id, orderId }).toPromise()
   }
 
 
-  addNewElementToCart(cartEl: CartElement, orderId: number): Promise<CartElement> {
-    return this.httpClient.post<CartElement>(API_URL + '/api/orders/order/add/element?uuid=' + this.uuid, { element: cartEl, orderId }).toPromise()
+  addNewElementToCart(cartEl: CartElement, orderId: number): Promise<{ o: CartOrder, ce: CartElement }> {
+    return this.httpClient.post<{ o: CartOrder, ce: CartElement }>(API_URL + '/api/orders/order/add/element?uuid=' + this.uuid, { element: cartEl, orderId }).toPromise()
   }
 
   changeElementStatus(status: boolean, id: number): Promise<any> {

@@ -37,20 +37,18 @@ export enum Weekdays {
 }
 
 export interface EsIndexElement {
-    id: string
+    id?: string
     oId: number
     oelId: number | null
     poelId: number | null
     melId: number | null
     index: number | null
+    indString: string | null
     priceNameIndex: number | null
     configFirstIndex: number | null
     configSecondIndex: number | null
     configThirdIndex: number | null
     name: string
-    reservation: boolean
-    reservationSize: number | null
-    paid: boolean
     cCId: number | null
     elementPositionType: EsElementPositionType
     elastic: boolean
@@ -66,14 +64,8 @@ export interface EsIndexElement {
     onlyGluten: boolean
     gluten: number
     grill: number
-    extra: number
     onOnePlate: boolean
-    priceExtra: number
     pricePerOne: number
-    bonusUsed: boolean,
-    currentBonusPrice: number
-    fractionBonusPrice: number
-    // quantity: number
     serveType: ServeType
     endAt: string
     startAt: string
@@ -81,6 +73,7 @@ export interface EsIndexElement {
     weekDay: Weekdays
     hasPlus: boolean
     element: string
+    description: string
     optionsElements: EsOptionsElement[]
     descElements: EsDescElement[]
     reverseElements: EsReverseElement[]

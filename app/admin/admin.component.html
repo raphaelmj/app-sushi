@@ -45,6 +45,7 @@
                          class="m-t-10">
             <app-select-elements-inline
                                         [tokenUser]="tokenUser"
+                                        [appConfig]="appConfig"
                                         [archives]="archives"
                                         [reservations]="reservations"
                                         [options]="statusOptions"
@@ -118,6 +119,7 @@
                          class="m-t-10">
             <app-select-elements-inline
                                         [tokenUser]="tokenUser"
+                                        [appConfig]="appConfig"
                                         [archives]="archives"
                                         [reservations]="reservations"
                                         [options]="statusOptions"
@@ -209,6 +211,7 @@
               <app-order-square
                                 [day]="currentDay"
                                 [order]="order"
+                                [appConfig]="appConfig"
                                 (emitStatus)="changeStatus($event)">
               </app-order-square>
             </FlexboxLayout>

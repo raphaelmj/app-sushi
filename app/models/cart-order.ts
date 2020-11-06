@@ -36,6 +36,12 @@ export enum OrderStatus {
     archive = 'archive'
 }
 
+export enum BonusType {
+    none = "none",
+    cart = "cart",
+    percent = "percent"
+}
+
 export interface CartOrder {
     id: number
     orderNumber: number
@@ -43,7 +49,9 @@ export interface CartOrder {
     total: string
     bonusTotal: number
     bonusUsed: boolean
+    bonusType: BonusType
     currentBonusPrice: number
+    currentBonusPercent: number
     oneExtraPrice: number
     description: string | null
     forWho: string | null

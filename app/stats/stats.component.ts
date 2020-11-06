@@ -1,9 +1,9 @@
+import { DayStats } from './../models/es-day-stats';
 import { Orientation } from 'tns-core-modules/ui/layouts/stack-layout';
 import { OrientationChangeService } from './../services/orientation-change.service';
 import { OnDestroy } from '@angular/core';
 import { QPStatsDay } from './../models/qp-stats';
 import { Subscription } from 'rxjs';
-import { BucketPlusElement } from './../models/es-index-response';
 import { StatisticsService } from './../services/stats/statistics.service';
 import { ViewChild } from '@angular/core';
 import { RadSideDrawerComponent } from "nativescript-ui-sidedrawer/angular";
@@ -19,7 +19,6 @@ import * as moment from "moment";
 import * as ModalPicker from "nativescript-modal-datetimepicker";
 import { screen, Device } from "tns-core-modules/platform";
 import { device } from "platform";
-import { on } from "tns-core-modules/application";
 import { RouterExtensions } from '@nativescript/angular';
 import { SwipeGestureEventData } from 'tns-core-modules/ui';
 
@@ -36,9 +35,9 @@ export class StatsComponent implements OnInit, AfterViewInit, OnDestroy {
   tokenUser: TokenBase | null;
   currentDay: Date;
   qPDay: QPStatsDay
-  data: { list: BucketPlusElement[], total: number, day: string, priceTotal: number, priceExtra: number, bonusPriceTotal: number }
+  data: DayStats
   scrollHeight: number = (screen.mainScreen.widthDIPs > screen.mainScreen.heightDIPs) ? screen.mainScreen.heightDIPs - 140 : screen.mainScreen.widthDIPs - 140;
-  statsGrid: string = '50,auto'
+  statsGrid: string = '100,auto'
   statsHeadData: string = 'row'
   fontSize: number = 14
   fontMultiplier: number = 1.5
@@ -46,6 +45,7 @@ export class StatsComponent implements OnInit, AfterViewInit, OnDestroy {
   initSize: { w: number, h: number } = { w: screen.mainScreen.widthDIPs, h: screen.mainScreen.heightDIPs }
   initOrient: Orientation = (screen.mainScreen.widthDIPs > screen.mainScreen.heightDIPs) ? 'horizontal' : 'vertical'
   device: Device = device
+  loadingStats: boolean = false
 
   subQPChange: Subscription
   subDayElements: Subscription
@@ -68,7 +68,7 @@ export class StatsComponent implements OnInit, AfterViewInit, OnDestroy {
     let activity = application.android.startActivity;
     activity.getWindow().addFlags(android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
     this.currentDay = moment(this.qPDay.day).toDate();
-    this.prepeareMergeNames()
+    // this.prepeareMergeNames()
   }
 
 
@@ -83,18 +83,18 @@ export class StatsComponent implements OnInit, AfterViewInit, OnDestroy {
     this._changeDetectionRef.detectChanges();
   }
 
-  prepeareMergeNames() {
-    this.data.list.map((el, i) => {
-      var n: string = "";
-      el.names.map((v, i) => {
-        n += v
-        if (i != (v.length - 1)) {
-          n += ', ';
-        }
-      })
-      this.data.list[i].mergeNames = n
-    })
-  }
+  // prepeareMergeNames() {
+  //   this.data.list.map((el, i) => {
+  //     var n: string = "";
+  //     el.names.map((v, i) => {
+  //       n += v
+  //       if (i != (v.length - 1)) {
+  //         n += ', ';
+  //       }
+  //     })
+  //     this.data.list[i].mergeNames = n
+  //   })
+  // }
 
   subToQueryParams() {
     this.subQPChange = this.activatedRoute.queryParams.subscribe((p: { day: string }) => {
@@ -120,20 +120,21 @@ export class StatsComponent implements OnInit, AfterViewInit, OnDestroy {
     switch (data.orient) {
       case 'horizontal':
         this.scrollHeight = data.height - 180;
-        this.statsGrid = '50,*'
+        this.statsGrid = '100,*'
         this.statsHeadData = 'row'
         break
       case 'vertical':
         this.scrollHeight = data.width - 180;
-        this.statsGrid = '50,*'
+        this.statsGrid = '100,*'
         this.statsHeadData = 'row'
         if (data.deviceType == 'Phone') {
-          this.statsGrid = '150,*'
+          this.statsGrid = '200,*'
           this.scrollHeight = data.width - 220;
           this.statsHeadData = 'column'
         }
         break;
     }
+    this._changeDetectionRef.detectChanges()
   }
 
   deviceDataSet(data: { orient: Orientation, deviceType: 'Phone' | 'Tablet', width?: number, height?: number }) {
@@ -177,16 +178,25 @@ export class StatsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   getDayData() {
     this.data = {
-      list: [],
       total: 0,
+      totalBonus: 0,
+      totalCount: 0,
+      bonusCart: { ordersCount: 0, total: 0 },
+      bonusPercent: {
+        ordersCount: 0,
+        total: 0,
+        details: []
+      },
+      totalServeTypes: { plate: 0, pack: 0 },
       day: moment(this.currentDay).format("yy-MM-DD"),
-      priceTotal: 0,
-      priceExtra: 0,
-      bonusPriceTotal: 0
+      bucketElements: [],
+      extra: 0,
+      extraPrice: 0
     }
+    this.loadingStats = true
     this.subDayElements = this.statisticsService.dayElements(this.qPDay.day).subscribe(r => {
       this.data = r
-      this.prepeareMergeNames()
+      this.loadingStats = false
     })
   }
 

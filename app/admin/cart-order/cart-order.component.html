@@ -85,8 +85,17 @@
               <Label class="price" [text]="'  ' + total + ' pln'"> </Label>
             </FlexboxLayout>
             <FlexboxLayout flexDirection="column" *ngIf="order.bonusUsed" class="price-bonus" alignItems="center" justifyContent="center">
-              <Label [text]="'  ' + total + ' pln'" class="price-no-bonus"> </Label>
-              <Label class="price" [text]="'  ' + order.bonusTotal + ' pln'"></Label>
+              <ng-container [ngSwitch]="order.bonusType">
+                <ng-container *ngSwitchCase="bonusType.percent">
+                  <Label [text]="'  ' + total + ' pln'" class="price-no-bonus"> </Label>
+                  <Label class="price" [text]="'  ' + order.bonusTotal + ' pln'"></Label>
+                </ng-container>
+                <ng-container *ngSwitchCase="bonusType.cart">
+                  <Label [text]="'  ' + total + ' pln'" class="price-no-bonus"> </Label>
+                  <Label class="price" [text]="'  ' + order.bonusTotal + ' pln'"></Label>
+                </ng-container>
+              </ng-container>
+
             </FlexboxLayout>
 
           </FlexboxLayout>

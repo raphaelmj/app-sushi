@@ -36,28 +36,41 @@
                 </FlexboxLayout>
             </GridLayout>
             <StackLayout row="1" orientation="horizontal" width="100%">
+                <app-loading-absolute [busy]="loadingStats"></app-loading-absolute>
                 <GridLayout [rows]="statsGrid">
                     <StackLayout row="0">
-                        <FlexboxLayout [flexDirection]="statsHeadData" class="w-100" justifyContent="space-between">
-                            <Label [text]="'Ilość: '+data.total" class="total-szt p-10"></Label>
+                        <FlexboxLayout [flexDirection]="statsHeadData" class="w-100" justifyContent="space-between" alignItems="flex-end">
 
-                            <FlexboxLayout alignItems="center" class="price-flex">
-                                <Label [text]="'Kwota: '+data.priceTotal + ' pln'" class="total-price p-10"></Label>
-                                <Label [text]="'+'" class="p-2" [ngStyle]="{'font-size': 14}"></Label>
-                                <Label [text]="'Kwota extra: '+data.priceExtra + ' pln'" class="total-extra p-10"></Label>
+                            <FlexboxLayout [flexDirection]="'row'">
+                                <FlexboxLayout alignItems="flex-end" class="price-flex p-10" flexDirection="column" justifyContent="flex-end">
+                                    <Label [text]="'Ilość: '+data.totalCount+' szt.'" class="total-szt"></Label>
+                                </FlexboxLayout>
+                                <FlexboxLayout alignItems="flex-end" class="price-flex p-10" flexDirection="row" justifyContent="flex-end">
+                                    <FlexboxLayout>
+                                        <Label [text]="' Kwota: '" class="label-what"></Label>
+                                    </FlexboxLayout>
+                                    <FlexboxLayout flexDirection="column">
+                                        <Label [text]="data.total + ' pln'" class="total-price" [ngClass]="{'throuth-line': data.total!=data.totalBonus}"></Label>
+                                        <ng-container *ngIf="data.total!=data.totalBonus">
+                                            <Label [text]="data.totalBonus + ' pln'" class="total-price"></Label>
+                                        </ng-container>
+                                    </FlexboxLayout>
+                                </FlexboxLayout>
                             </FlexboxLayout>
-                            <FlexboxLayout alignItems="center" class="price-flex">
-                                <Label [text]="'W tym kupon(y): '+data.bonusPriceTotal + ' pln'" class="price-bonus p-10"></Label>
+                            <FlexboxLayout alignItems="flex-end" class="price-flex p-10" flexDirection="column" justifyContent="flex-end">
+                                <Label [text]="' w tym kwota extra: '+data.extraPrice + ' pln'" class="total-extra"></Label>
+                            </FlexboxLayout>
+                            <FlexboxLayout alignItems="flex-end" class="price-flex p-10" flexDirection="column" justifyContent="flex-end">
+                                <Label [text]="'- kupon(y): '+data.bonusCart.total.toFixed(2) + ' pln'" class="price-bonus"></Label>
+                                <Label [text]="'- zniżki %: '+data.bonusPercent.total.toFixed(2) + ' pln'" class="price-bonus"></Label>
                             </FlexboxLayout>
                         </FlexboxLayout>
 
                     </StackLayout>
                     <ScrollView [height]="scrollHeight" row="1" (swipe)="onSwipeScreen($event)">
                         <WrapLayout orientation="horizontal" class="p-15">
-                            <GridLayout columns="200,*" *ngFor="let item of data.list" class="list-elements">
+                            <GridLayout columns="200,*" *ngFor="let item of data.bucketElements" class="list-elements">
                                 <FlexboxLayout column="0">
-                                    <!-- <Label [text]="item.element" textWrap="true" [ngStyle]="{'font-size': 14+(item.doc_count*1.5)}"></Label> -->
-                                    <!-- <Label [text]="item.names|json" textWrap="true"></Label> -->
                                     <FlexboxLayout flexDirection="column">
                                         <ng-container *ngFor="let n of item.names">
                                             <Label [text]="n" textWrap="true" [ngStyle]="{'font-size': fontSize+(item.doc_count*fontMultiplier)}"></Label>
@@ -68,66 +81,22 @@
                                     <Label [text]="item.doc_count+'x'" [ngStyle]="{'font-size': fontSize+(item.doc_count*fontMultiplier)}" class="p-5"></Label>
                                     <Label textWrap="true" [ngStyle]="{'font-size': fontSize+(item.doc_count*fontMultiplier)}">
                                         <FormattedString>
-                                            <Span [text]="item.serveTypesCount.plate+' x '"></Span>
+                                            <Span [text]="item.plate+' x '"></Span>
                                             <Span text="&#xf2e7;" class="fas"></Span>
                                         </FormattedString>
                                     </Label>
                                     <Label textWrap="true" [ngStyle]="{'font-size': fontSize+(item.doc_count*fontMultiplier)}">
                                         <FormattedString>
-                                            <Span [text]="item.serveTypesCount.pack+' x '"></Span>
+                                            <Span [text]="item.pack+' x '"></Span>
                                             <Span text="&#xf49e;" class="fas"></Span>
                                         </FormattedString>
                                     </Label>
                                 </FlexboxLayout>
-                                <!-- <FlexboxLayout column="2">
-                                <Label [text]="item.percent+'%'" [ngStyle]="{'font-size': 14+(item.doc_count*1.5)}"></Label>
-                            </FlexboxLayout> -->
                             </GridLayout>
                         </WrapLayout>
                     </ScrollView>
                 </GridLayout>
 
-
-                <!-- <Tabs selectedIndex="0">
-                    <TabStrip>
-                        <TabStripItem>
-                            <Label text="Lista"></Label>
-                        </TabStripItem>
-                        <TabStripItem class="special">
-                            <Label text="Wykres"></Label>
-                        </TabStripItem>
-                    </TabStrip>
-
-                    <TabContentItem>
-                        <GridLayout rows="60,auto">
-                            <StackLayout row="0">
-                                <Label [text]="'Ilość: '+data.total" class="total-szt p-15"></Label>
-                            </StackLayout>
-                            <ScrollView [height]="scrollHeight" row="1">
-                                <WrapLayout orientation="horizontal" class="p-15">
-                                    <GridLayout columns="200,*" *ngFor="let item of data.list" class="list-elements">
-                                        <FlexboxLayout column="0">
-                                            <FlexboxLayout *ngFor="let n of item.names" flexDirection="column">
-                                                <Label [text]="n" textWrap="true" [ngStyle]="{'font-size': 14+(item.doc_count*1.5)}"></Label>
-                                            </FlexboxLayout>
-                                        </FlexboxLayout>
-                                        <FlexboxLayout column="1">
-                                            <Label [text]="item.doc_count+'x'" [ngStyle]="{'font-size': 14+(item.doc_count*1.5)}" class="p-5"></Label>
-                                        </FlexboxLayout>
-                                    </GridLayout>
-                                </WrapLayout>
-                            </ScrollView>
-                        </GridLayout>
-                    </TabContentItem>
-                    <TabContentItem>
-                        <RadCartesianChart tkExampleTitle tkToggleNavButton>
-                            <CategoricalAxis tkCartesianVerticalAxis allowZoom="true" allowPan="false"></CategoricalAxis>
-                            <LinearAxis tkCartesianHorizontalAxis labelFormat="%.1f procent" labelFitMode="Rotate" allowZoom="false" allowPan="false"></LinearAxis>
-                            <BarSeries
-                                       tkCartesianSeries [items]="data.list" categoryProperty="mergeNames" valueProperty="percent" allowZoom="true" allowPan="false"></BarSeries>
-                        </RadCartesianChart>
-                    </TabContentItem>
-                </Tabs> -->
             </StackLayout>
         </GridLayout>
     </StackLayout>

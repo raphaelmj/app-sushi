@@ -1,12 +1,11 @@
 import { OrderQueryParams } from './models/order-query-params';
-export const API_URL = 'http://192.168.0.206:3000';
+export const API_URL = 'http://localhost:3000';
+export const WEBSOCKET_URL = "http://localhost:3000";
 
-
-export const WEBSOCKET_URL = "http://192.168.0.206:3000";
 
 export const API_TOKEN = "94F754AC8F1AA6C8F73DF2BD41A24";
 export const DB_FILE = "mydb.db";
-export const SITE_URL = "https://example.pl";
+export const SITE_URL = "https://weburl.pl";
 
 
 export const APPSYNC_ANDROID_PRODUCTION_KEY = "2RtJmGONNDItJNFd1lL1Iv4E0oBf7B2rruIUU";

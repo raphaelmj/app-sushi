@@ -1,0 +1,55 @@
+Label.label-b-type {
+    font-size: 18;
+    text-align: center;
+}
+
+FlexboxLayout.select-type-flex {}
+
+FlexboxLayout.select-type-flex.checked {
+    background-color: #504426;
+}
+
+FlexboxLayout.percent-select {
+    width: 80;
+    height: 60;
+
+    Label {
+        font-size: 20;
+    }
+}
+
+FlexboxLayout.percent-select.checked {
+    background-color: #504426;
+}
+
+Label.bonus-name {
+    font-size: 16;
+}
+
+Label.bonus-value {
+    font-size: 16;
+    color: #ff0000;
+}
+
+Label.base-total {
+    text-decoration: line-through;
+    font-size: 14;
+}
+
+Button.clear-close {
+    margin: 0 !important;
+    padding: 0 !important;
+    background-color: #000000 !important;
+    color: #ffffff;
+    height: 40;
+    font-size: 14;
+}
+
+Button.confirm {
+    margin: 0 !important;
+    padding: 0 !important;
+    background-color: #504426 !important;
+    color: #ffffff;
+    height: 40;
+    font-size: 14;
+}

@@ -1,0 +1,107 @@
+<ScrollView>
+    <GridLayout [rows]="grid" class="p-10">
+        <GridLayout columns="*,*,*"
+                    row="0">
+            <FlexboxLayout column="0"
+                           justifyContent="center"
+                           alignItems="center"
+                           flexDirection="column"
+                           class="select-type-flex"
+                           [ngClass]="{'checked': currentBonusType==bonusType.none}"
+                           (tap)="changeBonus(bonusType.none)">
+                <Label text="Brak"
+                       class="label-b-type"
+                       textWrap="true"></Label>
+            </FlexboxLayout>
+            <FlexboxLayout column="1"
+                           justifyContent="center"
+                           alignItems="center"
+                           flexDirection="column"
+                           class="select-type-flex"
+                           [ngClass]="{'checked': currentBonusType==bonusType.cart}"
+                           (tap)="changeBonus(bonusType.cart)">
+                <Label class="label-b-type"
+                       textWrap="true">
+                    <FormattedString>
+                        <Span text="&#xf5bf;"
+                              class="fas"></Span>
+                    </FormattedString>
+                </Label>
+                <Label class="label-b-type"
+                       textWrap="true">
+                    <FormattedString>
+                        <Span text="Pieczątki"></Span>
+                    </FormattedString>
+                </Label>
+            </FlexboxLayout>
+            <FlexboxLayout column="2"
+                           justifyContent="center"
+                           alignItems="center"
+                           flexDirection="column"
+                           class="select-type-flex"
+                           [ngClass]="{'checked': currentBonusType==bonusType.percent}"
+                           (tap)="changeBonus(bonusType.percent)">
+                <Label class="label-b-type"
+                       textWrap="true">
+                    <FormattedString>
+                        <Span text="&#xf295;"
+                              class="fas"></Span>
+                    </FormattedString>
+                </Label>
+                <Label class="label-b-type"
+                       textWrap="true">
+                    <FormattedString>
+                        <Span text="Zniżka procentowa"></Span>
+                    </FormattedString>
+                </Label>
+            </FlexboxLayout>
+        </GridLayout>
+        <FlexboxLayout *ngIf="currentBonusType==bonusType.percent"
+                       [row]="(currentBonusType==bonusType.percent)?1:0">
+            <ScrollView orientation="horizontal">
+                <FlexboxLayout justifyContent="center"
+                               alignItems="center">
+                    <ng-container *ngFor="let item of appConfig.data.bonusPercents">
+                        <FlexboxLayout justifyContent="center"
+                                       alignItems="center"
+                                       (tap)="setPerecent(item)"
+                                       [ngClass]="{'checked': item==currentBonusPercent}"
+                                       class="percent-select">
+                            <Label [text]="item+' %'"></Label>
+                        </FlexboxLayout>
+                    </ng-container>
+                </FlexboxLayout>
+            </ScrollView>
+        </FlexboxLayout>
+        <GridLayout columns="*,*"
+                    [row]="(currentBonusType==bonusType.percent)?2:1">
+            <FlexboxLayout column="0"justifyContent="center" alignItems="flex-start" flexDirection="column">
+                <ng-container *ngIf="currentBonusType==bonusType.cart">
+                    <Label text="Bonus: " class="bonus-name"></Label>
+                    <Label [text]="currentBonusPrice+' pln'" class="bonus-value"></Label>
+                </ng-container>
+                <ng-container *ngIf="currentBonusType==bonusType.percent">
+                    <Label text="Zniżka procent: " class="bonus-name"></Label>
+                    <Label [text]="currentBonusPercent+' %'" class="bonus-value"></Label>
+                </ng-container>
+            </FlexboxLayout>
+            <FlexboxLayout column="1" justifyContent="center" alignItems="flex-end" flexDirection="column">
+                <Label [text]="baseTotal.toFixed(2)+' pln'" class="base-total" *ngIf="currentBonusType==bonusType.percent || currentBonusType==bonusType.cart"></Label>
+                <Label [text]="total.toFixed(2)+' pln'" class="price-total"></Label>
+            </FlexboxLayout>
+        </GridLayout>
+        <GridLayout columns="*,*"
+                    [row]="(currentBonusType==bonusType.percent)?3:2">
+            <Button column="0" (tap)="closeExit()" class="clear-close">
+                <FormattedString>
+                  <Span text="Anuluj"></Span>
+                </FormattedString>
+            </Button>
+            <Button column="1" class="confirm" (tap)="confirmBonus()">
+                <FormattedString>
+                    <Span text="Zatwierdź"></Span>
+                </FormattedString>
+            </Button>
+        </GridLayout>
+    </GridLayout>
+</ScrollView>

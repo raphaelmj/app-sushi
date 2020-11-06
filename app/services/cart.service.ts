@@ -1,8 +1,9 @@
+import { BonusSetConfigComponent } from './../tools/bonus-set-config/bonus-set-config.component';
 import { CalculateService } from './calculate/calculate.service';
 import { ConfirmPasswordType, PasswordConfirmComponent } from './../tools/password-confirm/password-confirm.component';
 import { ReservationDataComponent } from './../tools/reservation-data/reservation-data.component';
 import { ElementConfigStepsPrice, MenuElement } from './../models/menu-element';
-import { DatePosition } from './../models/cart-order';
+import { DatePosition, BonusType } from './../models/cart-order';
 import { QuickStatsComponent } from './../tools/quick-stats/quick-stats.component';
 import { QuickStats } from './../models/quick-stats';
 import { OrderActionType, CartOrder } from '~/models/cart-order';
@@ -681,6 +682,21 @@ export class CartService {
       fullscreen: true,
     };
     return this.modalService.showModal(ReservationDataComponent, options);
+  }
+
+  showModalBonusConfig(viewCRef: ViewContainerRef, total: number | string, appConfig: AppConfig, bonusType: BonusType, currentBonusPrice: number, currentBonusPercent: number): Promise<boolean> {
+    var options: ModalDialogOptions = options = {
+      context: {
+        total,
+        appConfig,
+        bonusType,
+        currentBonusPrice,
+        currentBonusPercent
+      },
+      viewContainerRef: viewCRef,
+      fullscreen: true,
+    };
+    return this.modalService.showModal(BonusSetConfigComponent, options);
   }
 
 

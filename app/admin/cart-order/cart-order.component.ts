@@ -1,3 +1,4 @@
+import { BonusType } from './../../models/cart-order';
 import { ConfirmPasswordType } from './../../tools/password-confirm/password-confirm.component';
 import { MessageService } from './../../services/message.service';
 import { GetDataOrdersRefreshService } from '~/services/get-data-orders-refresh.service';
@@ -76,6 +77,8 @@ export class CartOrderComponent implements OnInit, AfterViewInit, OnDestroy, Aft
   subOrientChange: Subscription
   isInitView: boolean = true
   orient: Orientation
+
+  bonusType = BonusType
 
   constructor(
     private page: Page,
@@ -328,25 +331,47 @@ export class CartOrderComponent implements OnInit, AfterViewInit, OnDestroy, Aft
       // this.total += parseFloat(<any>cel.price);
       ps.push(cel.price)
     });
+    // console.log(this.calculateService.pricePlusMapElements(0, ps), ps)
     this.total = this.calculateService.pricePlusMapElements(0, ps)
-    if (this.order.bonusUsed) {
-      if (this.calculateService.stringToNumber(this.order.currentBonusPrice) >= this.total) {
-        this.order.bonusTotal = 0
-      } else {
-        this.order.bonusTotal = this.calculateService.minusElements(this.total, this.order.currentBonusPrice)
+    // console.log('beforeSum', this.order.bonusTotal)
+    if (this.order.bonusUsed && this.order.bonusType != BonusType.none) {
+
+      switch (this.order.bonusType) {
+        case BonusType.cart:
+          if (this.calculateService.stringToNumber(this.order.currentBonusPrice) >= this.total) {
+            this.order.bonusTotal = 0
+          } else {
+            this.order.bonusTotal = this.calculateService.minusElements(this.total, this.order.currentBonusPrice)
+          }
+          break
+        case BonusType.percent:
+          var percent: number = this.calculateService.stringToNumber(this.order.currentBonusPercent)
+          if (percent == 0) {
+            this.order.bonusTotal = this.calculateService.stringToNumber(this.total)
+          } else {
+            var percentValue: number = this.calculateService.percentFind(percent, this.total)
+            this.order.bonusTotal = this.calculateService.minusElements(this.total, percentValue)
+          }
+          break;
       }
+
     }
+
+    // console.log('after', this.order.bonusTotal)
+    this._changeDetectionRef.detectChanges()
+
     this.dishes = 0;
     this.order.cartOrderElements.map((cel) => {
       this.dishes += cel.quantity;
     });
   }
 
-  updateCart(data: { cartEl: CartElement }) {
+  updateCart(data: { cartEl: CartElement, date: Date, index: number }) {
     this.loading = true;
     data.cartEl.status = false;
-
-    this.ordersService.updateOrder(data.cartEl, this.order.id).then((r) => {
+    // console.log(data.cartEl)
+    this.ordersService.updateOrder(data.cartEl, this.order.id).then((o: CartOrder) => {
+      this.order = { ...this.order, ...{ bonusTotal: o.bonusTotal, total: o.total } }
       this.loading = false;
       if (data.cartEl.elementType == "special") {
         this.findElementAndUpdateById(data.cartEl);
@@ -358,7 +383,7 @@ export class CartOrderComponent implements OnInit, AfterViewInit, OnDestroy, Aft
   }
 
   findElementAndUpdate(cartEl: CartElement) {
-    var index: number = this.cartService.findElementIndex(this.order.cartOrderElements, cartEl);
+    var index: number = this.cartService.findElementIndexById(this.order.cartOrderElements, cartEl);
     this.order.cartOrderElements[index] = cartEl;
     this.cartSum();
   }
@@ -371,8 +396,8 @@ export class CartOrderComponent implements OnInit, AfterViewInit, OnDestroy, Aft
 
   remove(data: { cartEl: CartElement, index: number }) {
     var { cartEl } = data
-    this.ordersService.removeOrderElement(cartEl.id, this.order.id).then((r) => {
-
+    this.ordersService.removeOrderElement(cartEl.id, this.order.id).then((o: CartOrder) => {
+      this.order = { ...this.order, ...{ bonusTotal: o.bonusTotal } }
       var gIndex: number = this.cartService.findGroupIndex(this.cartGroups, cartEl);
       var elIndex: number = this.cartService.findElementIndexById(this.order.cartOrderElements, cartEl);
       var groupElIndex: number = 0
@@ -456,9 +481,10 @@ export class CartOrderComponent implements OnInit, AfterViewInit, OnDestroy, Aft
   }
 
   cartUpdatePush(cartEl: CartElement): Promise<any> {
-    return this.ordersService.addNewElementToCart(cartEl, this.order.id).then((ce) => {
-      this.order.cartOrderElements.push(ce);
-      this.putElementToGroup(ce.type, ce);
+    return this.ordersService.addNewElementToCart(cartEl, this.order.id).then((r: { o: CartOrder, ce: CartElement }) => {
+      this.order = { ...this.order, ...{ bonusTotal: r.o.bonusTotal } }
+      this.order.cartOrderElements.push(r.ce);
+      this.putElementToGroup(r.ce.type, r.ce);
       this.cartSum();
     });
   }

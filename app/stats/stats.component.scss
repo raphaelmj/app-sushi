@@ -27,19 +27,28 @@ GridLayout.list-elements {
     color: #ffffff;
 }
 
-Label.total-szt {
-    font-size: 22;
-    border-bottom-width: 1;
-    border-bottom-color: #504426;
-}
+
 
 FlexboxLayout.price-flex {
     border-bottom-width: 1;
     border-bottom-color: #504426;
 }
 
-Label.total-price {
+Label.label-what {
+    font-size: 18;
+}
+
+Label.total-szt {
     font-size: 22;
+}
+
+Label.total-price {
+    font-size: 20;
+}
+
+Label.total-price.throuth-line {
+    font-size: 16;
+    text-decoration: line-through;
 }
 
 Label.price-bonus {

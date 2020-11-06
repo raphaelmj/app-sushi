@@ -1,3 +1,4 @@
+import { AppConfig } from '~/models/app-config';
 import { RefreshAfterCronInprogressService } from './../services/refresh-after-cron-inprogress.service';
 import { RefreshAfterDeleteOrderService } from './../services/refresh-after-delete-order.service';
 import { CartService } from '~/services/cart.service';
@@ -54,6 +55,7 @@ export class AdminComponent implements OnInit, AfterViewInit, OnDestroy {
   subDataChange: Subscription;
   load: boolean = true;
   tokenUser: TokenBase;
+  appConfig: AppConfig
   listInProgress: boolean = false
   screen = screen
   loadingStats: boolean = false
@@ -112,6 +114,7 @@ export class AdminComponent implements OnInit, AfterViewInit, OnDestroy {
     this.reservations = this.activatedRoute.snapshot.data["ordersData"].reservations
     this.archives = this.activatedRoute.snapshot.data["ordersData"].archives
     this.inProgress = this.activatedRoute.snapshot.data["ordersData"].inProgress
+    this.appConfig = this.activatedRoute.snapshot.data["config"]
     this.countPages();
     this.setViewOrganization();
     this.currentDay = moment(this.oQP.day).toDate();
@@ -197,7 +200,7 @@ export class AdminComponent implements OnInit, AfterViewInit, OnDestroy {
 
   changeDataSubscribe() {
     this.subDataChange = this.getDataOrdersRefreshService.action$.subscribe((bool) => {
-      // console.log(bool.bool)
+      // console.log(bool)
       if (bool.bool) {
         // if (bool.uuid != device.uuid) {
         this.getData();

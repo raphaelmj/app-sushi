@@ -2,10 +2,14 @@ export enum UserPerm {
   super = 'superadmin',
   normal = 'normal',
 }
+export enum UserRole {
+  waiter = 'waiter',
+  admin = 'admin',
+}
 export interface TokenData {
   id: number
   nick: string;
-  role: "admin" | "waiter",
+  role: UserRole,
   permission?: UserPerm
 }
 export interface TokenBase {
@@ -17,7 +21,7 @@ export interface TokenBase {
 export interface UserInfo {
   id?: number
   nick: string
-  role: "admin" | "waiter",
+  role: UserRole,
   permission?: UserPerm
 }
 export interface TokenResponse {

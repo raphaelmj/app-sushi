@@ -57,6 +57,7 @@ import { AccElementsConfigComponent } from './acc-elements-config/acc-elements-c
 import { AccQuantityElementComponent } from './acc-elements-config/acc-quantity-element/acc-quantity-element.component';
 import { NgPipesModule } from 'ngx-pipes';
 import { PlusElementsCartViewComponent } from './cart-row-admin/plus-elements-cart-view/plus-elements-cart-view.component';
+import { BonusSetConfigComponent } from './bonus-set-config/bonus-set-config.component';
 
 @NgModule({
   declarations: [
@@ -106,6 +107,7 @@ import { PlusElementsCartViewComponent } from './cart-row-admin/plus-elements-ca
     AccElementsConfigComponent,
     AccQuantityElementComponent,
     PlusElementsCartViewComponent,
+    BonusSetConfigComponent,
   ],
   imports: [
     NativeScriptCommonModule,
@@ -156,6 +158,7 @@ import { PlusElementsCartViewComponent } from './cart-row-admin/plus-elements-ca
     PasswordConfirmComponent,
     AccElementsConfigComponent,
     PlusElementsCartViewComponent,
+    BonusSetConfigComponent,
   ],
   schemas: [NO_ERRORS_SCHEMA],
   entryComponents: [
@@ -174,6 +177,7 @@ import { PlusElementsCartViewComponent } from './cart-row-admin/plus-elements-ca
     PasswordConfirmComponent,
     AccElementsConfigComponent,
     PlusElementsCartViewComponent,
+    BonusSetConfigComponent,
   ],
 })
 export class ToolsModule { }

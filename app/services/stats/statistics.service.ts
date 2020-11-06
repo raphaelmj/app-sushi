@@ -1,4 +1,4 @@
-import { BucketPlusElement } from './../../models/es-index-response';
+import { DayStats } from './../../models/es-day-stats';
 import { Observable } from 'rxjs';
 import { API_URL } from '~/config';
 import { HttpClient } from '@angular/common/http';
@@ -11,8 +11,8 @@ export class StatisticsService {
 
   constructor(private httpClient: HttpClient) { }
 
-  dayElements(day: string): Observable<{ list: BucketPlusElement[], total: number, day: string, priceTotal: number, priceExtra: number, bonusPriceTotal: number }> {
-    return this.httpClient.get<{ list: BucketPlusElement[], total: number, day: string, priceTotal: number, priceExtra: number, bonusPriceTotal: number }>(API_URL + '/es/api/search/day/elements?day=' + day)
+  dayElements(day: string): Observable<DayStats> {
+    return this.httpClient.get<DayStats>(API_URL + '/es/api/search/day/stats?day=' + day)
   }
 
 }

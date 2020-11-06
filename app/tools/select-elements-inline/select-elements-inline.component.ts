@@ -1,12 +1,10 @@
+import { AppConfig, FilterState } from './../../models/app-config';
 import { AfterContentInit } from '@angular/core';
-import { TokenBase } from './../../models/token-base';
+import { TokenBase, UserRole } from './../../models/token-base';
 import { OrderStatus } from './../../models/cart-order';
 import { OrderQueryParams } from '~/models/order-query-params';
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef, OnChanges, SimpleChanges } from '@angular/core';
 import { Device, device } from "platform";
-import { screen } from "tns-core-modules/platform";
-import { on } from "tns-core-modules/application";
-import { DEFAULT_ORDERS_QUERY_PARAMS } from '~/config';
 
 @Component({
   selector: 'app-select-elements-inline',
@@ -25,6 +23,7 @@ export class SelectElementsInlineComponent implements OnInit, OnChanges, AfterCo
   @Input() archives: number = 0
   @Input() inProgress: number = 0
   @Input() tokenUser: TokenBase
+  @Input() appConfig: AppConfig
   isAll: boolean = false
   orderStatus = OrderStatus
   device: Device = device
@@ -41,8 +40,8 @@ export class SelectElementsInlineComponent implements OnInit, OnChanges, AfterCo
   constructor(private _changeDetectionRef: ChangeDetectorRef) { }
 
   ngAfterContentInit(): void {
-    if (this.tokenUser.user.role == 'admin') {
-      this.saveOQPState = Object.assign({}, DEFAULT_ORDERS_QUERY_PARAMS)
+    if (this.tokenUser.user.role == UserRole.admin) {
+      this.saveOQPState = Object.assign({}, this.getDefaultQueryParams(this.appConfig, UserRole.admin))
     } else {
       this.saveOQPState = Object.assign({}, this.oQP)
     }
@@ -98,7 +97,7 @@ export class SelectElementsInlineComponent implements OnInit, OnChanges, AfterCo
     }
     this.oQP.inprogress = this.inProgressSteps[this.inProgressStepsIndex]
     this.saveOQPState.inprogress = this.inProgressSteps[this.inProgressStepsIndex]
-    var { inprogress, ...rest } = DEFAULT_ORDERS_QUERY_PARAMS
+    var { inprogress, ...rest } = this.getDefaultQueryParams(this.appConfig, this.tokenUser.user.role)
 
     switch (this.oQP.inprogress) {
       case '0':
@@ -266,6 +265,19 @@ export class SelectElementsInlineComponent implements OnInit, OnChanges, AfterCo
     this.inProgressStepsIndex = this.findIndex(this.inProgressSteps, this.oQP.inprogress)
     this.reservationsStepsIndex = this.findIndex(this.reservationsSteps, this.oQP.reservation)
     this.paidStepsIndex = this.findIndex(this.reservationsSteps, this.oQP.reservation)
+  }
+
+  getDefaultQueryParams(appConfig: AppConfig, role: UserRole, page: number = 1): OrderQueryParams {
+
+    var fstate: FilterState = (role == UserRole.admin) ? appConfig.data.defaultFiltersStates.admin : appConfig.data.defaultFiltersStates.waiter
+    var qp: OrderQueryParams = {
+      page: page,
+      sts: fstate.sts.join('|'),
+      paid: fstate.paid,
+      reservation: fstate.reservation,
+      inprogress: fstate.inprogress
+    }
+    return qp
   }
 
 }
